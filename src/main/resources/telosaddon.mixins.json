@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "xyz.telosaddon.yuno.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MixinInGameHud",
+    "MixinMinecraftClient"
+  ],
+  "client": [
+    "MixinGameRenderer",
+    "MixinLightmapTextureManager",
+    "MixinMessageHandler",
+    "MixinSimpleOption"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

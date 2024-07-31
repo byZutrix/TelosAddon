@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "telosaddon",
+  "version": "${version}",
+  "name": "TelosAddon",
+  "description": "No description yet.",
+  "authors": [
+    "KamiYuno"
+  ],
+  "contact": {
+    "repo": "https://github.com/byZutrix/TelosAddon.git"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "",
+  "environment": "client",
+  "mixins": [
+    {
+      "config": "telosaddon.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric": "*",
+    "minecraft": "1.21"
+  }
+}

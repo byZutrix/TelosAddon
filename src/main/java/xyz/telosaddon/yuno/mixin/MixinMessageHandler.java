@@ -35,7 +35,21 @@ public class MixinMessageHandler {
 
     @Unique
     private void onChat(Text text) {
-        if(!text.getString().trim().startsWith("Your rank:")) return;
+        String s = text.getString().trim();
+        if(s.contains("has spawned at")) {
+            String[] args = s.split(" ");
+            String name = args[0];
+            TelosAddon.getInstance().addAliveBosses(name);
+        }
+
+        if(s.contains("has been defeated")) {
+            String[] args = s.split(" ");
+            String name = args[0];
+            if(TelosAddon.getInstance().getAliveBosses().contains(name))
+                TelosAddon.getInstance().removeAliveBoss(name);
+        }
+
+        if(!s.startsWith("Your rank:")) return;
         Config config = TelosAddon.getInstance().getConfig();
 
         config.addInt("TotalRuns", 1);

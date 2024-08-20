@@ -3,7 +3,6 @@ package xyz.telosaddon.yuno.utils;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
 import net.fabricmc.loader.api.FabricLoader;
-import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 import java.io.*;
@@ -17,6 +16,7 @@ public class Config {
     private final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(Integer.class, new IntegerSerializer())
             .registerTypeAdapter(Double.class, new DoubleSerializer())
+            .registerTypeAdapter(Long.class, new LongSerializer())
             .setPrettyPrinting()
             .create();
     private final File configFile;
@@ -49,11 +49,20 @@ public class Config {
         addDefault("Relics", 0);
         addDefault("TotalRuns", 0);
         addDefault("NoWhiteRuns", 0);
+        addDefault("TotalPlaytime", 0L);
 
         addDefault("NewGamma", 15000.0D);
         addDefault("NormalGamma", 1.0D);
 
         addDefault("MenuColor", new Color(255, 215, 0).getRGB());
+        addDefault("BorderColor", new Color(255, 255, 255, 150).getRGB());
+        addDefault("FillColor", new Color(0, 0, 0, 100).getRGB());
+
+        addDefault("InfoX", 4);
+        addDefault("InfoY", 4);
+
+        addDefault("BagX", -1);
+        addDefault("BagY", 60);
 
         addDefault("GreenSetting", false);
         addDefault("GoldSetting", false);
@@ -69,6 +78,11 @@ public class Config {
         addDefault("SwingSetting", false);
         addDefault("GammaSetting", false);
         addDefault("FPSSetting", false);
+        addDefault("PingSetting", false);
+        addDefault("PlaytimeSetting", false);
+        addDefault("SpawnBossesSetting", false);
+        addDefault("SoundSetting", false);
+        addDefault("Font", "Default");
         save();
 
     }
@@ -107,25 +121,38 @@ public class Config {
         Object value = configMap.get(key);
         if(value instanceof Double)
             return (Double) value;
-        throw new ClassCastException("Value is not a double");
+        throw new ClassCastException("Value is not a Double");
     }
 
-    public Integer getInteger(String key) {
+    public int getInteger(String key) {
         Object value = configMap.get(key);
         if(value instanceof Number)
             return ((Number) value).intValue();
-        throw new ClassCastException("Value is not a number");
+        throw new ClassCastException("Value is not an Int");
     }
 
     public Boolean getBoolean(String key) {
         Object value = configMap.get(key);
         if(value instanceof Boolean)
             return (Boolean) value;
-        throw new ClassCastException("Value is not a boolean");
+        throw new ClassCastException("Value is not a Boolean");
+    }
+
+    public String getString(String key) {
+        Object value = configMap.get(key);
+        if(value instanceof String)
+            return (String) value;
+        throw new ClassCastException("Value is not a String");
     }
 
     public void addInt(String key, int amount) {
         int value = getInteger(key);
+        configMap.put(key, value + amount);
+        save();
+    }
+
+    public void addLong(String key, long amount) {
+        long value = getInteger(key);
         configMap.put(key, value + amount);
         save();
     }

@@ -9,149 +9,121 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.utils.Config;
-
-import java.util.Arrays;
-import java.util.List;
+import xyz.telosaddon.yuno.utils.FontHelper;
 
 
 @Environment(EnvType.CLIENT)
 public class TelosMenu extends Screen {
 
-    private final MinecraftClient mc = MinecraftClient.getInstance();
-    private List<CustomButton> customButtonList;
-    private Config config;
-    private int menuColor;
+    private final MinecraftClient mc;
+    private final CustomUiManager customUiManager;
+    private final Config config;
 
     public TelosMenu() {
         super(Text.literal("Telos Menu"));
-        config = TelosAddon.getInstance().getConfig();
-        menuColor = config.getInteger("MenuColor");
+        this.mc = MinecraftClient.getInstance();
+        this.config = TelosAddon.getInstance().getConfig();
+        this.customUiManager = new CustomUiManager();
     }
 
     @Override
     protected void init() {
-        boolean swingSetting = config.getBoolean("SwingSetting");
-        boolean gammaSetting = config.getBoolean("GammaSetting");
-        boolean fpsSetting = config.getBoolean("FPSSetting");
-
-        boolean greenSetting = config.getBoolean("GreenSetting");
-        boolean goldSetting = config.getBoolean("GoldSetting");
-        boolean whiteSetting = config.getBoolean("WhiteSetting");
-        boolean blackSetting = config.getBoolean("BlackSetting");
-        boolean xMasSetting = config.getBoolean("XMasSetting");
-        boolean crossSetting = config.getBoolean("CrossSetting");
-        boolean relicSetting = config.getBoolean("RelicSetting");
-        boolean totalRunSetting = config.getBoolean("TotalRunSetting");
-        boolean noWhiteRunSetting = config.getBoolean("NoWhiteRunSetting");
-        boolean lifetimeSetting = config.getBoolean("LifetimeSetting");
-
-        // 23 y-value
-        customButtonList = Arrays.asList(
-
-                new CustomButton(8, 55, 150, 20, "Hold To Swing", (button, toggled) -> {
-                    toggle("SwingSetting", button.getText(), toggled);
-                }).setToggled(swingSetting),
-
-                new CustomButton(8, 78, 150, 20, "Gamma", (button, toggled) -> {
-                    toggle("GammaSetting", button.getText(), toggled);
-                    TelosAddon.getInstance().toggleGamma(toggled);
-                }).setToggled(gammaSetting),
-
-                new CustomButton(8, 101, 150, 20, "Show FPS", (button, toggled) -> {
-                    toggle("FPSSetting", button.getText(), toggled);
-                }).setToggled(fpsSetting),
-
-
-
-                new CustomButton(8, 124, 150, 20, "GreenBag Counter", (button, toggled) -> {
-                    toggle("GreenSetting", button.getText(), toggled);
-                }).setToggled(greenSetting),
-
-                new CustomButton(8, 147, 150, 20, "GoldBag Counter", (button, toggled) -> {
-                    toggle("GoldSetting", button.getText(), toggled);
-                }).setToggled(goldSetting),
-
-                new CustomButton(8, 170, 150, 20, "WhiteBag Counter", (button, toggled) -> {
-                    toggle("WhiteSetting", button.getText(), toggled);
-                }).setToggled(whiteSetting),
-
-                new CustomButton(8, 193, 150, 20, "BlackBag Counter", (button, toggled) -> {
-                    toggle("BlackSetting", button.getText(), toggled);
-                }).setToggled(blackSetting),
-
-                new CustomButton(8, 216, 150, 20, "XMasBag Counter", (button, toggled) -> {
-                    toggle("XMasSetting", button.getText(), toggled);
-                }).setToggled(xMasSetting),
-
-                new CustomButton(8, 239, 150, 20, "Cross Counter", (button, toggled) -> {
-                    toggle("CrossSetting", button.getText(), toggled);
-                }).setToggled(crossSetting),
-
-                new CustomButton(8, 262, 150, 20, "Relic Counter", (button, toggled) -> {
-                    toggle("RelicSetting", button.getText(), toggled);
-                }).setToggled(relicSetting),
-
-                new CustomButton(8, 285, 150, 20, "Total Boss Runs", (button, toggled) -> {
-                    toggle("TotalRunSetting", button.getText(), toggled);
-                }).setToggled(totalRunSetting),
-
-                new CustomButton(8, 308, 150, 20, "No Whites Runs", (button, toggled) -> {
-                    toggle("NoWhiteRunSetting", button.getText(), toggled);
-                }).setToggled(noWhiteRunSetting),
-
-                new CustomButton(8, 331, 150, 20, "Lifetime Counter", (button, toggled) -> {
-                    toggle("LifetimeSetting", button.getText(), toggled);
-                }).setToggled(lifetimeSetting),
-
-
-
-                new CustomButton(8, height - 28, 150, 20, "Done", (button) -> {
-                    mc.setScreen(null);
-                })
-
-        );
-    }
-
-    @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        for (CustomButton customButton : customButtonList) {
-            if (customButton.mouseClicked(mouseX, mouseY, button)) {
-                return true;
-            }
-        }
-        return super.mouseClicked(mouseX, mouseY, button);
+        this.customUiManager.switchTab(Tabs.HOME);
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        super.render(context, mouseX, mouseY, delta);
-        this.renderBackground(context, mouseX, mouseY, delta);
-        TextRenderer tr = mc.textRenderer;
-        drawTitle(context, tr);
+        if(!TelosAddon.getInstance().isEditMode()) {
+            super.render(context, mouseX, mouseY, delta);
 
-        for (CustomButton customButton : customButtonList) {
-            customButton.render(context, mouseX, mouseY, delta);
+            TextRenderer tr = mc.textRenderer;
+            drawTitle(context, tr);
+
+            String bugString = "§cPlease report bugs to §7'§4kamiyuno§7'§c on Discord§7!";
+            Text bugText = FontHelper.toCustomFont(bugString, config.getString("Font"));
+            int bugTextWidth = tr.getWidth(bugText);
+            context.drawText(tr, bugText, width - bugTextWidth - 4, height - 12, 0xFFFFFF, true);
         }
 
-        String bugText = "§cPlease report bugs to §7'§4kamiyuno§7'§c on Discord§7!";
-        int bugTextWidth = tr.getWidth(bugText);
-        context.drawText(tr, bugText, width - bugTextWidth - 4, height - 12, 0xFFFFFF, false);
+        this.customUiManager.render(context, mouseX, mouseY, delta);
+    }
 
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+
+        if(this.customUiManager.mouseClicked(mouseX, mouseY, button))
+            return true;
+
+        return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+
+        boolean isEditMode = TelosAddon.getInstance().isEditMode();
+        if(isEditMode) {
+            int infoX = config.getInteger("InfoX");
+            int infoY = config.getInteger("InfoY");
+            int infoWidth = TelosAddon.getInstance().infoWidth;
+            int infoHeight = TelosAddon.getInstance().infoHeight;
+
+            int bagX = config.getInteger("BagX");
+            int bagY = config.getInteger("BagY");
+            int bagWidth = TelosAddon.getInstance().bagWidth;
+            int bagHeight = TelosAddon.getInstance().bagHeight;
+
+            if(mouseX >= infoX + 10 && mouseY >= infoY + 10  && mouseX < infoX + infoWidth + 10 && mouseY < infoY + infoHeight + 10) {
+
+                config.set("InfoX", (int) mouseX - infoWidth / 2);
+                config.set("InfoY", (int) mouseY - infoHeight / 2);
+
+                return true;
+            }
+
+            if(mouseX >= bagX + 10 && mouseY >= bagY + 10  && mouseX < bagX + bagWidth + 10 && mouseY < bagY + bagHeight + 10) {
+
+                config.set("BagX", (int) mouseX - bagWidth / 2);
+                config.set("BagY", (int) mouseY - bagHeight / 2);
+
+                return true;
+            }
+        }
+
+        if(this.customUiManager.mouseDragged(mouseX, mouseY, button, deltaX, deltaY))
+            return true;
+
+        return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        this.customUiManager.keyPressed(keyCode, scanCode, modifiers);
+
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean charTyped(char chr, int modifiers) {
+        this.customUiManager.charTyped(chr, modifiers);
+
+        return super.charTyped(chr, modifiers);
+    }
+
+    @Override
+    public void close() {
+        this.client.setScreen(null);
+        TelosAddon.getInstance().setEditMode(false);
     }
 
     private void drawTitle(DrawContext context, TextRenderer tr) {
-        String title = "Telos Addon | BETA-v0.1";
+        String title = "Telos Addon | BETA-v0.2";
+        Text titleText = FontHelper.toCustomFont(title, config.getString("Font"));
+
         float titleScale = 1.5f;
         context.getMatrices().push();
         context.getMatrices().scale(titleScale, titleScale, titleScale);
-        context.drawText(tr, title, (int) (10 / titleScale), (int) (35 / titleScale), menuColor, false);
+        context.drawText(tr, titleText, (int) (10 / titleScale), (int) (35 / titleScale), config.getInteger("MenuColor"), true);
         context.getMatrices().pop();
-    }
-
-    private void toggle(String settingName, String btnName, boolean toggled) {
-        config.set(settingName, toggled);
-        String msg = toggled ? "set §7'§6" + btnName + "§7'§6 to §a§lTRUE§7!" : "Set §7'§6" + btnName +"§7'§6 to §c§lFALSE§7!";
-        TelosAddon.getInstance().sendMessage(msg);
     }
 
 }

@@ -8,17 +8,32 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import org.lwjgl.glfw.GLFW;
+import xyz.telosaddon.yuno.sound.SoundManager;
 import xyz.telosaddon.yuno.ui.TelosMenu;
 import xyz.telosaddon.yuno.utils.Config;
+import xyz.telosaddon.yuno.sound.CustomSound;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TelosAddon {
 
     private final MinecraftClient mc = MinecraftClient.getInstance();
     public static TelosAddon instance;
+    private SoundManager soundManager;
     private Config config;
     private Map<String, Integer> bagCounter;
+    private long playTime = 0;
+    private int tickCounter = 0;
+    private List<String> aliveBosses;
+    private boolean editMode = false;
+
+    public int infoWidth;
+    public int infoHeight;
+    public int bagWidth;
+    public int bagHeight;
 
     private KeyBinding menuKey;
 
@@ -28,7 +43,7 @@ public class TelosAddon {
         config.load();
 
         menuKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.telosaddon.open_menu",
+                "Open Menu",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_B,
                 "category.telosaddon.general"
@@ -36,6 +51,12 @@ public class TelosAddon {
 
         loadBagCounter();
 
+        soundManager = new SoundManager();
+
+        soundManager.addSound(new CustomSound("button_click"));
+        soundManager.addSound(new CustomSound("white_bag"));
+        soundManager.addSound(new CustomSound("button_click"));
+        aliveBosses = new ArrayList<>();
 
         instance = this;
     }
@@ -59,6 +80,16 @@ public class TelosAddon {
         if(menuKey.wasPressed()) {
             mc.setScreen(new TelosMenu());
         }
+
+        String serverIP = mc.getCurrentServerEntry() != null ? mc.getCurrentServerEntry().address : "Null";
+        if(mc.world != null && !mc.isPaused() && serverIP.contentEquals("telosrealms.com")) {
+            tickCounter++;
+            if(tickCounter >= 20) {
+                playTime++;
+                config.addLong("TotalPlaytime", 1);
+                tickCounter = 0;
+            }
+        }
     }
 
     public void sendMessage(String message) {
@@ -66,6 +97,7 @@ public class TelosAddon {
     }
     public static TelosAddon getInstance() { return instance; }
     public Config getConfig() { return config; }
+    public SoundManager getSoundManager() { return soundManager; }
 
     public void toggleGamma(boolean b) {
         Double newGamma = b ? config.getDouble("NewGamma") : config.getDouble("NormalGamma");
@@ -88,5 +120,26 @@ public class TelosAddon {
     public Map<String, Integer> getBagCounter() {
         return this.bagCounter;
     }
+
+    public String getPlaytimeText() {
+        long hours = this.playTime / 3600;
+        long minutes = (this.playTime % 3600) / 60;
+        long seconds = this.playTime % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    public boolean isOnTelos() {
+        String serverIP = mc.getCurrentServerEntry() != null ? mc.getCurrentServerEntry().address : "Null";
+        if(mc.world != null && !mc.isPaused() && serverIP.contentEquals("telosrealms.com")) {
+            return true;
+        }
+        return false;
+    }
+
+    public void addAliveBosses(String name) { this.aliveBosses.add(name); }
+    public void removeAliveBoss(String name) { this.aliveBosses.remove(name); }
+    public List<String> getAliveBosses() { return this.aliveBosses; }
+    public boolean isEditMode() { return this.editMode; }
+    public void setEditMode(boolean value) { this.editMode = value; }
 
 }

@@ -13,10 +13,7 @@ import xyz.telosaddon.yuno.ui.TelosMenu;
 import xyz.telosaddon.yuno.utils.Config;
 import xyz.telosaddon.yuno.sound.CustomSound;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TelosAddon {
 
@@ -55,7 +52,7 @@ public class TelosAddon {
 
         soundManager.addSound(new CustomSound("button_click"));
         soundManager.addSound(new CustomSound("white_bag"));
-        soundManager.addSound(new CustomSound("button_click"));
+        soundManager.addSound(new CustomSound("black_bag"));
         aliveBosses = new ArrayList<>();
 
         instance = this;
@@ -130,7 +127,7 @@ public class TelosAddon {
 
     public boolean isOnTelos() {
         String serverIP = mc.getCurrentServerEntry() != null ? mc.getCurrentServerEntry().address : "Null";
-        if(mc.world != null && !mc.isPaused() && serverIP.contentEquals("telosrealms.com")) {
+        if(mc.world != null && !mc.isPaused() && serverIP.contains("telosrealms.com")) {
             return true;
         }
         return false;

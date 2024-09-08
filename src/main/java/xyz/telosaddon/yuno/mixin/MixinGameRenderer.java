@@ -38,14 +38,14 @@ public abstract class MixinGameRenderer {
                 config.set("NoWhiteRuns", 0);
                 TelosAddon.getInstance().getBagCounter().replace("NoWhiteRuns", 0);
 
-                if(soundSetting && TelosAddon.getInstance().isOnTelos())
+                if(soundSetting)
                     soundManager.playSound("white_bag");
 
             }
             case 3 -> {
                 addBag("BlackBags", config);
 
-                if(soundSetting && TelosAddon.getInstance().isOnTelos())
+                if(soundSetting)
                     soundManager.playSound("black_bag");
 
             }

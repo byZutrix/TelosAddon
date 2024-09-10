@@ -1,0 +1,11 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "telosaddon:silkscreen.ttf",
+      "shift": [0, 0],
+      "size": 8.5,
+      "oversample": 2.0
+    }
+  ]
+}

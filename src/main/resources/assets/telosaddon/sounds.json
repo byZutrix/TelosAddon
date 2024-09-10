@@ -1,0 +1,17 @@
+{
+  "button_click": {
+    "sounds": [
+      "telosaddon:button_click"
+    ]
+  },
+  "white_bag": {
+    "sounds": [
+      "telosaddon:white_bag"
+    ]
+  },
+  "black_bag": {
+    "sounds": [
+      "telosaddon:black_bag"
+    ]
+  }
+}

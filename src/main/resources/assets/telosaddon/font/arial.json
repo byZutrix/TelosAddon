@@ -1,0 +1,11 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "telosaddon:arial.ttf",
+      "shift": [0, 0],
+      "size": 10.0,
+      "oversample": 2.0
+    }
+  ]
+}

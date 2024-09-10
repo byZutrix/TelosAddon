@@ -116,7 +116,7 @@ public class TelosMenu extends Screen {
     }
 
     private void drawTitle(DrawContext context, TextRenderer tr) {
-        String title = "Telos Addon | BETA-v0.2";
+        String title = "Telos Addon | BETA-v0.21";
         Text titleText = FontHelper.toCustomFont(title, config.getString("Font"));
 
         float titleScale = 1.5f;

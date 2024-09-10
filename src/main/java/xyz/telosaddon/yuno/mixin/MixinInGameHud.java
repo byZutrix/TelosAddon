@@ -19,7 +19,6 @@ import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.utils.Config;
 import xyz.telosaddon.yuno.utils.FontHelper;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 

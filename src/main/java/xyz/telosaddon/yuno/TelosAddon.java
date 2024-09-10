@@ -2,6 +2,7 @@ package xyz.telosaddon.yuno;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.world.LevelLoadingScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
@@ -33,6 +34,7 @@ public class TelosAddon {
     public int bagHeight;
 
     private KeyBinding menuKey;
+    private KeyBinding nexusKey;
 
     public void init() {
 
@@ -43,7 +45,14 @@ public class TelosAddon {
                 "Open Menu",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_B,
-                "category.telosaddon.general"
+                "Telos Addon"
+        ));
+
+        nexusKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+           "Nexus Key",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_X,
+                "Telos Addon"
         ));
 
         loadBagCounter();
@@ -78,8 +87,7 @@ public class TelosAddon {
             mc.setScreen(new TelosMenu());
         }
 
-        String serverIP = mc.getCurrentServerEntry() != null ? mc.getCurrentServerEntry().address : "Null";
-        if(mc.world != null && !mc.isPaused() && serverIP.contentEquals("telosrealms.com")) {
+        if(isOnTelos()) {
             tickCounter++;
             if(tickCounter >= 20) {
                 playTime++;
@@ -135,6 +143,7 @@ public class TelosAddon {
 
     public void addAliveBosses(String name) { this.aliveBosses.add(name); }
     public void removeAliveBoss(String name) { this.aliveBosses.remove(name); }
+    public void clearAliveBosses() { this.aliveBosses.clear(); }
     public List<String> getAliveBosses() { return this.aliveBosses; }
     public boolean isEditMode() { return this.editMode; }
     public void setEditMode(boolean value) { this.editMode = value; }

@@ -9,6 +9,7 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import org.lwjgl.glfw.GLFW;
+import xyz.telosaddon.yuno.features.HoldToSwingFeature;
 import xyz.telosaddon.yuno.sound.SoundManager;
 import xyz.telosaddon.yuno.ui.TelosMenu;
 import xyz.telosaddon.yuno.utils.Config;
@@ -80,8 +81,8 @@ public class TelosAddon {
         ClientPlayerEntity player = mc.player;
         if(player == null) return;
 
-        if(mc.options.attackKey.isPressed() && config.getBoolean("SwingSetting"))
-            player.swingHand(Hand.MAIN_HAND);
+        if(config.getBoolean("SwingSetting"))
+            HoldToSwingFeature.holdToSwing();
 
         if(menuKey.wasPressed()) {
             mc.setScreen(new TelosMenu());

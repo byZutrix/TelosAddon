@@ -115,7 +115,7 @@ public abstract class MixinInGameHud {
             infoList.add("FPS§7: §f" + client.getCurrentFps());
 
         if(pingSetting || isEditMode)
-            infoList.add("Ping§7: §f" + this.getPing());
+            infoList.add("Ping§7: §f" + TelosAddon.instance.ping);
 
         if(playtimeSetting || isEditMode)
             infoList.add("Playtime§7: §f" + TelosAddon.getInstance().getPlaytimeText());
@@ -151,18 +151,4 @@ public abstract class MixinInGameHud {
         for(int i = 0; i < infoList.size(); i++)
             context.drawText(tr, FontHelper.toCustomFont(infoList.get(i), fontName), infoX, infoY + i * 10, config.getInteger("MenuColor"), true);
     }
-
-    private int getPing() {
-
-        ClientPlayNetworkHandler networkHandler = client.getNetworkHandler();
-        if(networkHandler != null && client.player != null) {
-            PlayerListEntry playerListEntry = networkHandler.getPlayerListEntry(client.player.getUuid());
-            if(playerListEntry != null) {
-                return playerListEntry.getLatency();
-            }
-        }
-
-        return 0;
-    }
-
 }

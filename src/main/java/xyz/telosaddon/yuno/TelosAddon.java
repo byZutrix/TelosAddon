@@ -18,6 +18,7 @@ import xyz.telosaddon.yuno.ui.TelosMenu;
 import xyz.telosaddon.yuno.utils.Config;
 import xyz.telosaddon.yuno.sound.CustomSound;
 import xyz.telosaddon.yuno.utils.NbtUtils;
+import xyz.telosaddon.yuno.utils.TabListUtils;
 
 import java.util.*;
 
@@ -37,6 +38,8 @@ public class TelosAddon {
     public int infoHeight;
     public int bagWidth;
     public int bagHeight;
+
+    public String ping = "0";
 
     private KeyBinding menuKey;
     private KeyBinding nexusKey;
@@ -89,15 +92,15 @@ public class TelosAddon {
             HoldToSwingFeature.holdToSwing();
         }
 
-
         if(menuKey.wasPressed()) {
             mc.setScreen(new TelosMenu());
         }
 
         AutoNexusFeature.tick();
-        if(nexusKey.wasPressed())
-            AutoNexusFeature.autoNexus();
+        if(nexusKey.wasPressed()) AutoNexusFeature.autoNexus();
 
+        Optional<String> test = TabListUtils.getPing();
+        test.ifPresent(pingStr -> ping = pingStr);
 
         if(isOnTelos()) {
             tickCounter++;

@@ -6,14 +6,18 @@ import net.minecraft.client.gui.screen.world.LevelLoadingScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.entity.player.ItemCooldownManager;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import org.lwjgl.glfw.GLFW;
+import xyz.telosaddon.yuno.features.AutoNexusFeature;
 import xyz.telosaddon.yuno.features.HoldToSwingFeature;
 import xyz.telosaddon.yuno.sound.SoundManager;
 import xyz.telosaddon.yuno.ui.TelosMenu;
 import xyz.telosaddon.yuno.utils.Config;
 import xyz.telosaddon.yuno.sound.CustomSound;
+import xyz.telosaddon.yuno.utils.NbtUtils;
 
 import java.util.*;
 
@@ -81,12 +85,19 @@ public class TelosAddon {
         ClientPlayerEntity player = mc.player;
         if(player == null) return;
 
-        if(config.getBoolean("SwingSetting"))
+        if(config.getBoolean("SwingSetting")){
             HoldToSwingFeature.holdToSwing();
+        }
+
 
         if(menuKey.wasPressed()) {
             mc.setScreen(new TelosMenu());
         }
+
+        AutoNexusFeature.tick();
+        if(nexusKey.wasPressed())
+            AutoNexusFeature.autoNexus();
+
 
         if(isOnTelos()) {
             tickCounter++;

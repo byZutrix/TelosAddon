@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class TabListUtils {
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final String pingPattern = "^Ping:\\s\\d+$";
+    public static final String serverPattern = "Server:\\s*\\[(.*?)\\]";
 
     public static Optional<String> getPing(){
         Optional<String> ping = getLineMatches(pingPattern);
@@ -20,6 +21,15 @@ public class TabListUtils {
 
         String result = ping.get().split(": ")[1];
         return Optional.of(result);
+    }
+
+    public static Optional<String> getServer(){
+       Optional<String> server = getLineMatches(serverPattern);
+
+        if(server.isEmpty()) return Optional.empty();
+
+        String content = server.get().replaceAll("Server:\\s*\\[(.*?)]", "$1");
+        return Optional.of(content);
     }
 
     public static Optional<String> getLineMatches(String pattern){

@@ -23,6 +23,7 @@ public class HomeTab extends AbstractTab{
         boolean gammaSetting = getConfig().getBoolean("GammaSetting");
         boolean fpsSetting = getConfig().getBoolean("FPSSetting");
         boolean pingSetting = getConfig().getBoolean("PingSetting");
+        boolean serverSetting = getConfig().getBoolean("ServerSetting");
         boolean playtimeSetting = getConfig().getBoolean("PlaytimeSetting");
         boolean spawnBossesSetting = getConfig().getBoolean("SpawnBossesSetting");
         boolean soundSetting = getConfig().getBoolean("SoundSetting");
@@ -56,7 +57,11 @@ public class HomeTab extends AbstractTab{
 
                 new CustomButton(8, 221, 150, 20, "Custom Bag Sounds", (button, toggled) -> {
                     toggle("SoundSetting", button.getText(), toggled);
-                }).setToggled(soundSetting)
+                }).setToggled(soundSetting),
+
+                new CustomButton(8, 244, 150, 20, "Show Current Server", (button, toggled) -> {
+                    toggle("ServerSetting", button.getText(), toggled);
+                }).setToggled(serverSetting)
         );
 
         uiManager.getCustomElements().addAll(this.elements);

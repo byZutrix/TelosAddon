@@ -1,6 +1,8 @@
 package xyz.telosaddon.yuno.mixin;
 
+import com.google.common.collect.EvictingQueue;
 import com.mojang.authlib.GameProfile;
+import net.fabricmc.loader.impl.lib.sat4j.minisat.core.CircularBuffer;
 import net.minecraft.client.network.message.MessageHandler;
 import net.minecraft.network.message.MessageType;
 import net.minecraft.network.message.SignedMessage;
@@ -15,9 +17,11 @@ import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.utils.Config;
 
 import java.time.Instant;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 @Mixin(MessageHandler.class)
 public class MixinMessageHandler {
+
     @Inject(method = "method_45745", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/ChatHud;addMessage(Lnet/minecraft/text/Text;)V"))
     private void onDisguisedChatLambda(MessageType.Parameters parameters, Text text, Instant instant, CallbackInfoReturnable<Boolean> cir) {
         onChat(text);
@@ -59,7 +63,6 @@ public class MixinMessageHandler {
 
         int newValue2 = TelosAddon.getInstance().getBagCounter().get("NoWhiteRuns");
         TelosAddon.getInstance().getBagCounter().replace("NoWhiteRuns", newValue2 + 1);
-
     }
 
 }

@@ -79,6 +79,7 @@ public class Config {
         addDefault("GammaSetting", false);
         addDefault("FPSSetting", false);
         addDefault("PingSetting", false);
+        addDefault("ServerSetting", false);
         addDefault("PlaytimeSetting", false);
         addDefault("SpawnBossesSetting", false);
         addDefault("SoundSetting", false);

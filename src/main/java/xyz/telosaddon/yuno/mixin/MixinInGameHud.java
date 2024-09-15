@@ -57,6 +57,7 @@ public abstract class MixinInGameHud {
         boolean pingSetting = config.getBoolean("PingSetting");
         boolean playtimeSetting = config.getBoolean("PlaytimeSetting");
         boolean spawnBossesSetting = config.getBoolean("SpawnBossesSetting");
+        boolean serverSetting = config.getBoolean("ServerSetting");
 
         int greenBags = config.getBoolean("LifetimeSetting") ? config.getInteger("GreenBags") : TelosAddon.getInstance().getBagCounter().get("GreenBags");
         int goldBags = config.getBoolean("LifetimeSetting") ? config.getInteger("GoldBags") : TelosAddon.getInstance().getBagCounter().get("GoldBags");
@@ -119,6 +120,9 @@ public abstract class MixinInGameHud {
 
         if(playtimeSetting || isEditMode)
             infoList.add("Playtime§7: §f" + TelosAddon.getInstance().getPlaytimeText());
+
+        if(serverSetting || isEditMode)
+            infoList.add("Server§7: §f" + TelosAddon.instance.server);
 
         if(spawnBossesSetting || isEditMode) {
             for (String boss : TelosAddon.getInstance().getAliveBosses()) {

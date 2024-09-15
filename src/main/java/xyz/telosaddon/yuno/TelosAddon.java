@@ -39,7 +39,8 @@ public class TelosAddon {
     public int bagWidth;
     public int bagHeight;
 
-    public String ping = "0";
+    public String ping = "";
+    public String server = "";
 
     private KeyBinding menuKey;
     private KeyBinding nexusKey;
@@ -99,8 +100,11 @@ public class TelosAddon {
         AutoNexusFeature.tick();
         if(nexusKey.wasPressed()) AutoNexusFeature.autoNexus();
 
-        Optional<String> test = TabListUtils.getPing();
-        test.ifPresent(pingStr -> ping = pingStr);
+        Optional<String> pingOptional = TabListUtils.getPing();
+        pingOptional.ifPresent(pingStr -> ping = pingStr);
+
+        Optional<String> serverOptional = TabListUtils.getServer();
+        serverOptional.ifPresent(serverStr -> server = serverStr);
 
         if(isOnTelos()) {
             tickCounter++;

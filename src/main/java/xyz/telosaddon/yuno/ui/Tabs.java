@@ -2,6 +2,6 @@ package xyz.telosaddon.yuno.ui;
 
 public enum Tabs {
 
-    HOME, GUI, SETTINGS
+    HOME, GUI, SETTINGS, RANGE
 
 }

@@ -1,5 +1,6 @@
 package xyz.telosaddon.yuno;
 
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.world.LevelLoadingScreen;
@@ -9,6 +10,8 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import org.lwjgl.glfw.GLFW;
+import xyz.telosaddon.yuno.features.ShowMainRangeFeature;
+import xyz.telosaddon.yuno.features.ShowOffHandFeature;
 import xyz.telosaddon.yuno.sound.SoundManager;
 import xyz.telosaddon.yuno.ui.TelosMenu;
 import xyz.telosaddon.yuno.utils.Config;
@@ -16,7 +19,7 @@ import xyz.telosaddon.yuno.sound.CustomSound;
 
 import java.util.*;
 
-public class TelosAddon {
+public class TelosAddon implements ClientModInitializer {
 
     private final MinecraftClient mc = MinecraftClient.getInstance();
     public static TelosAddon instance;
@@ -36,42 +39,9 @@ public class TelosAddon {
     private KeyBinding menuKey;
     private KeyBinding nexusKey;
 
-    public void init() {
+    private ShowMainRangeFeature showMainRangeFeature;
 
-        config = new Config();
-        config.load();
-
-        menuKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "Open Menu",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_B,
-                "Telos Addon"
-        ));
-
-        nexusKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-           "Nexus Key",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_X,
-                "Telos Addon"
-        ));
-
-        loadBagCounter();
-
-        soundManager = new SoundManager();
-
-        soundManager.addSound(new CustomSound("button_click"));
-        soundManager.addSound(new CustomSound("white_bag"));
-        soundManager.addSound(new CustomSound("black_bag"));
-        aliveBosses = new ArrayList<>();
-
-        instance = this;
-    }
-
-    public void run() {
-        if(config.getBoolean("GammaSetting")) {
-            toggleGamma(true);
-        }
-    }
+    private ShowOffHandFeature showOffHandFeature;
 
     public void stop() {
         config.save();
@@ -86,6 +56,9 @@ public class TelosAddon {
         if(menuKey.wasPressed()) {
             mc.setScreen(new TelosMenu());
         }
+
+        this.showMainRangeFeature.tick();
+        this.showOffHandFeature.tick();
 
         if(isOnTelos()) {
             tickCounter++;
@@ -148,4 +121,49 @@ public class TelosAddon {
     public boolean isEditMode() { return this.editMode; }
     public void setEditMode(boolean value) { this.editMode = value; }
 
+    @Override
+    public void onInitializeClient() {
+        config = new Config();
+        config.load();
+
+        menuKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "Open Menu",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_B,
+                "Telos Addon"
+        ));
+
+        nexusKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "Nexus Key",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_X,
+                "Telos Addon"
+        ));
+
+        loadBagCounter();
+
+        soundManager = new SoundManager();
+
+        soundManager.addSound(new CustomSound("button_click"));
+        soundManager.addSound(new CustomSound("white_bag"));
+        soundManager.addSound(new CustomSound("black_bag"));
+        aliveBosses = new ArrayList<>();
+
+        this.showMainRangeFeature = new ShowMainRangeFeature(config);
+        this.showOffHandFeature = new ShowOffHandFeature(config);
+
+        if(config.getBoolean("GammaSetting")) {
+            toggleGamma(true);
+        }
+
+        instance = this;
+    }
+
+    public ShowOffHandFeature getShowOffHandFeature() {
+        return showOffHandFeature;
+    }
+
+    public ShowMainRangeFeature getShowMainRangeFeature() {
+        return showMainRangeFeature;
+    }
 }

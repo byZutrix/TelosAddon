@@ -152,11 +152,13 @@ public class TelosAddon implements ClientModInitializer {
         this.showMainRangeFeature = new ShowMainRangeFeature(config);
         this.showOffHandFeature = new ShowOffHandFeature(config);
 
+        instance = this;
+    }
+
+    public void run(){
         if(config.getBoolean("GammaSetting")) {
             toggleGamma(true);
         }
-
-        instance = this;
     }
 
     public ShowOffHandFeature getShowOffHandFeature() {

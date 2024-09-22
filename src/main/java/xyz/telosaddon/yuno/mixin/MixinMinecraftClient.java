@@ -11,6 +11,11 @@ import xyz.telosaddon.yuno.TelosAddon;
 public class MixinMinecraftClient {
 
 
+    @Inject(at = @At("TAIL"), method = "run")
+    private void run(CallbackInfo ci) {
+        TelosAddon.getInstance().run();
+    }
+
     @Inject(at = @At("HEAD"), method = "stop")
     private void stop(CallbackInfo info) {
         TelosAddon.getInstance().stop();

@@ -8,6 +8,7 @@ import xyz.telosaddon.yuno.ui.elements.CustomButton;
 import xyz.telosaddon.yuno.ui.tabs.GuiTab;
 import xyz.telosaddon.yuno.ui.tabs.HomeTab;
 import xyz.telosaddon.yuno.ui.tabs.SettingsTab;
+import xyz.telosaddon.yuno.ui.tabs.TeleportTab;
 import xyz.telosaddon.yuno.utils.Config;
 
 import java.util.ArrayList;
@@ -91,6 +92,10 @@ public class CustomUiManager {
                 SettingsTab settingsTab = new SettingsTab(this);
                 settingsTab.loadButtons();
             }
+            case TELEPORT -> {
+                TeleportTab tpTab = new TeleportTab(this);
+                tpTab.loadButtons();
+            }
         }
     }
 
@@ -118,7 +123,10 @@ public class CustomUiManager {
                 this.switchTab(Tabs.SETTINGS);
         }), isOnTab(Tabs.SETTINGS)).setTextInMiddle(true));
 
-
+        this.addCustomElement(new CustomButton(173, 55, 50, 20, "Teleports", (button -> {
+            if(this.getCurrentTab() != Tabs.TELEPORT)
+                this.switchTab(Tabs.TELEPORT);
+        }), isOnTab(Tabs.TELEPORT)).setTextInMiddle(true));
 
         this.addCustomElement(new CustomButton(8, mc.getWindow().getScaledHeight() - 51, 150, 20, "Join my Discord", (button) -> {
             Util.getOperatingSystem().open("https://discord.gg/sDDeDkxFF6");

@@ -9,6 +9,9 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import org.lwjgl.glfw.GLFW;
+import xyz.telosaddon.yuno.hotkey.AbilityHotkey;
+import xyz.telosaddon.yuno.hotkey.MenuHotkey;
+import xyz.telosaddon.yuno.hotkey.NexusHotkey;
 import xyz.telosaddon.yuno.sound.SoundManager;
 import xyz.telosaddon.yuno.ui.TelosMenu;
 import xyz.telosaddon.yuno.utils.Config;
@@ -40,20 +43,7 @@ public class TelosAddon {
 
         config = new Config();
         config.load();
-
-        menuKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "Open Menu",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_B,
-                "Telos Addon"
-        ));
-
-        nexusKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-           "Nexus Key",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_X,
-                "Telos Addon"
-        ));
+        initHotkeys();
 
         loadBagCounter();
 
@@ -65,6 +55,12 @@ public class TelosAddon {
         aliveBosses = new ArrayList<>();
 
         instance = this;
+    }
+
+    public void initHotkeys(){
+        NexusHotkey.init();
+        MenuHotkey.init();
+        AbilityHotkey.init();
     }
 
     public void run() {
@@ -82,10 +78,6 @@ public class TelosAddon {
 
         if(mc.options.attackKey.isPressed() && config.getBoolean("SwingSetting"))
             player.swingHand(Hand.MAIN_HAND);
-
-        if(menuKey.wasPressed()) {
-            mc.setScreen(new TelosMenu());
-        }
 
         if(isOnTelos()) {
             tickCounter++;

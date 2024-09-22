@@ -85,16 +85,13 @@ public class TeleportTab{
                 new CustomButton(63, 218, 40, 20, "Pyrelia", (button) -> {
                     joinWorld("Pyrelia");
                 }).setTextInMiddle(true),
-                new CustomButton(118, 218, 40, 20, "Quinthor", (button) -> {
-                    joinWorld("Quinthor");
-                }).setTextInMiddle(true),
-                new CustomButton(173, 218, 40, 20, "Ashburn", (button) -> {
+                new CustomButton(118, 218, 40, 20, "Ashburn", (button) -> {
                     joinWorld("Ashburn");
                 }).setTextInMiddle(true),
-                new CustomButton(8, 245, 40, 20, "Xelia", (button) -> {
+                new CustomButton(173, 218, 40, 20, "Xelia", (button) -> {
                     joinWorld("Xelia");
                 }).setTextInMiddle(true),
-                new CustomButton(63, 245, 40, 20, "Skyblock", (button) -> {
+                new CustomButton(8, 245, 40, 20, "Skyblock", (button) -> {
                     joinWorld("Skyblock");
                 }).setTextInMiddle(true)
                 );

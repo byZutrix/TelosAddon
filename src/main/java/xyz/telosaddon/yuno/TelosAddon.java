@@ -15,9 +15,10 @@ import xyz.telosaddon.yuno.utils.Config;
 import xyz.telosaddon.yuno.sound.CustomSound;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 public class TelosAddon {
-
+    public static final Logger LOGGER = Logger.getLogger("telosaddon");
     private final MinecraftClient mc = MinecraftClient.getInstance();
     public static TelosAddon instance;
     private SoundManager soundManager;
@@ -66,7 +67,6 @@ public class TelosAddon {
 
         instance = this;
     }
-
     public void run() {
         if(config.getBoolean("GammaSetting")) {
             toggleGamma(true);

@@ -43,10 +43,10 @@ public class RangeTab extends AbstractTab {
 				new CustomButton(163, 118, 40, 20, "Apply", (button) -> {
 					String input = mainRangeHeightField.getText();
 					try {
-						Double height = Double.parseDouble(input);
+						Float height = Float.parseFloat(input);
 						config.set("ShowMainRangeFeatureHeight", height);
 					} catch (NumberFormatException e) {
-						TelosAddon.getInstance().sendMessage("Wrong Format! Not a double!");
+						TelosAddon.getInstance().sendMessage("Wrong Format! Not a float!");
 					}
 				}).setTextInMiddle(true),
 				new CustomText(8, 141, "Main Hand's range circle's color:"),
@@ -70,10 +70,10 @@ public class RangeTab extends AbstractTab {
 				new CustomButton(163, 234, 40, 20, "Apply", (button) -> {
 					String input = offHandRangeHeightField.getText();
 					try {
-						Double height = Double.parseDouble(input);
+						Float height = Float.parseFloat(input);
 						config.set("ShowOffHandRangeFeatureHeight", height);
 					} catch (NumberFormatException e) {
-						TelosAddon.getInstance().sendMessage("Wrong Format! Not a double!");
+						TelosAddon.getInstance().sendMessage("Wrong Format! Not a float!");
 					}
 				}).setTextInMiddle(true),
 				new CustomText(8, 257, "Off Hand's range circle's color:"),

@@ -74,7 +74,7 @@ public class ShowRangeFeature extends AbstractFeature {
 				vertexConsumers,
 				player,
 				this.getConfig().getInteger(this.getFeatureName() + "Color"),
-				this.getConfig().getInteger(this.getFeatureName() + "Height"));
+				this.getConfig().getDouble(this.getFeatureName() + "Height").floatValue());
 
 	}
 }

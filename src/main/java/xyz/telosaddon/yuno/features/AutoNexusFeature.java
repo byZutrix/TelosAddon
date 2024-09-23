@@ -6,14 +6,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 import net.minecraft.util.Hand;
+import xyz.telosaddon.yuno.utils.ActionUtils;
 import xyz.telosaddon.yuno.utils.NbtUtils;
 
 import java.util.Optional;
 
 public class AutoNexusFeature {
     private static final MinecraftClient mc = MinecraftClient.getInstance();
-    private static final ClientPlayNetworkHandler networkHandler = mc.getNetworkHandler();
-    private static boolean nexus = false;
 
     public static void autoNexus(){
         PlayerEntity player = mc.player;
@@ -34,22 +33,7 @@ public class AutoNexusFeature {
 
         player.getInventory().selectedSlot = slot;
 
-        nexus = true;
-    }
-
-    public static void tick(){
-        PlayerEntity player = mc.player;
-
-        if(!nexus || player == null) return;
-        nexus = false;
-
-        ItemStack heldItem = player.getMainHandStack();
-        if(heldItem.isEmpty()) return;
-
-        PlayerInteractItemC2SPacket packet = new PlayerInteractItemC2SPacket(Hand.MAIN_HAND, 0, player.getYaw(), player.getPitch());
-        if(networkHandler == null) return;
-
-        networkHandler.sendPacket(packet);
+        ActionUtils.simulateRightClick(mc);
     }
 
     private static boolean isItemNexus(ItemStack stack){

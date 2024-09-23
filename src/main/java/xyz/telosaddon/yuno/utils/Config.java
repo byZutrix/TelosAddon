@@ -35,6 +35,8 @@ public class Config {
                 configMap = GSON.fromJson(reader, type);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (JsonSyntaxException e) {
+                configMap = new HashMap<>();
             }
         } else {
             configMap = new HashMap<>();
@@ -97,6 +99,7 @@ public class Config {
     public void save() {
         try (FileWriter writer = new FileWriter(configFile)) {
             GSON.toJson(configMap, writer);
+            //writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

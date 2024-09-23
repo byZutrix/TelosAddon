@@ -97,7 +97,6 @@ public class TelosAddon {
             mc.setScreen(new TelosMenu());
         }
 
-        AutoNexusFeature.tick();
         if(nexusKey.wasPressed()) AutoNexusFeature.autoNexus();
 
         Optional<String> pingOptional = TabListUtils.getPing();

@@ -2,9 +2,7 @@ package xyz.telosaddon.yuno.renderer;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
@@ -12,26 +10,12 @@ import org.joml.Matrix4f;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import static net.minecraft.client.render.RenderPhase.*;
 
 public class CircleRenderer {
 	private final List<Angle> angles = new ArrayList<>();
-
-	public void drawCircle(MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity) {
-		ClientPlayerEntity player = MinecraftClient.getInstance().player;
-
-		int color = 0x99FF0000;
-
-		float height = 0.5f;
-		float dy = (entity.isInSneakingPose() ? 0.125f : 0) + height;
-
-		RenderLayer layer = CircleRendererPhases.DEBUG_QUADS;
-
-		VertexConsumer vertices = vertexConsumers.getBuffer(layer);
-
-		matrices.push();
-		drawCircleQuad(matrices, vertices, dy, color);
-		matrices.pop();
-	}
 
 	public void drawCircle(MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, int color, float height) {
 		ClientPlayerEntity player = MinecraftClient.getInstance().player;
@@ -108,6 +92,35 @@ public class CircleRenderer {
 	private record Angle(float dx, float dz, float farDx, float farDz) {
 		public Angle(float dx, float dz) {
 			this(dx, dz, 0, 0);
+		}
+	}
+
+	private static class CircleRendererPhases extends RenderPhase{
+		static final RenderLayer.MultiPhase DEBUG_LINE_STRIP = makeLayer(VertexFormat.DrawMode.DEBUG_LINE_STRIP);
+		static final RenderLayer.MultiPhase DEBUG_QUADS = makeLayer(VertexFormat.DrawMode.QUADS);
+		static final RenderLayer.MultiPhase TRIANGLE_FAN = makeLayer(VertexFormat.DrawMode.TRIANGLE_FAN);
+
+		private static RenderLayer.MultiPhase makeLayer(VertexFormat.DrawMode mode) {
+			String name = "showtelosrange_" + mode.name().toLowerCase(Locale.ROOT);
+
+			return RenderLayer.of(name, VertexFormats.POSITION_COLOR, mode, 1536, false, true,
+					RenderLayer.MultiPhaseParameters.builder()
+							.program(COLOR_PROGRAM)
+							.transparency(TRANSLUCENT_TRANSPARENCY)
+							.cull(ENABLE_CULLING)
+							.lightmap(ENABLE_LIGHTMAP)
+							.overlay(ENABLE_OVERLAY_COLOR)
+							.writeMaskState(COLOR_MASK)
+							.depthTest(LEQUAL_DEPTH_TEST)
+							.layering(VIEW_OFFSET_Z_LAYERING)
+							.build(false)
+			);
+		}
+
+		// required for COLOR_PROGRAM, etc.
+		// see #makeLayer
+		private CircleRendererPhases(String name, Runnable beginAction, Runnable endAction) {
+			super(name, beginAction, endAction);
 		}
 	}
 }

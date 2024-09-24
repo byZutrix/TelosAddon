@@ -43,8 +43,8 @@ public class RangeTab extends AbstractTab {
 				new CustomButton(163, 118, 40, 20, "Apply", (button) -> {
 					String input = mainRangeHeightField.getText();
 					try {
-						Float height = Float.parseFloat(input);
-						config.set("ShowMainRangeFeatureHeight", height);
+						float height = Float.parseFloat(input);
+						config.set("ShowMainRangeFeatureHeight", (double) height);
 					} catch (NumberFormatException e) {
 						TelosAddon.getInstance().sendMessage("Wrong Format! Not a float!");
 					}
@@ -70,8 +70,8 @@ public class RangeTab extends AbstractTab {
 				new CustomButton(163, 234, 40, 20, "Apply", (button) -> {
 					String input = offHandRangeHeightField.getText();
 					try {
-						Float height = Float.parseFloat(input);
-						config.set("ShowOffHandRangeFeatureHeight", height);
+						float height = Float.parseFloat(input);
+						config.set("ShowOffHandRangeFeatureHeight", (double) height);
 					} catch (NumberFormatException e) {
 						TelosAddon.getInstance().sendMessage("Wrong Format! Not a float!");
 					}

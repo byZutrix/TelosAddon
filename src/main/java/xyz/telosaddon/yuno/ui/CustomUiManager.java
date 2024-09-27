@@ -131,7 +131,8 @@ public class CustomUiManager {
         this.addCustomElement(new CustomButton(173, 55, 50, 20, "Teleport", (button -> {
             if(this.getCurrentTab() != Tabs.TELEPORT)
                 this.switchTab(Tabs.TELEPORT);
-        }), isOnTab(Tabs.TELEPORT)).setTextInMiddle(true)),
+        }), isOnTab(Tabs.TELEPORT)).setTextInMiddle(true));
+
         this.addCustomElement(new CustomButton(228, 55, 50, 20, "Range", (button -> {
             if(this.getCurrentTab() != Tabs.RANGE)
                 this.switchTab(Tabs.RANGE);

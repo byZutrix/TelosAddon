@@ -1,5 +1,6 @@
 package xyz.telosaddon.yuno;
 
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.world.LevelLoadingScreen;
@@ -21,7 +22,7 @@ import xyz.telosaddon.yuno.sound.CustomSound;
 
 import java.util.*;
 
-public class TelosAddon {
+public class TelosAddon implements ClientModInitializer {
 
     private final MinecraftClient mc = MinecraftClient.getInstance();
     public static TelosAddon instance;
@@ -63,10 +64,6 @@ public class TelosAddon {
 
         if(mc.options.attackKey.isPressed() && config.getBoolean("SwingSetting"))
             player.swingHand(Hand.MAIN_HAND);
-
-        if(menuKey.wasPressed()) {
-            mc.setScreen(new TelosMenu());
-        }
 
         this.showMainRangeFeature.tick();
         this.showOffHandFeature.tick();

@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
+// THIS DOES NOT WORK ATM!!!
 public class AbilityHotkey{
     private static KeyBinding keyBinding;
 
@@ -46,10 +47,8 @@ public class AbilityHotkey{
         });
     }
 
-
     private static void scrollToSlot(PlayerInventory inv, int slot){
         int diff = inv.selectedSlot - slot;
-        System.out.println(diff);
         int dist = Math.abs(diff);
         for(int j = 0; j <  dist; j++) {
             inv.scrollInHotbar(diff);

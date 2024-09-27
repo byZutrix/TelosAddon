@@ -123,7 +123,7 @@ public class CustomUiManager {
                 this.switchTab(Tabs.SETTINGS);
         }), isOnTab(Tabs.SETTINGS)).setTextInMiddle(true));
 
-        this.addCustomElement(new CustomButton(173, 55, 50, 20, "Teleports", (button -> {
+        this.addCustomElement(new CustomButton(173, 55, 50, 20, "Teleport", (button -> {
             if(this.getCurrentTab() != Tabs.TELEPORT)
                 this.switchTab(Tabs.TELEPORT);
         }), isOnTab(Tabs.TELEPORT)).setTextInMiddle(true));

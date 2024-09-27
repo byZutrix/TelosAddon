@@ -13,6 +13,11 @@
   "license": "All-Rights-Reserved",
   "icon": "assets/telosaddon/icon.png",
   "environment": "client",
+  "entrypoints": {
+    "client": [
+      "xyz.telosaddon.yuno.TelosAddon"
+    ]
+  },
   "mixins": [
     {
       "config": "telosaddon.mixins.json",

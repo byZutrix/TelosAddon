@@ -7,6 +7,7 @@ import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.ui.elements.CustomButton;
 import xyz.telosaddon.yuno.ui.tabs.GuiTab;
 import xyz.telosaddon.yuno.ui.tabs.HomeTab;
+import xyz.telosaddon.yuno.ui.tabs.RangeTab;
 import xyz.telosaddon.yuno.ui.tabs.SettingsTab;
 import xyz.telosaddon.yuno.ui.tabs.TeleportTab;
 import xyz.telosaddon.yuno.utils.Config;
@@ -96,6 +97,10 @@ public class CustomUiManager {
                 TeleportTab tpTab = new TeleportTab(this);
                 tpTab.loadButtons();
             }
+            case RANGE -> {
+                RangeTab rangeTab = new RangeTab(this);
+                rangeTab.loadButtons();
+            }
         }
     }
 
@@ -126,7 +131,13 @@ public class CustomUiManager {
         this.addCustomElement(new CustomButton(173, 55, 50, 20, "Teleport", (button -> {
             if(this.getCurrentTab() != Tabs.TELEPORT)
                 this.switchTab(Tabs.TELEPORT);
-        }), isOnTab(Tabs.TELEPORT)).setTextInMiddle(true));
+        }), isOnTab(Tabs.TELEPORT)).setTextInMiddle(true)),
+        this.addCustomElement(new CustomButton(228, 55, 50, 20, "Range", (button -> {
+            if(this.getCurrentTab() != Tabs.RANGE)
+                this.switchTab(Tabs.RANGE);
+        }), isOnTab(Tabs.RANGE)).setTextInMiddle(true));
+
+
 
         this.addCustomElement(new CustomButton(8, mc.getWindow().getScaledHeight() - 51, 150, 20, "Join my Discord", (button) -> {
             Util.getOperatingSystem().open("https://discord.gg/sDDeDkxFF6");

@@ -12,6 +12,8 @@ import org.lwjgl.glfw.GLFW;
 import xyz.telosaddon.yuno.hotkey.AbilityHotkey;
 import xyz.telosaddon.yuno.hotkey.MenuHotkey;
 import xyz.telosaddon.yuno.hotkey.NexusHotkey;
+import xyz.telosaddon.yuno.features.ShowMainRangeFeature;
+import xyz.telosaddon.yuno.features.ShowOffHandFeature;
 import xyz.telosaddon.yuno.sound.SoundManager;
 import xyz.telosaddon.yuno.ui.TelosMenu;
 import xyz.telosaddon.yuno.utils.Config;
@@ -39,35 +41,18 @@ public class TelosAddon {
     private KeyBinding menuKey;
     private KeyBinding nexusKey;
 
-    public void init() {
+    private ShowMainRangeFeature showMainRangeFeature;
 
-        config = new Config();
-        config.load();
-        initHotkeys();
+    private ShowOffHandFeature showOffHandFeature;
 
-        loadBagCounter();
 
-        soundManager = new SoundManager();
-
-        soundManager.addSound(new CustomSound("button_click"));
-        soundManager.addSound(new CustomSound("white_bag"));
-        soundManager.addSound(new CustomSound("black_bag"));
-        aliveBosses = new ArrayList<>();
-
-        instance = this;
-    }
 
     public void initHotkeys(){
         NexusHotkey.init();
         MenuHotkey.init();
         AbilityHotkey.init();
     }
-
-    public void run() {
-        if(config.getBoolean("GammaSetting")) {
-            toggleGamma(true);
-        }
-    }
+    
 
     public void stop() {
         config.save();
@@ -78,6 +63,13 @@ public class TelosAddon {
 
         if(mc.options.attackKey.isPressed() && config.getBoolean("SwingSetting"))
             player.swingHand(Hand.MAIN_HAND);
+
+        if(menuKey.wasPressed()) {
+            mc.setScreen(new TelosMenu());
+        }
+
+        this.showMainRangeFeature.tick();
+        this.showOffHandFeature.tick();
 
         if(isOnTelos()) {
             tickCounter++;
@@ -140,4 +132,38 @@ public class TelosAddon {
     public boolean isEditMode() { return this.editMode; }
     public void setEditMode(boolean value) { this.editMode = value; }
 
+    @Override
+    public void onInitializeClient() {
+        config = new Config();
+        config.load();
+
+        initHotkeys();
+        loadBagCounter();
+
+        soundManager = new SoundManager();
+
+        soundManager.addSound(new CustomSound("button_click"));
+        soundManager.addSound(new CustomSound("white_bag"));
+        soundManager.addSound(new CustomSound("black_bag"));
+        aliveBosses = new ArrayList<>();
+
+        this.showMainRangeFeature = new ShowMainRangeFeature(config);
+        this.showOffHandFeature = new ShowOffHandFeature(config);
+
+        instance = this;
+    }
+
+    public void run(){
+        if(config.getBoolean("GammaSetting")) {
+            toggleGamma(true);
+        }
+    }
+
+    public ShowOffHandFeature getShowOffHandFeature() {
+        return showOffHandFeature;
+    }
+
+    public ShowMainRangeFeature getShowMainRangeFeature() {
+        return showMainRangeFeature;
+    }
 }

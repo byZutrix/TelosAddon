@@ -11,8 +11,10 @@
     "MixinGameRenderer",
     "MixinLightmapTextureManager",
     "MixinMessageHandler",
+    "MixinMinecraftServer",
     "MixinSimpleOption",
-    "MixinMinecraftServer"
+    "MixinWorldRenderer"
+
   ],
   "injectors": {
     "defaultRequire": 1

@@ -9,11 +9,10 @@ import xyz.telosaddon.yuno.ui.elements.CustomDropdown;
 import xyz.telosaddon.yuno.ui.elements.CustomText;
 import xyz.telosaddon.yuno.ui.elements.CustomTextField;
 import xyz.telosaddon.yuno.utils.Config;
+import xyz.telosaddon.yuno.utils.SerializeUtils;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SettingsTab {
 
@@ -29,16 +28,18 @@ public class SettingsTab {
     }
 
     public void loadButtons() {
-
+        var guiColorTextField = new CustomTextField(8, 95, 150, 20, "#000000");
         this.elements = Arrays.asList(
-                new CustomTextField(8, 95, 150, 20, "#000000"),
                 new CustomText(8, 83, "Change Gui Color:"),
+                guiColorTextField,
                 new CustomButton(163, 95, 40, 20, "Apply", (button) -> {
-                    if(this.elements.get(0) == null && !(this.elements.get(0) instanceof CustomTextField)) return;
-                    CustomTextField customTextField = (CustomTextField) this.elements.get(0);
-                    String input = customTextField.getText();
-
-                    setMenuColor(input);
+                    String input = guiColorTextField.getText();
+                    try {
+                        int color = SerializeUtils.parseHexRGB(input);
+                        config.set("MenuColor", color);
+                    } catch (Exception e) {
+                        TelosAddon.getInstance().sendMessage("Wrong Format! Use #000000");
+                    }
                 }).setTextInMiddle(true),
                 new CustomButton(8, 118, 150, 20, "Edit Display Positions", (button -> {
                     TelosAddon.getInstance().setEditMode(true);
@@ -70,26 +71,6 @@ public class SettingsTab {
         );
 
         uiManager.getCustomElements().addAll(this.elements);
-    }
-
-
-    public void setMenuColor(String input) {
-        if(input == null) {
-            TelosAddon.getInstance().sendMessage("Wrong Format! Use #000000");
-            return;
-        }
-
-        Pattern hexPattern = Pattern.compile("^#[0-9A-Fa-f]{6}$");
-        Matcher matcher = hexPattern.matcher(input);
-
-        if(!matcher.matches()) {
-            TelosAddon.getInstance().sendMessage("Wrong Format! Use #000000");
-            return;
-        }
-
-        input = input.substring(1);
-        int color = Integer.parseInt(input, 16);
-        config.set("MenuColor", color);
     }
 
 }

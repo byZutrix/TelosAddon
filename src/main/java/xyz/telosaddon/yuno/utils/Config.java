@@ -83,6 +83,14 @@ public class Config {
         addDefault("SpawnBossesSetting", false);
         addDefault("SoundSetting", false);
         addDefault("Font", "Default");
+
+        addDefault("ShowMainRangeFeatureEnabled", true);
+        addDefault("ShowOffHandRangeFeatureEnabled", false);
+        addDefault("ShowMainRangeFeatureHeight", 0.5);
+        addDefault("ShowOffHandRangeFeatureHeight", 0.5);
+
+        addDefault("ShowMainRangeFeatureColor", new Color(255, 0, 0).getRGB());
+        addDefault("ShowOffHandRangeFeatureColor", new Color(0, 0, 255).getRGB());
         save();
 
     }

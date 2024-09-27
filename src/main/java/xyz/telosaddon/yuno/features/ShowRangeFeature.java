@@ -36,7 +36,9 @@ public class ShowRangeFeature extends AbstractFeature {
 		for (var line : loreComponent.lines()) {
 			if (!line.getString().contains("Range:")) continue;
 			try {
-				String num = line.getString().split("Range:")[1].trim();
+				String numWithPossibleExt = line.getString().split("Range:")[1].trim();
+				// Handle <num>(+3) case for EX
+				String num = numWithPossibleExt.split("\\(")[0].trim();
 				return Float.parseFloat(num);
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException ignored) {
 			}

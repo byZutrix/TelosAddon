@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import org.lwjgl.glfw.GLFW;
 
+import java.nio.charset.StandardCharsets;
+
 @Environment(EnvType.CLIENT)
 public class NexusHotkey {
     private static KeyBinding keyBinding;
@@ -30,7 +32,7 @@ public class NexusHotkey {
                 int invslot = inv.selectedSlot;
                 for (int i = 0; i < 9; i++) {
                     ItemStack item = inv.getStack(i);
-                    if (item.getItem().equals(Items.CARROT_ON_A_STICK)){
+                    if (item.getName().getString().hashCode() == 1307700015){ // hacky solution but it works
                         invslot = i;
                     }
                 }
@@ -47,7 +49,6 @@ public class NexusHotkey {
 
     private static void scrollToSlot(PlayerInventory inv, int slot){
         int diff = inv.selectedSlot - slot;
-        System.out.println(diff);
         int dist = Math.abs(diff);
         for(int j = 0; j <  dist; j++) {
             inv.scrollInHotbar(diff);

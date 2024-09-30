@@ -21,9 +21,10 @@ import xyz.telosaddon.yuno.utils.Config;
 import xyz.telosaddon.yuno.sound.CustomSound;
 
 import java.util.*;
+import java.util.logging.Logger;
 
-public class TelosAddon implements ClientModInitializer {
-
+public class TelosAddon implements ClientModInitializer  {
+    public static final Logger LOGGER = Logger.getLogger("telosaddon");
     private final MinecraftClient mc = MinecraftClient.getInstance();
     public static TelosAddon instance;
     private SoundManager soundManager;
@@ -53,7 +54,7 @@ public class TelosAddon implements ClientModInitializer {
         MenuHotkey.init();
         AbilityHotkey.init();
     }
-    
+
 
     public void stop() {
         config.save();

@@ -15,6 +15,9 @@ import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.utils.Config;
 
 import java.time.Instant;
+import java.util.logging.Level;
+
+import static xyz.telosaddon.yuno.TelosAddon.LOGGER;
 
 @Mixin(MessageHandler.class)
 public class MixinMessageHandler {

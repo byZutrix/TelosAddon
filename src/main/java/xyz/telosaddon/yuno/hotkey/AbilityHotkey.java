@@ -6,10 +6,15 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.glfw.GLFW;
+import xyz.telosaddon.yuno.utils.LocalAPI;
+
+import static xyz.telosaddon.yuno.utils.BossBarUtils.bossBarMap;
+
 
 @Environment(EnvType.CLIENT)
 // THIS DOES NOT WORK ATM!!!
@@ -29,6 +34,8 @@ public class AbilityHotkey{
                 assert client.player != null;
                 PlayerInventory inv = client.player.getInventory();
                 int invslot = inv.selectedSlot;
+                System.out.println(LocalAPI.getCurrentCharacterType() + " lv" + LocalAPI.getCurrentCharacterLevel() + " " + LocalAPI.getCurrentCharacterClass());
+
 
                 for (int i = 0; i < 9; i++) {
                     ItemStack item = inv.getStack(i);

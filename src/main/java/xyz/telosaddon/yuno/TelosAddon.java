@@ -1,27 +1,28 @@
 package xyz.telosaddon.yuno;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.world.LevelLoadingScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
-import org.lwjgl.glfw.GLFW;
 import xyz.telosaddon.yuno.hotkey.AbilityHotkey;
 import xyz.telosaddon.yuno.hotkey.MenuHotkey;
 import xyz.telosaddon.yuno.hotkey.NexusHotkey;
 import xyz.telosaddon.yuno.features.ShowMainRangeFeature;
 import xyz.telosaddon.yuno.features.ShowOffHandFeature;
 import xyz.telosaddon.yuno.sound.SoundManager;
-import xyz.telosaddon.yuno.ui.TelosMenu;
+
+import xyz.telosaddon.yuno.utils.BossBarUtils;
 import xyz.telosaddon.yuno.utils.Config;
 import xyz.telosaddon.yuno.sound.CustomSound;
+import xyz.telosaddon.yuno.utils.LocalAPI;
 
 import java.util.*;
+
 import java.util.logging.Logger;
+
+import static xyz.telosaddon.yuno.utils.LocalAPI.updateAPI;
 
 public class TelosAddon implements ClientModInitializer  {
     public static final Logger LOGGER = Logger.getLogger("telosaddon");
@@ -40,19 +41,16 @@ public class TelosAddon implements ClientModInitializer  {
     public int bagWidth;
     public int bagHeight;
 
-    private KeyBinding menuKey;
-    private KeyBinding nexusKey;
-
     private ShowMainRangeFeature showMainRangeFeature;
 
     private ShowOffHandFeature showOffHandFeature;
 
-
+    private static final String MOD_NAME = "TelosAddon";
 
     public void initHotkeys(){
         NexusHotkey.init();
         MenuHotkey.init();
-        AbilityHotkey.init();
+        // AbilityHotkey.init(); until fixed
     }
 
 
@@ -76,7 +74,12 @@ public class TelosAddon implements ClientModInitializer  {
                 config.addLong("TotalPlaytime", 1);
                 tickCounter = 0;
             }
+            if (playTime % 5 == 0 && tickCounter == 0){
+                updateAPI();
+            }
         }
+
+
     }
 
     public void sendMessage(String message) {
@@ -134,6 +137,8 @@ public class TelosAddon implements ClientModInitializer  {
     public void onInitializeClient() {
         config = new Config();
         config.load();
+
+        BossBarUtils.init();
 
         initHotkeys();
         loadBagCounter();

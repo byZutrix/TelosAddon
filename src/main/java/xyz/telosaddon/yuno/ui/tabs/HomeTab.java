@@ -24,6 +24,7 @@ public class HomeTab extends AbstractTab{
 
     public void loadButtons() {
         boolean swingSetting = getConfig().getBoolean("SwingSetting");
+        boolean swingIfNoCooldown = getConfig().getBoolean("SwingIfNoCooldown");
         boolean gammaSetting = getConfig().getBoolean("GammaSetting");
         boolean fpsSetting = getConfig().getBoolean("FPSSetting");
         boolean pingSetting = getConfig().getBoolean("PingSetting");
@@ -41,6 +42,10 @@ public class HomeTab extends AbstractTab{
                 new CustomButton(8, 83, 150, 20, "Hold To Swing", (button, toggled) -> {
                     toggle("SwingSetting", button.getText(), toggled);
                 }).setToggled(swingSetting),
+
+                new CustomButton(160, 83, 150, 20, "Swing Only If No Cooldown", (button, toggled) -> {
+                    toggle("SwingIfNoCooldown", button.getText(), toggled);
+                }).setToggled(swingIfNoCooldown),
 
                 new CustomButton(8, 106, 150, 20, "Gamma", (button, toggled) -> {
                     toggle("GammaSetting", button.getText(), toggled);

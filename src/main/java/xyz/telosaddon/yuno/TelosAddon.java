@@ -68,8 +68,12 @@ public class TelosAddon implements ClientModInitializer  {
         ClientPlayerEntity player = mc.player;
         if(player == null) return;
 
-        if(mc.options.attackKey.isPressed() && config.getBoolean("SwingSetting"))
-            player.swingHand(Hand.MAIN_HAND);
+        if(mc.options.attackKey.isPressed() && config.getBoolean("SwingSetting")) {
+            boolean canSwing = !player.getItemCooldownManager().isCoolingDown(player.getMainHandStack().getItem());
+            if (!config.getBoolean("SwingIfNoCooldown") || canSwing) {
+                player.swingHand(Hand.MAIN_HAND);
+            }
+        }
 
         this.showMainRangeFeature.tick();
         this.showOffHandFeature.tick();

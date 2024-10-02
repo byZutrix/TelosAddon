@@ -55,7 +55,9 @@ public class LocalAPI {
 
                 BossBar areaBar = (BossBar) preArray[3];
                 String area = stripAllFormatting(areaBar.getName().getString());
-                currentCharacterArea = area.substring(0,area.length()-3); // idk why but theres "290" at the end so we gotta trim that off
+                currentCharacterArea = area.replaceAll("[0-9]+", ""); // idk why but theres numbers at the end so we gotta trim that off
+
+
                 BossBar bossBar = (BossBar) preArray[1]; // maybe add what boss we're fighting?
                 switch (bossBar.getName().hashCode()){
                     case -1083980771 -> currentCharacterFighting = "Chungus";

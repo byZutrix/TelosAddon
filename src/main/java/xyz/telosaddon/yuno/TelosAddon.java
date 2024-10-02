@@ -83,7 +83,6 @@ public class TelosAddon implements ClientModInitializer  {
             }
             if (playTime % 5 == 0 && tickCounter == 0){
                 updateAPI();
-                rpcManager.updatePresence();
             }
         }
 

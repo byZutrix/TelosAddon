@@ -3,32 +3,25 @@ package xyz.telosaddon.yuno.discordrpc;
 import com.jagrosh.discordipc.IPCClient;
 import com.jagrosh.discordipc.IPCListener;
 import com.jagrosh.discordipc.entities.RichPresence;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.utils.LocalAPI;
 
 import java.time.OffsetDateTime;
-import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static xyz.telosaddon.yuno.TelosAddon.MOD_NAME;
-import static xyz.telosaddon.yuno.TelosAddon.MOD_VERSION;
-
-public class DiscordRPCManager implements IPCListener, ClientPlayConnectionEvents.Disconnect,ClientPlayConnectionEvents.Join {
+public class DiscordRPCManager implements IPCListener {
 
     private static final long APPLICATION_ID = 1290485474452045865L;
-    private static final long UPDATE_PERIOD = 4200L;
 
     private static final Logger logger = TelosAddon.LOGGER;
+
+
 
     private IPCClient client;
     private OffsetDateTime startTimestamp;
 
-    private Timer updateTimer;
     private boolean connected;
 
     public void start() {
@@ -50,20 +43,23 @@ public class DiscordRPCManager implements IPCListener, ClientPlayConnectionEvent
             logger.log(Level.WARNING,"Discord RPC has thrown an unexpected error while trying to start...");
             logger.log(Level.WARNING, e.toString());
         }
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if ((System.currentTimeMillis()/50) % 100 == 0) updatePresence();
+        });
     }
 
 
     public void stop() {
-        if (isActive()) {
-            connected = false;
-            client.close();
-        }
+        logger.log(Level.INFO, "Attempting to disconnect RPC \nConnectedStatus:" + connected);
+        connected = false;
+        client.close();
     }
+
+
     public void updatePresence() {
-        if (!isActive()) return;
-        if (!TelosAddon.getInstance().isOnTelos() || !connected){
-            client.sendRichPresence(new RichPresence.Builder().build());
-            System.out.println("Not on telos");
+        if (!TelosAddon.getInstance().isOnTelos() || !TelosAddon.getInstance().getConfig().getBoolean("DiscordRPCSetting")){
+            client.sendRichPresence(null);
             return;
         }
         String largeImageDescription = "telosrealms.com";
@@ -91,6 +87,7 @@ public class DiscordRPCManager implements IPCListener, ClientPlayConnectionEvent
 
     @Override
     public void onDisconnect(IPCClient client, Throwable t) {
+        logger.info("Discord RPC disconnected.");
         this.client = null;
         connected = false;
     }
@@ -98,13 +95,8 @@ public class DiscordRPCManager implements IPCListener, ClientPlayConnectionEvent
         return client != null && connected;
     }
 
-    @Override
-    public void onPlayDisconnect(ClientPlayNetworkHandler handler, MinecraftClient client) {
-        connected = false;
+    public IPCClient getClient() {
+        return client;
     }
 
-    @Override
-    public void onPlayReady(ClientPlayNetworkHandler handler, PacketSender sender, MinecraftClient client) {
-        connected = true;
-    }
 }

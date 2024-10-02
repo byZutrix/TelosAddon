@@ -14,7 +14,7 @@ import xyz.telosaddon.yuno.utils.SerializeUtils;
 import java.util.Arrays;
 import java.util.List;
 
-public class SettingsTab {
+public class SettingsTab extends AbstractTab{
 
     private final MinecraftClient mc;
     private final Config config;
@@ -25,9 +25,11 @@ public class SettingsTab {
         this.uiManager = uiManager;
         this.config = TelosAddon.getInstance().getConfig();
         this.mc = MinecraftClient.getInstance();
+
     }
 
     public void loadButtons() {
+
         var guiColorTextField = new CustomTextField(8, 95, 150, 20, "#000000");
         this.elements = Arrays.asList(
                 new CustomText(8, 83, "Change Gui Color:"),
@@ -51,7 +53,7 @@ public class SettingsTab {
                     config.set("BagX", -1);
                     config.set("BagY", 60);
                 })).setTextInMiddle(true),
-                new CustomDropdown(8, 164, 150, 20, "Change Font", Arrays.asList(
+                new CustomDropdown(8, 166, 150, 20, "Change Font", Arrays.asList(
                         "Default",
                         "Arial",
                         "Nokia CF",
@@ -68,6 +70,9 @@ public class SettingsTab {
                         default -> config.set("Font", "default");
                     }
                 }))
+
+
+
         );
 
         uiManager.getCustomElements().addAll(this.elements);

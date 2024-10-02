@@ -109,6 +109,8 @@ public class Config {
         addDefault("SoundSetting", false);
         addDefault("Font", "Default");
 
+        addDefault("DiscordRPCSetting", true);
+
         addDefault("ShowMainRangeFeatureEnabled", true);
         addDefault("ShowOffHandRangeFeatureEnabled", false);
         addDefault("ShowMainRangeFeatureHeight", 0.5);

@@ -26,6 +26,7 @@ public class HomeTab extends AbstractTab{
         boolean playtimeSetting = getConfig().getBoolean("PlaytimeSetting");
         boolean spawnBossesSetting = getConfig().getBoolean("SpawnBossesSetting");
         boolean soundSetting = getConfig().getBoolean("SoundSetting");
+        boolean discordRPCSetting = getConfig().getBoolean("DiscordRPCSetting");
 
         this.elements = Arrays.asList(
 
@@ -56,7 +57,10 @@ public class HomeTab extends AbstractTab{
 
                 new CustomButton(8, 221, 150, 20, "Custom Bag Sounds", (button, toggled) -> {
                     toggle("SoundSetting", button.getText(), toggled);
-                }).setToggled(soundSetting)
+                }).setToggled(soundSetting),
+                new CustomButton(8, 244, 150, 20, "Toggle Discord Rich Presence", ((button, toggled) -> {
+                    toggle("DiscordRPCSetting", button.getText(), toggled);
+                })).setToggled(discordRPCSetting)
         );
 
         uiManager.getCustomElements().addAll(this.elements);

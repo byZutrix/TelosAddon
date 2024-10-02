@@ -7,6 +7,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.telosaddon.yuno.TelosAddon;
 
+import static xyz.telosaddon.yuno.TelosAddon.getInstance;
+
 @Mixin(MinecraftServer.class)
 public class MixinMinecraftServer {
 
@@ -14,6 +16,7 @@ public class MixinMinecraftServer {
     private void createWorlds(CallbackInfo ci) {
         TelosAddon ta = TelosAddon.getInstance();
         ta.clearAliveBosses();
+        getInstance().getRpcManager().start();
     }
 
 }

@@ -110,6 +110,8 @@ public class Config {
         addDefault("Font", "Default");
 
         addDefault("DiscordRPCSetting", true);
+        addDefault("DiscordDefaultStatusMessage", " ~Just chillin'");
+        addDefault("RPCShowLocationSetting", true);
 
         addDefault("ShowMainRangeFeatureEnabled", true);
         addDefault("ShowOffHandRangeFeatureEnabled", false);

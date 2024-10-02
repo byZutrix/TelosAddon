@@ -17,8 +17,6 @@ public class DiscordRPCManager implements IPCListener {
 
     private static final Logger logger = TelosAddon.LOGGER;
 
-
-
     private IPCClient client;
     private OffsetDateTime startTimestamp;
 
@@ -64,20 +62,28 @@ public class DiscordRPCManager implements IPCListener {
         }
         String largeImageDescription = "telosrealms.com";
         String smallImageDescription = LocalAPI.getCurrentCharacterType() + " Lv" + LocalAPI.getCurrentCharacterLevel() + " " + LocalAPI.getCurrentCharacterClass();
-        String detailsString = LocalAPI.getCurrentCharacterWorld() + " | " + LocalAPI.getCurrentCharacterArea();
-
-        // TODO: make these configurable
-        String stateString = (LocalAPI.getCurrentCharacterFighting().length() > 0
-                ? ("Fighting " + LocalAPI.getCurrentCharacterFighting())
-                : " ~Just chillin'");
         RichPresence presence = new RichPresence.Builder()
-                .setState(stateString)
-                .setDetails(detailsString)
+                .setState(getStateString())
+                .setDetails(getDetailsString())
                 .setStartTimestamp(startTimestamp)
                 .setLargeImage("teloslogo", largeImageDescription)
                 .setSmallImage(LocalAPI.getCurrentCharacterType().toLowerCase(), smallImageDescription)
                 .build();
         client.sendRichPresence(presence);
+    }
+
+    private String getDetailsString(){
+        if (TelosAddon.getInstance().getConfig().getBoolean("RPCShowLocationSetting")){
+            return LocalAPI.getCurrentCharacterWorld() + " | " + LocalAPI.getCurrentCharacterArea();
+        } else{
+            return "In an Unknown Place";
+        }
+    }
+
+    private String getStateString(){
+        return (LocalAPI.getCurrentCharacterFighting().length() > 0
+                ? ("Fighting " + LocalAPI.getCurrentCharacterFighting())
+                : TelosAddon.getInstance().getConfig().getString("DiscordDefaultStatusMessage"));
     }
     @Override
     public void onReady(IPCClient client) {

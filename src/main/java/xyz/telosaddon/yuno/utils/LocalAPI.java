@@ -15,7 +15,6 @@ public class LocalAPI {
     private static String currentCharacterClass = "";
     private static int currentCharacterLevel = -1;
     private static String currentCharacterWorld = "";
-    private static String rawBossBarData = "";
     private static String currentCharacterArea = "";
     private static String currentCharacterFighting = "";
     private static String currentClientPing = "";
@@ -55,7 +54,7 @@ public class LocalAPI {
 
                 BossBar areaBar = (BossBar) preArray[3];
                 String area = stripAllFormatting(areaBar.getName().getString());
-                currentCharacterArea = area.replaceAll("[0-9]+", ""); // idk why but theres numbers at the end so we gotta trim that off
+                currentCharacterArea = area.replaceAll("[^a-zA-z ]+", ""); // idk why but theres numbers at the end so we gotta trim that off
 
 
                 BossBar bossBar = (BossBar) preArray[1]; // maybe add what boss we're fighting?
@@ -116,9 +115,6 @@ public class LocalAPI {
         return currentCharacterWorld;
     }
 
-    public static String getRawBossBarData() {
-        return rawBossBarData;
-    }
 
     public static String getCurrentCharacterFighting() {
         return currentCharacterFighting;
@@ -130,8 +126,5 @@ public class LocalAPI {
 
     public static String getCurrentClientPing() {
         return currentClientPing;
-    }
-    public static void setRawBossBarData(String rawBossBarData) {
-        LocalAPI.rawBossBarData = rawBossBarData;
     }
 }

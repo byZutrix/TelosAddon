@@ -5,6 +5,8 @@ import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.ui.CustomElement;
 import xyz.telosaddon.yuno.ui.CustomUiManager;
 import xyz.telosaddon.yuno.ui.elements.CustomButton;
+import xyz.telosaddon.yuno.ui.elements.CustomText;
+import xyz.telosaddon.yuno.ui.elements.CustomTextField;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +29,10 @@ public class HomeTab extends AbstractTab{
         boolean spawnBossesSetting = getConfig().getBoolean("SpawnBossesSetting");
         boolean soundSetting = getConfig().getBoolean("SoundSetting");
         boolean discordRPCSetting = getConfig().getBoolean("DiscordRPCSetting");
+        boolean RPCShowLocationSetting = getConfig().getBoolean("RPCShowLocationSetting");
+        String discordDefaultStatusMessage = getConfig().getString("DiscordDefaultStatusMessage");
 
+        var discordStatusTextField = new CustomTextField(170, 129, 150, 20, discordDefaultStatusMessage);
         this.elements = Arrays.asList(
 
                 new CustomButton(8, 83, 150, 20, "Hold To Swing", (button, toggled) -> {
@@ -58,9 +63,17 @@ public class HomeTab extends AbstractTab{
                 new CustomButton(8, 221, 150, 20, "Custom Bag Sounds", (button, toggled) -> {
                     toggle("SoundSetting", button.getText(), toggled);
                 }).setToggled(soundSetting),
-                new CustomButton(8, 244, 150, 20, "Toggle Discord Rich Presence", ((button, toggled) -> {
+                new CustomButton(170, 83, 150, 20, "Toggle Discord RPC", ((button, toggled) -> {
                     toggle("DiscordRPCSetting", button.getText(), toggled);
-                })).setToggled(discordRPCSetting)
+                })).setToggled(discordRPCSetting),
+                new CustomText(170, 110, "Change default status text:"),
+                discordStatusTextField,
+                new CustomButton(170, 152, 150, 20, "Confirm", ((button) -> {
+                    getConfig().set("DiscordDefaultStatusMessage", discordStatusTextField.getText());
+                })),
+                new CustomButton(170, 175, 150, 20, "Toggle show location", ((button, toggled) -> {
+                    toggle("RPCShowLocationSetting", button.getText(), toggled);
+                })).setToggled(RPCShowLocationSetting)
         );
 
         uiManager.getCustomElements().addAll(this.elements);

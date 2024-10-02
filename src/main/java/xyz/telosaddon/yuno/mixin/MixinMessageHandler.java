@@ -52,6 +52,10 @@ public class MixinMessageHandler {
                 TelosAddon.getInstance().removeAliveBoss(name);
         }
 
+        if(s.contains("discord.telosrealms.com")){ // nexus check
+            TelosAddon.getInstance().getAliveBosses().clear();
+        }
+
         if(!s.startsWith("Your rank:")) return;
         Config config = TelosAddon.getInstance().getConfig();
 

@@ -1,6 +1,5 @@
 package xyz.telosaddon.yuno.ui.tabs;
 
-import net.minecraft.util.Util;
 import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.ui.CustomElement;
 import xyz.telosaddon.yuno.ui.CustomUiManager;
@@ -10,6 +9,9 @@ import xyz.telosaddon.yuno.ui.elements.CustomTextField;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static xyz.telosaddon.yuno.utils.TabListUtils.stripAllFormatting;
+
 
 public class HomeTab extends AbstractTab{
 
@@ -67,10 +69,14 @@ public class HomeTab extends AbstractTab{
                 new CustomButton(170, 83, 150, 20, "Discord Rich Presence", ((button, toggled) -> {
                     toggle("DiscordRPCSetting", button.getText(), toggled);
                 })).setToggled(discordRPCSetting),
-                new CustomText(170, 110, "Change default status text:"),
+                new CustomText(170, 115, "Change default status text:"),
                 discordStatusTextField,
-                new CustomButton(170, 152, 150, 20, "Confirm", ((button) -> {
-                    getConfig().set("DiscordDefaultStatusMessage", discordStatusTextField.getText());
+                new CustomButton(170, 152, 150, 20, "Confirm change", ((button) -> {
+                    if (!isValidInputString(discordStatusTextField.getText())){
+                        String toggleText ="§6There was an §cerror §6with your input! Please try again!";
+                        TelosAddon.getInstance().sendMessage(toggleText);
+                    }
+                    getConfig().set("DiscordDefaultStatusMessage", stripAllFormatting(discordStatusTextField.getText()));
                 })),
                 new CustomButton(170, 175, 150, 20, "Show location", ((button, toggled) -> {
                     toggle("RPCShowLocationSetting", button.getText(), toggled);
@@ -82,6 +88,13 @@ public class HomeTab extends AbstractTab{
         );
 
         uiManager.getCustomElements().addAll(this.elements);
+    }
+
+
+    private static boolean isValidInputString(String input){
+        if (input.length() <2) return false;
+        else if (input.length() > 23) return false;
+        return true;
     }
 
 

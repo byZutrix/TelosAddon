@@ -20,7 +20,7 @@ public class CustomTextField extends AbstractCustomElement {
     private String text = "";
     private String placeHolderText;
     private boolean isFocused = false;
-    private int maxLength = 28;
+    private int maxLength = 23;
     private int cursorPos = 0;
     private Predicate<Character> inputFilter = character -> true;
     private long lastBlinkTime = 0;

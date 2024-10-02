@@ -112,6 +112,7 @@ public class Config {
         addDefault("DiscordRPCSetting", true);
         addDefault("DiscordDefaultStatusMessage", " ~Just chillin'");
         addDefault("RPCShowLocationSetting", true);
+        addDefault("RPCShowFightingSetting", false);
 
         addDefault("ShowMainRangeFeatureEnabled", true);
         addDefault("ShowOffHandRangeFeatureEnabled", false);

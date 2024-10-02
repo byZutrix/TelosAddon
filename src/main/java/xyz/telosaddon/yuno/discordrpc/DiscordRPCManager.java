@@ -81,7 +81,7 @@ public class DiscordRPCManager implements IPCListener {
     }
 
     private String getStateString(){
-        return (LocalAPI.getCurrentCharacterFighting().length() > 0
+        return (LocalAPI.getCurrentCharacterFighting().length() > 0 && TelosAddon.getInstance().getConfig().getBoolean("RPCShowFightingSetting")
                 ? ("Fighting " + LocalAPI.getCurrentCharacterFighting())
                 : TelosAddon.getInstance().getConfig().getString("DiscordDefaultStatusMessage"));
     }

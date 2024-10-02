@@ -30,6 +30,7 @@ public class HomeTab extends AbstractTab{
         boolean soundSetting = getConfig().getBoolean("SoundSetting");
         boolean discordRPCSetting = getConfig().getBoolean("DiscordRPCSetting");
         boolean RPCShowLocationSetting = getConfig().getBoolean("RPCShowLocationSetting");
+        boolean RPCShowFightingSetting = getConfig().getBoolean("RPCShowFightingSetting");
         String discordDefaultStatusMessage = getConfig().getString("DiscordDefaultStatusMessage");
 
         var discordStatusTextField = new CustomTextField(170, 129, 150, 20, discordDefaultStatusMessage);
@@ -63,7 +64,7 @@ public class HomeTab extends AbstractTab{
                 new CustomButton(8, 221, 150, 20, "Custom Bag Sounds", (button, toggled) -> {
                     toggle("SoundSetting", button.getText(), toggled);
                 }).setToggled(soundSetting),
-                new CustomButton(170, 83, 150, 20, "Toggle Discord RPC", ((button, toggled) -> {
+                new CustomButton(170, 83, 150, 20, "Discord Rich Presence", ((button, toggled) -> {
                     toggle("DiscordRPCSetting", button.getText(), toggled);
                 })).setToggled(discordRPCSetting),
                 new CustomText(170, 110, "Change default status text:"),
@@ -71,9 +72,13 @@ public class HomeTab extends AbstractTab{
                 new CustomButton(170, 152, 150, 20, "Confirm", ((button) -> {
                     getConfig().set("DiscordDefaultStatusMessage", discordStatusTextField.getText());
                 })),
-                new CustomButton(170, 175, 150, 20, "Toggle show location", ((button, toggled) -> {
+                new CustomButton(170, 175, 150, 20, "Show location", ((button, toggled) -> {
                     toggle("RPCShowLocationSetting", button.getText(), toggled);
-                })).setToggled(RPCShowLocationSetting)
+                })).setToggled(RPCShowLocationSetting),
+                new CustomButton(170, 198, 150, 20, "Show current boss", ((button, toggled) -> {
+                    toggle("RPCShowFightingSetting", button.getText(), toggled);
+                })).setToggled(RPCShowFightingSetting)
+
         );
 
         uiManager.getCustomElements().addAll(this.elements);

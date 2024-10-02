@@ -6,6 +6,9 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
+import org.apache.http.impl.client.AutoRetryHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import xyz.telosaddon.yuno.discordrpc.DiscordRPCManager;
 import xyz.telosaddon.yuno.hotkey.AbilityHotkey;
 import xyz.telosaddon.yuno.hotkey.MenuHotkey;
 import xyz.telosaddon.yuno.hotkey.NexusHotkey;
@@ -25,9 +28,14 @@ import java.util.logging.Logger;
 import static xyz.telosaddon.yuno.utils.LocalAPI.updateAPI;
 
 public class TelosAddon implements ClientModInitializer  {
-    public static final Logger LOGGER = Logger.getLogger("telosaddon");
+    public static final String MOD_NAME = "TelosAddon";
+    public static final String MOD_VERSION = "v0.21b";
+
+    public static final Logger LOGGER = Logger.getLogger(MOD_NAME);
     private final MinecraftClient mc = MinecraftClient.getInstance();
     public static TelosAddon instance;
+
+    private static final DiscordRPCManager rpcManager = new DiscordRPCManager();
     private SoundManager soundManager;
     private Config config;
     private Map<String, Integer> bagCounter;
@@ -45,19 +53,18 @@ public class TelosAddon implements ClientModInitializer  {
 
     private ShowOffHandFeature showOffHandFeature;
 
-    private static final String MOD_NAME = "TelosAddon";
 
     public void initHotkeys(){
         NexusHotkey.init();
         MenuHotkey.init();
         // AbilityHotkey.init(); until fixed
     }
-
-
     public void stop() {
         config.save();
+        rpcManager.stop();
     }
     public void tick() {
+
         ClientPlayerEntity player = mc.player;
         if(player == null) return;
 
@@ -76,9 +83,9 @@ public class TelosAddon implements ClientModInitializer  {
             }
             if (playTime % 5 == 0 && tickCounter == 0){
                 updateAPI();
+                rpcManager.updatePresence();
             }
         }
-
 
     }
 
@@ -137,9 +144,10 @@ public class TelosAddon implements ClientModInitializer  {
     public void onInitializeClient() {
         config = new Config();
         config.load();
+        instance = this;
 
         BossBarUtils.init();
-
+        rpcManager.start();
         initHotkeys();
         loadBagCounter();
 
@@ -153,7 +161,7 @@ public class TelosAddon implements ClientModInitializer  {
         this.showMainRangeFeature = new ShowMainRangeFeature(config);
         this.showOffHandFeature = new ShowOffHandFeature(config);
 
-        instance = this;
+
     }
 
     public void run(){
@@ -162,11 +170,20 @@ public class TelosAddon implements ClientModInitializer  {
         }
     }
 
+    // todo
+    public static void runAsync(Runnable runnable) {
+
+    }
+
     public ShowOffHandFeature getShowOffHandFeature() {
         return showOffHandFeature;
     }
 
     public ShowMainRangeFeature getShowMainRangeFeature() {
         return showMainRangeFeature;
+    }
+
+    public DiscordRPCManager getRpcManager () {
+        return rpcManager;
     }
 }

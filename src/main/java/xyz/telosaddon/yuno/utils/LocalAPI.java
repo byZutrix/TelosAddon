@@ -1,15 +1,12 @@
 package xyz.telosaddon.yuno.utils;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.entity.boss.BossBar;
 import xyz.telosaddon.yuno.TelosAddon;
 
 import java.util.Optional;
-import java.util.logging.Level;
 
-import static xyz.telosaddon.yuno.TelosAddon.LOGGER;
 import static xyz.telosaddon.yuno.utils.BossBarUtils.bossBarMap;
-import static xyz.telosaddon.yuno.utils.TabListUtils.getPing;
+import static xyz.telosaddon.yuno.utils.TabListUtils.*;
 
 // place to put stuff that I don't really know where else to put
 public class LocalAPI {
@@ -19,6 +16,7 @@ public class LocalAPI {
     private static int currentCharacterLevel = -1;
     private static String currentCharacterWorld = "";
     private static String rawBossBarData = "";
+    private static String currentCharacterArea = "";
     private static String currentCharacterFighting = "";
     private static String currentClientPing = "";
 
@@ -45,16 +43,60 @@ public class LocalAPI {
             e.printStackTrace();
         }
         currentClientPing = getPing().isPresent() ? getPing().get() : String.valueOf(-1);
+        updateCharacterArea();
+        Optional<String> realm = TabListUtils.getServer();
+        realm.ifPresent(s -> currentCharacterWorld = s);
+    }
 
+    private static void updateCharacterArea(){
         if (bossBarMap != null) {
             Object[] preArray = bossBarMap.values().toArray();
-            if (preArray.length > 0 && preArray[1] instanceof BossBar) {
-                BossBar bossBar = (BossBar) preArray[1];
-                LOGGER.log(Level.INFO, "Current Boss Bar Hashcode: " + bossBar.getName().hashCode());
+            if (preArray.length > 5 && preArray[1] instanceof BossBar && preArray[3] instanceof BossBar) {
+
+                BossBar areaBar = (BossBar) preArray[3];
+                String area = stripAllFormatting(areaBar.getName().getString());
+                currentCharacterArea = area.substring(0,area.length()-3); // idk why but theres "290" at the end so we gotta trim that off
+                BossBar bossBar = (BossBar) preArray[1]; // maybe add what boss we're fighting?
+                switch (bossBar.getName().hashCode()){
+                    case -1083980771 -> currentCharacterFighting = "Chungus";
+                    case 452824575 -> currentCharacterFighting = "Illarious";
+                    case 2125535338 -> currentCharacterFighting = "Astaroth";
+                    case -1083975966 -> currentCharacterFighting = "Glumi";
+                    case 2125159587 -> currentCharacterFighting = "Lotil";
+                    case 453134978 -> currentCharacterFighting = "Tidol";
+                    case 1757112170 -> currentCharacterFighting = "Valus";
+                    case 1472054207 -> currentCharacterFighting = "Oozul";
+                    case 2035818623 -> currentCharacterFighting = "Freddy";
+                    case 1258344668 -> currentCharacterFighting = "Anubis";
+
+                    case 908391166 -> currentCharacterFighting = "Shadowflare";
+                    case 1996713601 -> currentCharacterFighting = "Loa";
+                    // insert astaroth bosses here
+                    case -1624135070 -> currentCharacterFighting = "Prismara";
+                    case 2125160548 -> currentCharacterFighting = "Omnipotent";
+                    case 1757423534 -> currentCharacterFighting = "Thalassar";
+                    case 1735775594 -> currentCharacterFighting = "Silex";
+                    case -624873662 -> currentCharacterFighting = "Chronos";
+                    case -1338784736 -> currentCharacterFighting = "Golden Freddy";
+                    case -1258333136 -> currentCharacterFighting = "Kurvaros";
+
+                    case 2008511319 -> currentCharacterFighting = "Warden";
+                    case 2008512280 -> currentCharacterFighting = "Herald";
+                    case 2008513241 -> currentCharacterFighting = "Reaper";
+                    case 2008514202 -> currentCharacterFighting = "Defender";
+                    case 1757100638 -> currentCharacterFighting = "Asmodeus";
+                    case 1735762140 -> currentCharacterFighting = "Seraphim";
+
+                    case 1216094805 -> currentCharacterFighting = "Onyx Castle";
+                    case 1757905956 -> currentCharacterFighting = "Onyx";
+
+                    case -1083171609 -> currentCharacterFighting = "Pirate's Cove";
+                    case 1997519880 -> currentCharacterFighting = "Thornwood Wargrove";
+                    default -> currentCharacterFighting = "";
+                }
+
             }
         }
-
-
     }
 
     public static String getCurrentCharacterType() {
@@ -78,6 +120,10 @@ public class LocalAPI {
 
     public static String getCurrentCharacterFighting() {
         return currentCharacterFighting;
+    }
+
+    public static String getCurrentCharacterArea() {
+        return currentCharacterArea;
     }
 
     public static String getCurrentClientPing() {

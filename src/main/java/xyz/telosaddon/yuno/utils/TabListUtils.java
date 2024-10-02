@@ -66,7 +66,7 @@ public class TabListUtils {
         return getTabList().get().stream().filter(player -> Pattern.matches(pattern, player)).findFirst();
     }
 
-    private static String stripAllFormatting(String input) {
+    static String stripAllFormatting(String input) {
         return stripColors(input).replaceAll("[^\\p{ASCII}]", "");
     }
 
@@ -75,7 +75,4 @@ public class TabListUtils {
         return withoutColors;
     }
 
-    private static String toUnicode(char ch) {
-        return String.format("\\u%04x", (int) ch);
-    }
 }

@@ -6,7 +6,7 @@
   "mixins": [
     "AccessorBossBars",
     "MixinInGameHud",
-    "MixinMinecraftClient"
+    "MixinMinecraftClient",
   ],
   "client": [
     "MixinGameRenderer",

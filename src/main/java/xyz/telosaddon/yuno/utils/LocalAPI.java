@@ -4,7 +4,9 @@ import net.minecraft.entity.boss.BossBar;
 import xyz.telosaddon.yuno.TelosAddon;
 
 import java.util.Optional;
+import java.util.logging.Level;
 
+import static xyz.telosaddon.yuno.TelosAddon.LOGGER;
 import static xyz.telosaddon.yuno.utils.BossBarUtils.bossBarMap;
 import static xyz.telosaddon.yuno.utils.TabListUtils.*;
 
@@ -57,7 +59,8 @@ public class LocalAPI {
                 currentCharacterArea = area.replaceAll("[^a-zA-z ]+", ""); // idk why but theres numbers at the end so we gotta trim that off
 
 
-                BossBar bossBar = (BossBar) preArray[1]; // maybe add what boss we're fighting?
+                BossBar bossBar = (BossBar) preArray[1]; // add what boss we're fighting
+                //LOGGER.log(Level.INFO, "Bossbar hashcode:" + bossBar.getName().hashCode()); // keep this until i can fill out all the bosses
                 switch (bossBar.getName().hashCode()){
                     case -1083980771 -> currentCharacterFighting = "Chungus";
                     case 452824575 -> currentCharacterFighting = "Illarious";
@@ -68,7 +71,7 @@ public class LocalAPI {
                     case 1757112170 -> currentCharacterFighting = "Valus";
                     case 1472054207 -> currentCharacterFighting = "Oozul";
                     case 2035818623 -> currentCharacterFighting = "Freddy";
-                    case 1258344668 -> currentCharacterFighting = "Anubis";
+                    case 1258344668 -> currentCharacterFighting = "Anubis"; //bugged
 
                     case 908391166 -> currentCharacterFighting = "Shadowflare";
                     case 1996713601 -> currentCharacterFighting = "Loa";

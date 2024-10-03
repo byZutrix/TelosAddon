@@ -34,7 +34,6 @@ public class AbilityHotkey{
                 assert client.player != null;
                 PlayerInventory inv = client.player.getInventory();
                 int invslot = inv.selectedSlot;
-                System.out.println(LocalAPI.getCurrentCharacterType() + " lv" + LocalAPI.getCurrentCharacterLevel() + " " + LocalAPI.getCurrentCharacterClass());
 
 
                 for (int i = 0; i < 9; i++) {

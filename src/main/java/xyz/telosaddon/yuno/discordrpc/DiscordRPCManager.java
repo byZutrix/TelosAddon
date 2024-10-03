@@ -54,8 +54,8 @@ public class DiscordRPCManager implements IPCListener {
         client.close();
     }
 
-
     public void updatePresence() {
+        if (!isActive()) return;
         if (!TelosAddon.getInstance().isOnTelos() || !TelosAddon.getInstance().getConfig().getBoolean("DiscordRPCSetting")){
             client.sendRichPresence(null);
             return;

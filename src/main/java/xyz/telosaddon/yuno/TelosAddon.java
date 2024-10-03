@@ -57,7 +57,7 @@ public class TelosAddon implements ClientModInitializer  {
     public void initHotkeys(){
         NexusHotkey.init();
         MenuHotkey.init();
-        // AbilityHotkey.init(); until fixed
+        AbilityHotkey.init();// until fixed
     }
     public void stop() {
         config.save();

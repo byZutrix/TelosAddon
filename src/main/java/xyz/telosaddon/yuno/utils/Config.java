@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Config {
@@ -47,6 +48,7 @@ public class Config {
      * @param fromBackup Whether to load specifically from the backup file
      */
     private void load(boolean fromBackup) {
+        TelosAddon.LOGGER.log(Level.INFO, "Attempting to load config" + (fromBackup ? " from backup..." : "..."));
         File file = fromBackup ? tmpFile : configFile;
         if (file.exists()) {
             try (FileReader reader = new FileReader(file)) {
@@ -129,6 +131,7 @@ public class Config {
 
     public void addDefault(String key, Object value) {
         if(!configMap.containsKey(key)) {
+            TelosAddon.LOGGER.info("Config key (" + key + ") does not have a value. Using default");
             configMap.put(key, value);
         }
     }
@@ -148,7 +151,7 @@ public class Config {
             try {
                 tmpFile.createNewFile();
             } catch (IOException ignore) {
-                TelosAddon.LOGGER.warning("Encountered an issue when creating tmp config file.");
+                TelosAddon.LOGGER.log(Level.WARNING, "Encountered an issue when creating tmp config file.");
             }
         }
 
@@ -161,7 +164,7 @@ public class Config {
             }
 
             if (!createdNewBackup) {
-                TelosAddon.LOGGER.warning("Could not backup config. Skipping save.");
+                TelosAddon.LOGGER.log(Level.WARNING,"Could not backup config. Skipping save.");
                 return;
             }
         }

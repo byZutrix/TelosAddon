@@ -66,7 +66,7 @@ public class TabListUtils {
         return getTabList().get().stream().filter(player -> Pattern.matches(pattern, player)).findFirst();
     }
 
-    static String stripAllFormatting(String input) {
+    public static String stripAllFormatting(String input) {
         return stripColors(input).replaceAll("[^\\p{ASCII}]", "");
     }
 

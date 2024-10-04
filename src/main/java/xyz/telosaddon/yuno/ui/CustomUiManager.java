@@ -7,7 +7,9 @@ import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.ui.elements.CustomButton;
 import xyz.telosaddon.yuno.ui.tabs.GuiTab;
 import xyz.telosaddon.yuno.ui.tabs.HomeTab;
+import xyz.telosaddon.yuno.ui.tabs.RangeTab;
 import xyz.telosaddon.yuno.ui.tabs.SettingsTab;
+import xyz.telosaddon.yuno.ui.tabs.TeleportTab;
 import xyz.telosaddon.yuno.utils.Config;
 
 import java.util.ArrayList;
@@ -91,6 +93,14 @@ public class CustomUiManager {
                 SettingsTab settingsTab = new SettingsTab(this);
                 settingsTab.loadButtons();
             }
+            case TELEPORT -> {
+                TeleportTab tpTab = new TeleportTab(this);
+                tpTab.loadButtons();
+            }
+            case RANGE -> {
+                RangeTab rangeTab = new RangeTab(this);
+                rangeTab.loadButtons();
+            }
         }
     }
 
@@ -117,6 +127,16 @@ public class CustomUiManager {
             if(this.getCurrentTab() != Tabs.SETTINGS)
                 this.switchTab(Tabs.SETTINGS);
         }), isOnTab(Tabs.SETTINGS)).setTextInMiddle(true));
+
+        this.addCustomElement(new CustomButton(173, 55, 50, 20, "Teleport", (button -> {
+            if(this.getCurrentTab() != Tabs.TELEPORT)
+                this.switchTab(Tabs.TELEPORT);
+        }), isOnTab(Tabs.TELEPORT)).setTextInMiddle(true));
+
+        this.addCustomElement(new CustomButton(228, 55, 50, 20, "Range", (button -> {
+            if(this.getCurrentTab() != Tabs.RANGE)
+                this.switchTab(Tabs.RANGE);
+        }), isOnTab(Tabs.RANGE)).setTextInMiddle(true));
 
 
 

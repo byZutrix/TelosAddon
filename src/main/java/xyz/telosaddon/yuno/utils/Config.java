@@ -3,6 +3,7 @@ package xyz.telosaddon.yuno.utils;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
 import net.fabricmc.loader.api.FabricLoader;
+import xyz.telosaddon.yuno.TelosAddon;
 
 import java.awt.*;
 import java.io.*;
@@ -10,6 +11,8 @@ import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Config {
 
@@ -20,21 +23,45 @@ public class Config {
             .setPrettyPrinting()
             .create();
     private final File configFile;
-
+    /**
+     * Backup file in case the main file becomes corrupted
+     */
+    private final File tmpFile;
     private Map<String, Object> configMap;
 
     public Config() {
         Path path = FabricLoader.getInstance().getConfigDir();
         this.configFile = new File(path.toFile(), "telosaddon.json");
         this.configMap = new HashMap<>();
+        this.tmpFile = new File(path.toFile(), "telosaddon.tmp");
     }
+
+    /**
+     * Loads the config from the local json file
+     */
     public void load() {
-        if (configFile.exists()) {
-            try (FileReader reader = new FileReader(configFile)) {
+        this.load(false);
+    }
+
+    /**
+     * Loads config settings from the local json file
+     * @param fromBackup Whether to load specifically from the backup file
+     */
+    private void load(boolean fromBackup) {
+        TelosAddon.LOGGER.log(Level.INFO, "Attempting to load config" + (fromBackup ? " from backup..." : "..."));
+        File file = fromBackup ? tmpFile : configFile;
+        if (file.exists()) {
+            try (FileReader reader = new FileReader(file)) {
                 Type type = new TypeToken<Map<String, Object>>() {}.getType();
                 configMap = GSON.fromJson(reader, type);
-            } catch (IOException e) {
+            } catch (IOException | JsonSyntaxException e) {
                 e.printStackTrace();
+
+                if (e instanceof JsonSyntaxException) {
+                    // JsonSyntaxException indicates the file was corrupted, so load from backup
+                    this.load(true);
+                    return;
+                }
             }
         } else {
             configMap = new HashMap<>();
@@ -83,17 +110,65 @@ public class Config {
         addDefault("SpawnBossesSetting", false);
         addDefault("SoundSetting", false);
         addDefault("Font", "Default");
+
+        addDefault("DiscordRPCSetting", true);
+        addDefault("DiscordDefaultStatusMessage", " ~Just chillin'");
+        addDefault("RPCShowLocationSetting", true);
+        addDefault("RPCShowFightingSetting", false);
+
+        addDefault("ShowMainRangeFeatureEnabled", true);
+        addDefault("ShowOffHandRangeFeatureEnabled", false);
+        addDefault("ShowMainRangeFeatureHeight", 0.5);
+        addDefault("ShowOffHandRangeFeatureHeight", 0.5);
+
+        addDefault("ShowMainRangeFeatureColor", new Color(255, 0, 0).getRGB());
+        addDefault("ShowOffHandRangeFeatureColor", new Color(0, 0, 255).getRGB());
         save();
 
+        // Don't overwrite backup with main json file when pulling from backup
+        save(!fromBackup);
     }
 
     public void addDefault(String key, Object value) {
         if(!configMap.containsKey(key)) {
+            TelosAddon.LOGGER.info("Config key (" + key + ") does not have a value. Using default");
             configMap.put(key, value);
         }
     }
 
+    /**
+     * Saves config to the local json file and backs up the existing config
+     */
     public void save() {
+        this.save(true);
+    }
+
+    /**
+     * Saves config to the local json file and the previous version becomes a backup .tmp file
+     */
+    private void save(boolean overwriteBackup) {
+        if (!tmpFile.exists()) {
+            try {
+                tmpFile.createNewFile();
+            } catch (IOException ignore) {
+                TelosAddon.LOGGER.log(Level.WARNING, "Encountered an issue when creating tmp config file.");
+            }
+        }
+
+        if (overwriteBackup) {
+            boolean deletedOldBackup = tmpFile.delete();
+            boolean createdNewBackup = false;
+
+            if (deletedOldBackup) {
+                createdNewBackup = configFile.renameTo(tmpFile);
+            }
+
+            if (!createdNewBackup) {
+                TelosAddon.LOGGER.log(Level.WARNING,"Could not backup config. Skipping save.");
+                return;
+            }
+        }
+
         try (FileWriter writer = new FileWriter(configFile)) {
             GSON.toJson(configMap, writer);
         } catch (IOException e) {

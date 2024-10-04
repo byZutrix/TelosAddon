@@ -15,6 +15,9 @@ import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.utils.Config;
 
 import java.time.Instant;
+import java.util.logging.Level;
+
+import static xyz.telosaddon.yuno.TelosAddon.LOGGER;
 
 @Mixin(MessageHandler.class)
 public class MixinMessageHandler {
@@ -47,6 +50,10 @@ public class MixinMessageHandler {
             String name = args[0];
             if(TelosAddon.getInstance().getAliveBosses().contains(name))
                 TelosAddon.getInstance().removeAliveBoss(name);
+        }
+
+        if(s.contains("discord.telosrealms.com")){ // nexus check
+            TelosAddon.getInstance().getAliveBosses().clear();
         }
 
         if(!s.startsWith("Your rank:")) return;

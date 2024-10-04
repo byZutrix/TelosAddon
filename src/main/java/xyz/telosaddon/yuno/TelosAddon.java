@@ -1,25 +1,41 @@
 package xyz.telosaddon.yuno;
 
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.world.LevelLoadingScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
-import org.lwjgl.glfw.GLFW;
+import org.apache.http.impl.client.AutoRetryHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import xyz.telosaddon.yuno.discordrpc.DiscordRPCManager;
+import xyz.telosaddon.yuno.hotkey.AbilityHotkey;
+import xyz.telosaddon.yuno.hotkey.MenuHotkey;
+import xyz.telosaddon.yuno.hotkey.NexusHotkey;
+import xyz.telosaddon.yuno.features.ShowMainRangeFeature;
+import xyz.telosaddon.yuno.features.ShowOffHandFeature;
 import xyz.telosaddon.yuno.sound.SoundManager;
-import xyz.telosaddon.yuno.ui.TelosMenu;
+
+import xyz.telosaddon.yuno.utils.BossBarUtils;
 import xyz.telosaddon.yuno.utils.Config;
 import xyz.telosaddon.yuno.sound.CustomSound;
+import xyz.telosaddon.yuno.utils.LocalAPI;
 
 import java.util.*;
 
-public class TelosAddon {
+import java.util.logging.Logger;
 
+import static xyz.telosaddon.yuno.utils.LocalAPI.updateAPI;
+
+public class TelosAddon implements ClientModInitializer  {
+    public static final String MOD_NAME = "TelosAddon";
+    public static final String MOD_VERSION = "v0.21b";
+
+    public static final Logger LOGGER = Logger.getLogger(MOD_NAME);
     private final MinecraftClient mc = MinecraftClient.getInstance();
     public static TelosAddon instance;
+
+    private static final DiscordRPCManager rpcManager = new DiscordRPCManager();
     private SoundManager soundManager;
     private Config config;
     private Map<String, Integer> bagCounter;
@@ -33,59 +49,30 @@ public class TelosAddon {
     public int bagWidth;
     public int bagHeight;
 
-    private KeyBinding menuKey;
-    private KeyBinding nexusKey;
+    private ShowMainRangeFeature showMainRangeFeature;
 
-    public void init() {
+    private ShowOffHandFeature showOffHandFeature;
 
-        config = new Config();
-        config.load();
 
-        menuKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "Open Menu",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_B,
-                "Telos Addon"
-        ));
-
-        nexusKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-           "Nexus Key",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_X,
-                "Telos Addon"
-        ));
-
-        loadBagCounter();
-
-        soundManager = new SoundManager();
-
-        soundManager.addSound(new CustomSound("button_click"));
-        soundManager.addSound(new CustomSound("white_bag"));
-        soundManager.addSound(new CustomSound("black_bag"));
-        aliveBosses = new ArrayList<>();
-
-        instance = this;
+    public void initHotkeys(){
+        NexusHotkey.init();
+        MenuHotkey.init();
+        AbilityHotkey.init();// until fixed
     }
-
-    public void run() {
-        if(config.getBoolean("GammaSetting")) {
-            toggleGamma(true);
-        }
-    }
-
     public void stop() {
         config.save();
+        rpcManager.stop();
     }
     public void tick() {
+
         ClientPlayerEntity player = mc.player;
         if(player == null) return;
 
         if(mc.options.attackKey.isPressed() && config.getBoolean("SwingSetting"))
             player.swingHand(Hand.MAIN_HAND);
 
-        if(menuKey.wasPressed()) {
-            mc.setScreen(new TelosMenu());
-        }
+        this.showMainRangeFeature.tick();
+        this.showOffHandFeature.tick();
 
         if(isOnTelos()) {
             tickCounter++;
@@ -94,7 +81,11 @@ public class TelosAddon {
                 config.addLong("TotalPlaytime", 1);
                 tickCounter = 0;
             }
+            if (playTime % 5 == 0 && tickCounter == 0){
+                updateAPI();
+            }
         }
+
     }
 
     public void sendMessage(String message) {
@@ -148,4 +139,50 @@ public class TelosAddon {
     public boolean isEditMode() { return this.editMode; }
     public void setEditMode(boolean value) { this.editMode = value; }
 
+    @Override
+    public void onInitializeClient() {
+        config = new Config();
+        config.load();
+        instance = this;
+
+        BossBarUtils.init();
+        rpcManager.start();
+        initHotkeys();
+        loadBagCounter();
+
+        soundManager = new SoundManager();
+
+        soundManager.addSound(new CustomSound("button_click"));
+        soundManager.addSound(new CustomSound("white_bag"));
+        soundManager.addSound(new CustomSound("black_bag"));
+        aliveBosses = new ArrayList<>();
+
+        this.showMainRangeFeature = new ShowMainRangeFeature(config);
+        this.showOffHandFeature = new ShowOffHandFeature(config);
+
+
+    }
+
+    public void run(){
+        if(config.getBoolean("GammaSetting")) {
+            toggleGamma(true);
+        }
+    }
+
+    // todo
+    public static void runAsync(Runnable runnable) {
+
+    }
+
+    public ShowOffHandFeature getShowOffHandFeature() {
+        return showOffHandFeature;
+    }
+
+    public ShowMainRangeFeature getShowMainRangeFeature() {
+        return showMainRangeFeature;
+    }
+
+    public DiscordRPCManager getRpcManager () {
+        return rpcManager;
+    }
 }

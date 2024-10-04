@@ -4,15 +4,17 @@
   "package": "xyz.telosaddon.yuno.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AccessorBossBars",
     "MixinInGameHud",
-    "MixinMinecraftClient"
+    "MixinMinecraftClient",
   ],
   "client": [
     "MixinGameRenderer",
     "MixinLightmapTextureManager",
     "MixinMessageHandler",
+    "MixinMinecraftServer",
     "MixinSimpleOption",
-    "MixinMinecraftServer"
+    "MixinWorldRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

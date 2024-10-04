@@ -10,29 +10,20 @@ import xyz.telosaddon.yuno.TelosAddon;
 @Mixin(MinecraftClient.class)
 public class MixinMinecraftClient {
 
-    private TelosAddon telosAddon;
 
-    @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/lang/System;currentTimeMillis()J"))
-    private void init(CallbackInfo ci) {
-        System.out.println("[TelosAddon] Loading Client...");
-        telosAddon = new TelosAddon();
-        telosAddon.init();
-        System.out.println("[TelosAddon] Client Loaded!");
-    }
-
-    @Inject(method = "run", at = @At("HEAD"))
+    @Inject(at = @At("TAIL"), method = "run")
     private void run(CallbackInfo ci) {
-        telosAddon.run();
+        TelosAddon.getInstance().run();
     }
 
     @Inject(at = @At("HEAD"), method = "stop")
     private void stop(CallbackInfo info) {
-        telosAddon.stop();
+        TelosAddon.getInstance().stop();
     }
 
     @Inject(at = @At("TAIL"), method = "tick")
     private void tick(CallbackInfo info) {
-        telosAddon.tick();
+        TelosAddon.getInstance().tick();
     }
 
 }

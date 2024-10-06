@@ -43,37 +43,39 @@ public class HomeTab extends AbstractTab{
                     toggle("SwingSetting", button.getText(), toggled);
                 }).setToggled(swingSetting),
 
-                new CustomButton(160, 83, 150, 20, "Swing Only If No Cooldown", (button, toggled) -> {
+                new CustomButton(8, 106, 150, 20, "Swing Only If No Cooldown", (button, toggled) -> {
                     toggle("SwingIfNoCooldown", button.getText(), toggled);
                 }).setToggled(swingIfNoCooldown),
 
-                new CustomButton(8, 106, 150, 20, "Gamma", (button, toggled) -> {
+                new CustomButton(8, 129, 150, 20, "Gamma", (button, toggled) -> {
                     toggle("GammaSetting", button.getText(), toggled);
                     TelosAddon.getInstance().toggleGamma(toggled);
                 }).setToggled(gammaSetting),
 
-                new CustomButton(8, 129, 150, 20, "Show FPS", (button, toggled) -> {
+                new CustomButton(8, 152, 150, 20, "Show FPS", (button, toggled) -> {
                     toggle("FPSSetting", button.getText(), toggled);
                 }).setToggled(fpsSetting),
 
-                new CustomButton(8, 152, 150, 20, "Show Ping", (button, toggled) -> {
+                new CustomButton(8, 175, 150, 20, "Show Ping", (button, toggled) -> {
                     toggle("PingSetting", button.getText(), toggled);
                 }).setToggled(pingSetting),
 
-                new CustomButton(8, 175, 150, 20, "Show Playtime", (button, toggled) -> {
+                new CustomButton(8, 198, 150, 20, "Show Playtime", (button, toggled) -> {
                     toggle("PlaytimeSetting", button.getText(), toggled);
                 }).setToggled(playtimeSetting),
 
-                new CustomButton(8, 198, 150, 20, "Show Spawned Bosses", (button, toggled) -> {
+                new CustomButton(8, 221, 150, 20, "Show Spawned Bosses", (button, toggled) -> {
                     toggle("SpawnBossesSetting", button.getText(), toggled);
                 }).setToggled(spawnBossesSetting),
 
-                new CustomButton(8, 221, 150, 20, "Custom Bag Sounds", (button, toggled) -> {
+                new CustomButton(8, 244, 150, 20, "Custom Bag Sounds", (button, toggled) -> {
                     toggle("SoundSetting", button.getText(), toggled);
                 }).setToggled(soundSetting),
+
                 new CustomButton(170, 83, 150, 20, "Discord Rich Presence", ((button, toggled) -> {
                     toggle("DiscordRPCSetting", button.getText(), toggled);
                 })).setToggled(discordRPCSetting),
+
                 new CustomText(170, 115, "Change default status text:"),
                 discordStatusTextField,
                 new CustomButton(170, 152, 150, 20, "Confirm change", ((button) -> {
@@ -83,9 +85,11 @@ public class HomeTab extends AbstractTab{
                     }
                     getConfig().set("DiscordDefaultStatusMessage", stripAllFormatting(discordStatusTextField.getText()));
                 })),
+
                 new CustomButton(170, 175, 150, 20, "Show location", ((button, toggled) -> {
                     toggle("RPCShowLocationSetting", button.getText(), toggled);
                 })).setToggled(RPCShowLocationSetting),
+
                 new CustomButton(170, 198, 150, 20, "Show current boss", ((button, toggled) -> {
                     toggle("RPCShowFightingSetting", button.getText(), toggled);
                 })).setToggled(RPCShowFightingSetting)
@@ -97,9 +101,7 @@ public class HomeTab extends AbstractTab{
 
 
     private static boolean isValidInputString(String input){
-        if (input.length() <2) return false;
-        else if (input.length() > 23) return false;
-        return true;
+        return (input.length() > 0 && input.length() < 23);
     }
 
 

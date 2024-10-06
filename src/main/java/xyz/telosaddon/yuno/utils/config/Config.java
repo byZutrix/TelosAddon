@@ -110,6 +110,7 @@ public class Config {
         addDefault("NoWhiteRunSetting", false);
         addDefault("LifetimeSetting", false);
 
+
         addDefault("SwingSetting", false);
         addDefault("GammaSetting", false);
         addDefault("FPSSetting", false);
@@ -124,6 +125,7 @@ public class Config {
         addDefault("RPCShowLocationSetting", true);
         addDefault("RPCShowFightingSetting", false);
 
+        addDefault("SwingIfNoCooldown", false);
         addDefault("ShowMainRangeFeatureEnabled", true);
         addDefault("ShowOffHandRangeFeatureEnabled", false);
         addDefault("ShowMainRangeFeatureHeight", 0.5);

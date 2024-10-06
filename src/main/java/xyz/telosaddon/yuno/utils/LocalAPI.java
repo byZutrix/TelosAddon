@@ -60,7 +60,7 @@ public class LocalAPI {
 
 
                 BossBar bossBar = (BossBar) preArray[1]; // add what boss we're fighting
-                LOGGER.log(Level.INFO, "Bossbar hashcode:" + bossBar.getName().hashCode()); // keep this until i can fill out all the bosses
+                //LOGGER.log(Level.INFO, "Bossbar hashcode:" + bossBar.getName().hashCode()); // keep this until i can fill out all the bosses
                 switch (bossBar.getName().hashCode()){
                     case -1083980771 -> currentCharacterFighting = "Chungus";
                     case 452824575 -> currentCharacterFighting = "Illarious";

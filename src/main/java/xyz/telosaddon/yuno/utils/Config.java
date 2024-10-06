@@ -103,6 +103,7 @@ public class Config {
         addDefault("LifetimeSetting", false);
 
         addDefault("SwingSetting", false);
+        addDefault("SwingIfNoCooldown", false);
         addDefault("GammaSetting", false);
         addDefault("FPSSetting", false);
         addDefault("PingSetting", false);

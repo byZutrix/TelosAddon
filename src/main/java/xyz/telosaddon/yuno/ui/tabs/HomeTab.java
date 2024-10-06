@@ -31,6 +31,7 @@ public class HomeTab extends AbstractTab{
         boolean playtimeSetting = getConfig().getBoolean("PlaytimeSetting");
         boolean spawnBossesSetting = getConfig().getBoolean("SpawnBossesSetting");
         boolean soundSetting = getConfig().getBoolean("SoundSetting");
+        boolean noFrontCameraFeatureEnabled = getConfig().getBoolean("NoFrontCameraFeatureEnabled");
         boolean discordRPCSetting = getConfig().getBoolean("DiscordRPCSetting");
         boolean RPCShowLocationSetting = getConfig().getBoolean("RPCShowLocationSetting");
         boolean RPCShowFightingSetting = getConfig().getBoolean("RPCShowFightingSetting");
@@ -71,6 +72,10 @@ public class HomeTab extends AbstractTab{
                 new CustomButton(8, 244, 150, 20, "Custom Bag Sounds", (button, toggled) -> {
                     toggle("SoundSetting", button.getText(), toggled);
                 }).setToggled(soundSetting),
+
+                new CustomButton(8, 267, 150, 20, "Disable Front Camera", ((button, toggled) -> {
+                    toggle("NoFrontCameraFeatureEnabled", button.getText(), toggled);
+                })).setToggled(noFrontCameraFeatureEnabled),
 
                 new CustomButton(170, 83, 150, 20, "Discord Rich Presence", ((button, toggled) -> {
                     toggle("DiscordRPCSetting", button.getText(), toggled);

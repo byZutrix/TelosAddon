@@ -6,6 +6,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import xyz.telosaddon.yuno.discordrpc.DiscordRPCManager;
+import xyz.telosaddon.yuno.features.NoFrontCameraFeature;
 import xyz.telosaddon.yuno.hotkey.AbilityHotkey;
 import xyz.telosaddon.yuno.hotkey.MenuHotkey;
 import xyz.telosaddon.yuno.hotkey.NexusHotkey;
@@ -50,6 +51,8 @@ public class TelosAddon implements ClientModInitializer  {
 
     private ShowOffHandFeature showOffHandFeature;
 
+    private NoFrontCameraFeature noFrontCameraFeature;
+
 
 
     public void initHotkeys(){
@@ -75,6 +78,7 @@ public class TelosAddon implements ClientModInitializer  {
 
         this.showMainRangeFeature.tick();
         this.showOffHandFeature.tick();
+        this.noFrontCameraFeature.tick();
 
         if(isOnTelos()) {
             tickCounter++;
@@ -159,7 +163,7 @@ public class TelosAddon implements ClientModInitializer  {
 
         this.showMainRangeFeature = new ShowMainRangeFeature(config);
         this.showOffHandFeature = new ShowOffHandFeature(config);
-
+        this.noFrontCameraFeature = new NoFrontCameraFeature(config);
 
     }
 

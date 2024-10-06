@@ -118,6 +118,7 @@ public class Config {
         addDefault("PlaytimeSetting", false);
         addDefault("SpawnBossesSetting", false);
         addDefault("SoundSetting", false);
+        addDefault("NoFrontCameraFeatureEnabled", true);
         addDefault("Font", "Default");
 
         addDefault("DiscordRPCSetting", true);

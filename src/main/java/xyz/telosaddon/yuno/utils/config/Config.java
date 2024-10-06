@@ -135,6 +135,8 @@ public class Config {
 
         addDefault("ShowMainRangeFeatureColor", new Color(255, 0, 0).getRGB());
         addDefault("ShowOffHandRangeFeatureColor", new Color(0, 0, 255).getRGB());
+
+        addDefault("ShowListedPrice", true);
     }
 
     public void addDefault(String key, Object value) {

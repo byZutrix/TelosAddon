@@ -5,11 +5,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Util;
 import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.ui.elements.CustomButton;
-import xyz.telosaddon.yuno.ui.tabs.GuiTab;
-import xyz.telosaddon.yuno.ui.tabs.HomeTab;
-import xyz.telosaddon.yuno.ui.tabs.RangeTab;
-import xyz.telosaddon.yuno.ui.tabs.SettingsTab;
-import xyz.telosaddon.yuno.ui.tabs.TeleportTab;
+import xyz.telosaddon.yuno.ui.tabs.*;
 import xyz.telosaddon.yuno.utils.config.Config;
 
 import java.util.ArrayList;
@@ -101,6 +97,10 @@ public class CustomUiManager {
                 RangeTab rangeTab = new RangeTab(this);
                 rangeTab.loadButtons();
             }
+            case AUCTION -> {
+                AuctionTab auctionTab = new AuctionTab(this);
+                auctionTab.loadButtons();
+            }
         }
     }
 
@@ -137,6 +137,11 @@ public class CustomUiManager {
             if(this.getCurrentTab() != Tabs.RANGE)
                 this.switchTab(Tabs.RANGE);
         }), isOnTab(Tabs.RANGE)).setTextInMiddle(true));
+
+        this.addCustomElement(new CustomButton(283, 55, 50, 20, "Auction", (button -> {
+            if(this.getCurrentTab() != Tabs.AUCTION)
+                this.switchTab(Tabs.AUCTION);
+        }), isOnTab(Tabs.AUCTION)).setTextInMiddle(true));
 
         this.addCustomElement(new CustomButton(8, mc.getWindow().getScaledHeight() - 51, 150, 20, "Join my Discord", (button) -> {
             Util.getOperatingSystem().open("https://discord.gg/sDDeDkxFF6");

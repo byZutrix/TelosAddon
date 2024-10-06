@@ -130,6 +130,8 @@ public class Config {
         addDefault("ShowOffHandRangeFeatureEnabled", false);
         addDefault("ShowMainRangeFeatureHeight", 0.5);
         addDefault("ShowOffHandRangeFeatureHeight", 0.5);
+        addDefault("ShowMainRangeInFirstPerson", true);
+        addDefault("ShowOffHandRangeInFirstPerson", true);
 
         addDefault("ShowMainRangeFeatureColor", new Color(255, 0, 0).getRGB());
         addDefault("ShowOffHandRangeFeatureColor", new Color(0, 0, 255).getRGB());

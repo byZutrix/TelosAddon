@@ -27,20 +27,25 @@ public class RangeTab extends AbstractTab {
 		boolean showOffHandRangeSetting = getConfig().getBoolean("ShowOffHandRangeFeatureEnabled");
 		double showMainRangeHeight = getConfig().getDouble("ShowMainRangeFeatureHeight");
 		double showOffHandRangeHeight = getConfig().getDouble("ShowOffHandRangeFeatureHeight");
+		boolean showMainRangeInFirstPersonSetting = getConfig().getBoolean("ShowMainRangeInFirstPerson");
+		boolean showOffHandRangeInFirstPersonSetting = getConfig().getBoolean("ShowOffHandRangeInFirstPerson");
 
-		var mainRangeHeightField = new CustomTextField(8, 118, 150, 20, "" + showMainRangeHeight);
-		var mainRangeColorField = new CustomTextField(8, 153, 150, 20, "#AARRGGBB");
+		var mainRangeHeightField = new CustomTextField(8, 141, 250, 20, "" + showMainRangeHeight);
+		var mainRangeColorField = new CustomTextField(8, 176, 250, 20, "#AARRGGBB");
 
-		var offHandRangeHeightField = new CustomTextField(8, 234, 150, 20, "" + showOffHandRangeHeight);
-		var offHandRangeColorField = new CustomTextField(8, 269, 150, 20, "#AARRGGBB");
+		var offHandRangeHeightField = new CustomTextField(8, 300, 250, 20, "" + showOffHandRangeHeight);
+		var offHandRangeColorField = new CustomTextField(8, 335, 250, 20, "#AARRGGBB");
 		this.elements = Arrays.asList(
 				// Main Hand
-				new CustomButton(8, 83, 150, 20, "Show Main Hand's range", (button, toggled) -> {
+				new CustomButton(8, 83, 250, 20, "Show Main Hand's range", (button, toggled) -> {
 					toggle("ShowMainRangeFeatureEnabled", button.getText(), toggled);
 				}).setToggled(showMainRangeSetting),
-				new CustomText(8, 106, "Main Hand's range circle's height:"),
+				new CustomButton(8, 106, 250, 20, "Show Main Hand's range in first person", (button, toggled) -> {
+					toggle("ShowMainRangeInFirstPerson", button.getText(), toggled);
+				}).setToggled(showMainRangeInFirstPersonSetting),
+				new CustomText(8, 129, "Main Hand's range circle's height:"),
 				mainRangeHeightField,
-				new CustomButton(163, 118, 40, 20, "Apply", (button) -> {
+				new CustomButton(263, 141, 40, 20, "Apply", (button) -> {
 					String input = mainRangeHeightField.getText();
 					try {
 						float height = Float.parseFloat(input);
@@ -49,9 +54,9 @@ public class RangeTab extends AbstractTab {
 						TelosAddon.getInstance().sendMessage("Wrong Format! Not a float!");
 					}
 				}).setTextInMiddle(true),
-				new CustomText(8, 141, "Main Hand's range circle's color:"),
+				new CustomText(8, 164, "Main Hand's range circle's color:"),
 				mainRangeColorField,
-				new CustomButton(163, 153, 40, 20, "Apply", (button) -> {
+				new CustomButton(263, 176, 40, 20, "Apply", (button) -> {
 					String input = mainRangeColorField.getText();
 					try {
 						int color = SerializeUtils.parseHexARGB(input);
@@ -62,12 +67,15 @@ public class RangeTab extends AbstractTab {
 				}).setTextInMiddle(true),
 
 				// OffHand
-				new CustomButton(8, 199, 150, 20, "Show Off Hand's range", (button, toggled) -> {
+				new CustomButton(8, 242, 250, 20, "Show Off Hand's range", (button, toggled) -> {
 					toggle("ShowOffHandRangeFeatureEnabled", button.getText(), toggled);
 				}).setToggled(showOffHandRangeSetting),
-				new CustomText(8, 222, "Off Hand's range circle's height:"),
+				new CustomButton(8, 265, 250, 20, "Show Off Hand's range in first person", (button, toggled) -> {
+					toggle("ShowOffHandRangeInFirstPerson", button.getText(), toggled);
+				}).setToggled(showOffHandRangeInFirstPersonSetting),
+				new CustomText(8, 288, "Off Hand's range circle's height:"),
 				offHandRangeHeightField,
-				new CustomButton(163, 234, 40, 20, "Apply", (button) -> {
+				new CustomButton(263, 300, 40, 20, "Apply", (button) -> {
 					String input = offHandRangeHeightField.getText();
 					try {
 						float height = Float.parseFloat(input);
@@ -76,9 +84,9 @@ public class RangeTab extends AbstractTab {
 						TelosAddon.getInstance().sendMessage("Wrong Format! Not a float!");
 					}
 				}).setTextInMiddle(true),
-				new CustomText(8, 257, "Off Hand's range circle's color:"),
+				new CustomText(8, 323, "Off Hand's range circle's color:"),
 				offHandRangeColorField,
-				new CustomButton(163, 269, 40, 20, "Apply", (button) -> {
+				new CustomButton(263, 335, 40, 20, "Apply", (button) -> {
 					String input = offHandRangeColorField.getText();
 					try {
 						int color = SerializeUtils.parseHexARGB(input);

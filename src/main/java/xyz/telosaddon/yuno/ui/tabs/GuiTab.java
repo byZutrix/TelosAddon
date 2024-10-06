@@ -4,7 +4,7 @@ import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.ui.CustomElement;
 import xyz.telosaddon.yuno.ui.elements.CustomButton;
 import xyz.telosaddon.yuno.ui.CustomUiManager;
-import xyz.telosaddon.yuno.utils.Config;
+import xyz.telosaddon.yuno.utils.config.Config;
 
 import java.util.Arrays;
 import java.util.List;

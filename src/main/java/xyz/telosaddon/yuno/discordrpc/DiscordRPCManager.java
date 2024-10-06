@@ -49,7 +49,7 @@ public class DiscordRPCManager implements IPCListener {
 
 
     public void stop() {
-        logger.log(Level.INFO, "Attempting to disconnect RPC \nConnectedStatus:" + connected);
+        logger.log(Level.INFO, "Attempting to disconnect RPC \nConnectedStatus: " + connected);
         connected = false;
         client.close();
     }

@@ -10,7 +10,7 @@ import xyz.telosaddon.yuno.ui.tabs.HomeTab;
 import xyz.telosaddon.yuno.ui.tabs.RangeTab;
 import xyz.telosaddon.yuno.ui.tabs.SettingsTab;
 import xyz.telosaddon.yuno.ui.tabs.TeleportTab;
-import xyz.telosaddon.yuno.utils.Config;
+import xyz.telosaddon.yuno.utils.config.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,8 +137,6 @@ public class CustomUiManager {
             if(this.getCurrentTab() != Tabs.RANGE)
                 this.switchTab(Tabs.RANGE);
         }), isOnTab(Tabs.RANGE)).setTextInMiddle(true));
-
-
 
         this.addCustomElement(new CustomButton(8, mc.getWindow().getScaledHeight() - 51, 150, 20, "Join my Discord", (button) -> {
             Util.getOperatingSystem().open("https://discord.gg/sDDeDkxFF6");

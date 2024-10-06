@@ -71,10 +71,12 @@ public class LocalAPI {
                     case 1757112170 -> currentCharacterFighting = "Valus";
                     case 1472054207 -> currentCharacterFighting = "Oozul";
                     case 2035818623 -> currentCharacterFighting = "Freddy";
-                    case 1258344668 -> currentCharacterFighting = "Anubis"; //bugged
+                    case -1258344668 -> currentCharacterFighting = "Anubis"; //bugged
+                    case -1240191621 -> currentCharacterFighting = "Hollowbane";
 
                     case 908391166 -> currentCharacterFighting = "Shadowflare";
                     case 1996713601 -> currentCharacterFighting = "Loa";
+                    case -1048545196 -> currentCharacterFighting = "Valerion";
                     // insert astaroth bosses here
                     case -1624135070 -> currentCharacterFighting = "Prismara";
                     case 2125160548 -> currentCharacterFighting = "Omnipotent";

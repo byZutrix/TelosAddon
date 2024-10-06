@@ -1,4 +1,4 @@
-package xyz.telosaddon.yuno.utils;
+package xyz.telosaddon.yuno.utils.config;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;

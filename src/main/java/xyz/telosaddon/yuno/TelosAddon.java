@@ -3,11 +3,8 @@ package xyz.telosaddon.yuno;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.option.KeyBinding;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
-import org.apache.http.impl.client.AutoRetryHttpClient;
-import org.apache.http.impl.client.CloseableHttpClient;
 import xyz.telosaddon.yuno.discordrpc.DiscordRPCManager;
 import xyz.telosaddon.yuno.hotkey.AbilityHotkey;
 import xyz.telosaddon.yuno.hotkey.MenuHotkey;
@@ -17,19 +14,19 @@ import xyz.telosaddon.yuno.features.ShowOffHandFeature;
 import xyz.telosaddon.yuno.sound.SoundManager;
 
 import xyz.telosaddon.yuno.utils.BossBarUtils;
-import xyz.telosaddon.yuno.utils.Config;
+import xyz.telosaddon.yuno.utils.config.Config;
 import xyz.telosaddon.yuno.sound.CustomSound;
-import xyz.telosaddon.yuno.utils.LocalAPI;
 
 import java.util.*;
 
+//todo: change to literally any other logger
 import java.util.logging.Logger;
 
 import static xyz.telosaddon.yuno.utils.LocalAPI.updateAPI;
 
 public class TelosAddon implements ClientModInitializer  {
     public static final String MOD_NAME = "TelosAddon";
-    public static final String MOD_VERSION = "v0.21b";
+    public static final String MOD_VERSION = "v0.21c";
 
     public static final Logger LOGGER = Logger.getLogger(MOD_NAME);
     private final MinecraftClient mc = MinecraftClient.getInstance();
@@ -54,6 +51,7 @@ public class TelosAddon implements ClientModInitializer  {
     private ShowOffHandFeature showOffHandFeature;
 
 
+
     public void initHotkeys(){
         NexusHotkey.init();
         MenuHotkey.init();
@@ -68,8 +66,12 @@ public class TelosAddon implements ClientModInitializer  {
         ClientPlayerEntity player = mc.player;
         if(player == null) return;
 
-        if(mc.options.attackKey.isPressed() && config.getBoolean("SwingSetting"))
-            player.swingHand(Hand.MAIN_HAND);
+        if(mc.options.attackKey.isPressed() && config.getBoolean("SwingSetting")) {
+            boolean canSwing = !player.getItemCooldownManager().isCoolingDown(player.getMainHandStack().getItem());
+            if (!config.getBoolean("SwingIfNoCooldown") || canSwing) {
+                player.swingHand(Hand.MAIN_HAND);
+            }
+        }
 
         this.showMainRangeFeature.tick();
         this.showOffHandFeature.tick();
@@ -80,8 +82,6 @@ public class TelosAddon implements ClientModInitializer  {
                 playTime++;
                 config.addLong("TotalPlaytime", 1);
                 tickCounter = 0;
-            }
-            if (playTime % 5 == 0 && tickCounter == 0){
                 updateAPI();
             }
         }
@@ -167,11 +167,6 @@ public class TelosAddon implements ClientModInitializer  {
         if(config.getBoolean("GammaSetting")) {
             toggleGamma(true);
         }
-    }
-
-    // todo
-    public static void runAsync(Runnable runnable) {
-
     }
 
     public ShowOffHandFeature getShowOffHandFeature() {

@@ -6,15 +6,11 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.Box;
 import xyz.telosaddon.yuno.renderer.CircleRenderer;
-import xyz.telosaddon.yuno.utils.Config;
+import xyz.telosaddon.yuno.utils.config.Config;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class ShowRangeFeature extends AbstractFeature {
 	private ItemStack previousItem = null;

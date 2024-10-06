@@ -4,8 +4,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
@@ -16,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.telosaddon.yuno.TelosAddon;
-import xyz.telosaddon.yuno.utils.Config;
+import xyz.telosaddon.yuno.utils.config.Config;
 import xyz.telosaddon.yuno.utils.FontHelper;
 
 import java.util.*;

@@ -8,8 +8,10 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import xyz.telosaddon.yuno.TelosAddon;
-import xyz.telosaddon.yuno.utils.Config;
+import xyz.telosaddon.yuno.utils.config.Config;
 import xyz.telosaddon.yuno.utils.FontHelper;
+
+import static xyz.telosaddon.yuno.TelosAddon.MOD_VERSION;
 
 
 @Environment(EnvType.CLIENT)
@@ -116,7 +118,7 @@ public class TelosMenu extends Screen {
     }
 
     private void drawTitle(DrawContext context, TextRenderer tr) {
-        String title = "Telos Addon | BETA-v0.21b";
+        String title = "Telos Addon | BETA-" + MOD_VERSION;
         Text titleText = FontHelper.toCustomFont(title, config.getString("Font"));
 
         float titleScale = 1.5f;

@@ -1,4 +1,4 @@
-package xyz.telosaddon.yuno.utils;
+package xyz.telosaddon.yuno.utils.config;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -10,7 +10,7 @@ import xyz.telosaddon.yuno.ui.tabs.HomeTab;
 import xyz.telosaddon.yuno.ui.tabs.RangeTab;
 import xyz.telosaddon.yuno.ui.tabs.SettingsTab;
 import xyz.telosaddon.yuno.ui.tabs.TeleportTab;
-import xyz.telosaddon.yuno.utils.Config;
+import xyz.telosaddon.yuno.utils.config.Config;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package xyz.telosaddon.yuno.ui.tabs;
 
 import xyz.telosaddon.yuno.TelosAddon;
-import xyz.telosaddon.yuno.utils.Config;
+import xyz.telosaddon.yuno.utils.config.Config;
 
 public abstract class AbstractTab {
 

@@ -60,7 +60,7 @@ public class LocalAPI {
 
 
                 BossBar bossBar = (BossBar) preArray[1]; // add what boss we're fighting
-                //LOGGER.log(Level.INFO, "Bossbar hashcode:" + bossBar.getName().hashCode()); // keep this until i can fill out all the bosses
+                LOGGER.log(Level.INFO, "Bossbar hashcode:" + bossBar.getName().hashCode()); // keep this until i can fill out all the bosses
                 switch (bossBar.getName().hashCode()){
                     case -1083980771 -> currentCharacterFighting = "Chungus";
                     case 452824575 -> currentCharacterFighting = "Illarious";
@@ -71,10 +71,12 @@ public class LocalAPI {
                     case 1757112170 -> currentCharacterFighting = "Valus";
                     case 1472054207 -> currentCharacterFighting = "Oozul";
                     case 2035818623 -> currentCharacterFighting = "Freddy";
-                    case 1258344668 -> currentCharacterFighting = "Anubis"; //bugged
+                    case -1258344668 -> currentCharacterFighting = "Anubis"; //bugged
+                    case -1240191621 -> currentCharacterFighting = "Hollowbane";
 
                     case 908391166 -> currentCharacterFighting = "Shadowflare";
                     case 1996713601 -> currentCharacterFighting = "Loa";
+                    case -1048545196 -> currentCharacterFighting = "Valerion";
                     // insert astaroth bosses here
                     case -1624135070 -> currentCharacterFighting = "Prismara";
                     case 2125160548 -> currentCharacterFighting = "Omnipotent";

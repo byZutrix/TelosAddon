@@ -1,6 +1,6 @@
 package xyz.telosaddon.yuno.features;
 
-import xyz.telosaddon.yuno.utils.Config;
+import xyz.telosaddon.yuno.utils.config.Config;
 
 public abstract class AbstractFeature {
 

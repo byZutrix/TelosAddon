@@ -6,8 +6,8 @@ import xyz.telosaddon.yuno.ui.CustomUiManager;
 import xyz.telosaddon.yuno.ui.elements.CustomButton;
 import xyz.telosaddon.yuno.ui.elements.CustomText;
 import xyz.telosaddon.yuno.ui.elements.CustomTextField;
-import xyz.telosaddon.yuno.utils.Config;
-import xyz.telosaddon.yuno.utils.SerializeUtils;
+import xyz.telosaddon.yuno.utils.config.Config;
+import xyz.telosaddon.yuno.utils.config.SerializeUtils;
 
 import java.util.Arrays;
 import java.util.List;

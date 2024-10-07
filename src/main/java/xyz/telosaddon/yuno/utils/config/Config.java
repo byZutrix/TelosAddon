@@ -150,6 +150,13 @@ public class Config {
      * Saves config to the local json file and the previous version becomes a backup .tmp file
      */
     private void save(boolean overwriteBackup) {
+        if (!configFile.exists()) {
+            try {
+                configFile.createNewFile();
+            } catch (IOException ignore) {
+                TelosAddon.LOGGER.log(Level.WARNING, "Encountered an issue when creating main config file.");
+            }
+        }
 
         if (!tmpFile.exists()) {
             try {
@@ -168,10 +175,11 @@ public class Config {
             }
 
             if (!createdNewBackup) {
-                TelosAddon.LOGGER.log(Level.WARNING,"Could not backup config. Skipping save.");
+                logger.log(Level.WARNING, "Could not backup config. Skipping save.");
                 return;
             }
         }
+
         try (FileWriter writer = new FileWriter(configFile)) {
             GSON.toJson(configMap, writer);
         } catch (IOException e) {

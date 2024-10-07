@@ -6,6 +6,7 @@ import xyz.telosaddon.yuno.ui.CustomUiManager;
 import xyz.telosaddon.yuno.ui.elements.CustomButton;
 import xyz.telosaddon.yuno.ui.elements.CustomText;
 import xyz.telosaddon.yuno.ui.elements.CustomTextField;
+import xyz.telosaddon.yuno.utils.config.Config;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,9 +18,11 @@ public class HomeTab extends AbstractTab{
 
     private final CustomUiManager uiManager;
     private List<CustomElement> elements;
+    private final Config config;
 
     public HomeTab(CustomUiManager uiManager) {
         this.uiManager = uiManager;
+        this.config = TelosAddon.getInstance().getConfig();
     }
 
     public void loadButtons() {
@@ -32,12 +35,17 @@ public class HomeTab extends AbstractTab{
         boolean spawnBossesSetting = getConfig().getBoolean("SpawnBossesSetting");
         boolean soundSetting = getConfig().getBoolean("SoundSetting");
         boolean noFrontCameraFeatureEnabled = getConfig().getBoolean("NoFrontCameraFeatureEnabled");
+        boolean nexusSuggestFeatureEnabled = getConfig().getBoolean("NexusSuggestFeatureEnabled");
         boolean discordRPCSetting = getConfig().getBoolean("DiscordRPCSetting");
         boolean RPCShowLocationSetting = getConfig().getBoolean("RPCShowLocationSetting");
         boolean RPCShowFightingSetting = getConfig().getBoolean("RPCShowFightingSetting");
         String discordDefaultStatusMessage = getConfig().getString("DiscordDefaultStatusMessage");
+        String nexusSuggestText = getConfig().getString("NexusSuggestText");
+        double nexusSuggestFrameLength = getConfig().getDouble("NexusSuggestFrameLength");
 
         var discordStatusTextField = new CustomTextField(170, 129, 150, 20, discordDefaultStatusMessage);
+        var nexusSuggestTextField = new CustomTextField(170, 292, 150, 20, nexusSuggestText);
+        var nexusSuggestFrameLengthField = new CustomTextField(170, 359, 150, 20, "" + nexusSuggestFrameLength);
         this.elements = Arrays.asList(
 
                 new CustomButton(8, 83, 150, 20, "Hold To Swing", (button, toggled) -> {
@@ -97,8 +105,32 @@ public class HomeTab extends AbstractTab{
 
                 new CustomButton(170, 198, 150, 20, "Show current boss", ((button, toggled) -> {
                     toggle("RPCShowFightingSetting", button.getText(), toggled);
-                })).setToggled(RPCShowFightingSetting)
+                })).setToggled(RPCShowFightingSetting),
 
+                new CustomButton(170, 230, 150, 20, "Nexus Alert", ((button, toggled) -> {
+                    toggle("NexusSuggestFeatureEnabled", button.getText(), toggled);
+                })).setToggled(nexusSuggestFeatureEnabled),
+
+                new CustomText(170, 278, "Change default alert text:"),
+                nexusSuggestTextField,
+                new CustomButton(170, 315, 150, 20, "Confirm change", (button) -> {
+                    if (!isValidInputString(nexusSuggestTextField.getText())){
+                        String toggleText ="§6There was an §cerror §6with your input! Please try again!";
+                        TelosAddon.getInstance().sendMessage(toggleText);
+                    }
+                    getConfig().set("NexusSuggestText", stripAllFormatting(nexusSuggestTextField.getText()));
+                }),
+                new CustomText(170, 347, "Nexus Alert DPS frame length:"),
+                nexusSuggestFrameLengthField,
+                new CustomButton(170, 382, 150, 20, "Confirm change", (button) -> {
+                    String input = nexusSuggestFrameLengthField.getText();
+                    try {
+                        float length = Float.parseFloat(input);
+                        config.set("NexusSuggestFrameLength", (double) length);
+                    } catch (NumberFormatException e) {
+                        TelosAddon.getInstance().sendMessage("Wrong Format! Not a float!");
+                    }
+                })
         );
 
         uiManager.getCustomElements().addAll(this.elements);

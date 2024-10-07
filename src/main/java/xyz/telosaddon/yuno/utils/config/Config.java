@@ -126,6 +126,10 @@ public class Config {
         addDefault("RPCShowLocationSetting", true);
         addDefault("RPCShowFightingSetting", false);
 
+        addDefault("NexusSuggestFeatureEnabled", true);
+        addDefault("NexusSuggestText", "WARP NEXUS");
+        addDefault("NexusSuggestFrameLength", 2.0);
+
         addDefault("SwingIfNoCooldown", false);
         addDefault("ShowMainRangeFeatureEnabled", true);
         addDefault("ShowOffHandRangeFeatureEnabled", false);

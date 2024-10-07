@@ -175,7 +175,7 @@ public class Config {
             }
 
             if (!createdNewBackup) {
-                logger.log(Level.WARNING, "Could not backup config. Skipping save.");
+                TelosAddon.LOGGER.log(Level.WARNING, "Could not backup config. Skipping save.");
                 return;
             }
         }

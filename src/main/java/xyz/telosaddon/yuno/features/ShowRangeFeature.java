@@ -2,11 +2,13 @@ package xyz.telosaddon.yuno.features;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.option.Perspective;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.renderer.CircleRenderer;
 import xyz.telosaddon.yuno.utils.config.Config;
 
@@ -17,6 +19,7 @@ public class ShowRangeFeature extends AbstractFeature {
 	private float radius = Float.NaN;
 	private final CircleRenderer circleRenderer;
 	private final Function<PlayerInventory, ItemStack> itemGetter;
+	private final String itemSlotName;
 
 	private int color = 0x99FF0000;
 
@@ -24,6 +27,7 @@ public class ShowRangeFeature extends AbstractFeature {
 		super(config, "Show" + itemSlotName + "RangeFeature");
 		this.circleRenderer = new CircleRenderer();
 		this.itemGetter = itemGetter;
+		this.itemSlotName = itemSlotName;
 	}
 
 	private float parseRadius(ItemStack itemStack) {
@@ -63,11 +67,16 @@ public class ShowRangeFeature extends AbstractFeature {
 		if (!this.isEnabled()) return;
 		var client = MinecraftClient.getInstance();
 		if (client.player == null) return;
+		Config config = TelosAddon.getInstance().getConfig();
+		if (client.options.getPerspective() == Perspective.FIRST_PERSON && !config.getBoolean("Show" + itemSlotName + "RangeInFirstPerson")) return;
 		checkMainHand(client);
 	}
 
 	public void draw(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ClientPlayerEntity player) {
 		if (!this.isEnabled()) return;
+		var client = MinecraftClient.getInstance();
+		Config config = TelosAddon.getInstance().getConfig();
+		if (client.options.getPerspective() == Perspective.FIRST_PERSON && !config.getBoolean("Show" + itemSlotName + "RangeInFirstPerson")) return;
 		this.circleRenderer.drawCircle(matrices,
 				vertexConsumers,
 				player,

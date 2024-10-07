@@ -6,6 +6,8 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import xyz.telosaddon.yuno.discordrpc.DiscordRPCManager;
+import xyz.telosaddon.yuno.features.NexusSuggestFeature;
+import xyz.telosaddon.yuno.features.NoFrontCameraFeature;
 import xyz.telosaddon.yuno.hotkey.AbilityHotkey;
 import xyz.telosaddon.yuno.hotkey.MenuHotkey;
 import xyz.telosaddon.yuno.hotkey.NexusHotkey;
@@ -37,7 +39,6 @@ public class TelosAddon implements ClientModInitializer  {
     private Config config;
     private Map<String, Integer> bagCounter;
     private long playTime = 0;
-    private int tickCounter = 0;
     private List<String> aliveBosses;
     private boolean editMode = false;
 
@@ -45,10 +46,12 @@ public class TelosAddon implements ClientModInitializer  {
     public int infoHeight;
     public int bagWidth;
     public int bagHeight;
+    public int tickCounter = 0;
 
     private ShowMainRangeFeature showMainRangeFeature;
-
     private ShowOffHandFeature showOffHandFeature;
+    private NoFrontCameraFeature noFrontCameraFeature;
+    private NexusSuggestFeature nexusSuggestFeature;
 
 
 
@@ -75,6 +78,8 @@ public class TelosAddon implements ClientModInitializer  {
 
         this.showMainRangeFeature.tick();
         this.showOffHandFeature.tick();
+        this.noFrontCameraFeature.tick();
+        this.nexusSuggestFeature.tick();
 
         if(isOnTelos()) {
             tickCounter++;
@@ -159,7 +164,8 @@ public class TelosAddon implements ClientModInitializer  {
 
         this.showMainRangeFeature = new ShowMainRangeFeature(config);
         this.showOffHandFeature = new ShowOffHandFeature(config);
-
+        this.noFrontCameraFeature = new NoFrontCameraFeature(config);
+        this.nexusSuggestFeature = new NexusSuggestFeature(config);
 
     }
 

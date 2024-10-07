@@ -118,6 +118,7 @@ public class Config {
         addDefault("PlaytimeSetting", false);
         addDefault("SpawnBossesSetting", false);
         addDefault("SoundSetting", false);
+        addDefault("NoFrontCameraFeatureEnabled", true);
         addDefault("Font", "Default");
 
         addDefault("DiscordRPCSetting", true);
@@ -125,14 +126,22 @@ public class Config {
         addDefault("RPCShowLocationSetting", true);
         addDefault("RPCShowFightingSetting", false);
 
+        addDefault("NexusSuggestFeatureEnabled", true);
+        addDefault("NexusSuggestText", "WARP NEXUS");
+        addDefault("NexusSuggestFrameLength", 2.0);
+
         addDefault("SwingIfNoCooldown", false);
         addDefault("ShowMainRangeFeatureEnabled", true);
         addDefault("ShowOffHandRangeFeatureEnabled", false);
         addDefault("ShowMainRangeFeatureHeight", 0.5);
         addDefault("ShowOffHandRangeFeatureHeight", 0.5);
+        addDefault("ShowMainRangeInFirstPerson", true);
+        addDefault("ShowOffHandRangeInFirstPerson", true);
 
         addDefault("ShowMainRangeFeatureColor", new Color(255, 0, 0).getRGB());
         addDefault("ShowOffHandRangeFeatureColor", new Color(0, 0, 255).getRGB());
+
+        addDefault("ShowListedPrice", true);
     }
 
     public void addDefault(String key, Object value) {

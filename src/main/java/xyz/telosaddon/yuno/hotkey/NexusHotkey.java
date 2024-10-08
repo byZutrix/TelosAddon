@@ -36,12 +36,10 @@ public class NexusHotkey {
                         invslot = i;
                     }
                 }
-                int savedHandSlot = inv.selectedSlot;
                 int savedNexusSlot = invslot;
                 scrollToSlot(inv, savedNexusSlot);
                 assert client.interactionManager != null;
                 client.interactionManager.interactItem(client.player, client.player.getActiveHand());
-                scrollToSlot(inv, savedHandSlot);
             }
         });
     }

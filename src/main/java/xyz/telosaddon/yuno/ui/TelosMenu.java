@@ -41,7 +41,7 @@ public class TelosMenu extends Screen {
             TextRenderer tr = mc.textRenderer;
             drawTitle(context, tr);
 
-            String bugString = "§cPlease report bugs to §7'§4kamiyuno§7'§c on Discord§7!";
+            String bugString = "§cPlease report bugs to §7'§4pixelizedgaming§7'§c on Discord§7!";
             Text bugText = FontHelper.toCustomFont(bugString, config.getString("Font"));
             int bugTextWidth = tr.getWidth(bugText);
             context.drawText(tr, bugText, width - bugTextWidth - 4, height - 12, 0xFFFFFF, true);

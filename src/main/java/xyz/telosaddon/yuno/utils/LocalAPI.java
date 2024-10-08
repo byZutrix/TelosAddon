@@ -21,6 +21,7 @@ public class LocalAPI {
     private static String currentCharacterFighting = "";
     private static String currentClientPing = "";
 
+    //todo make async
     public static void updateAPI(){
         if (!TelosAddon.getInstance().isOnTelos()) return;
         Optional<String> info = TabListUtils.getCharInfo();

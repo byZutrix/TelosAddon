@@ -8,6 +8,7 @@ import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.utils.LocalAPI;
 
 import java.time.OffsetDateTime;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,15 +44,21 @@ public class DiscordRPCManager implements IPCListener {
         }
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if ((System.currentTimeMillis()/50) % 100 == 0) updatePresence();
+            CompletableFuture<Void> future = CompletableFuture.runAsync(()->{
+                if ((System.currentTimeMillis()/50) % 100 == 0){
+                    updatePresence();
+                }
+            });
         });
     }
 
 
     public void stop() {
         logger.log(Level.INFO, "Attempting to disconnect RPC \nConnectedStatus: " + connected);
-        connected = false;
-        client.close();
+        if (isActive()) {
+            connected = false;
+            client.close();
+        }
     }
 
     public void updatePresence() {

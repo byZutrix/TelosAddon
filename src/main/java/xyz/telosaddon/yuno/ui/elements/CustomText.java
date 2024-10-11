@@ -10,6 +10,9 @@ public class CustomText extends AbstractCustomElement {
 
     private int x;
     private int y;
+
+
+
     private String text;
     private int color = -1;
 
@@ -35,5 +38,7 @@ public class CustomText extends AbstractCustomElement {
         context.drawText(tr, customText, this.x, this.y, textColor, true);
     }
 
-
+    public void setText(String text) {
+        this.text = text;
+    }
 }

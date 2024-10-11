@@ -4,6 +4,7 @@ import net.minecraft.entity.boss.BossBar;
 import xyz.telosaddon.yuno.TelosAddon;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 
 import static xyz.telosaddon.yuno.TelosAddon.LOGGER;
@@ -21,32 +22,36 @@ public class LocalAPI {
     private static String currentCharacterFighting = "";
     private static String currentClientPing = "";
 
+    //todo make async
     public static void updateAPI(){
-        if (!TelosAddon.getInstance().isOnTelos()) return;
-        Optional<String> info = TabListUtils.getCharInfo();
-        if (info.isEmpty()) return;
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            // todo: add lock
+                if (!TelosAddon.getInstance().isOnTelos()) return;
+                Optional<String> info = TabListUtils.getCharInfo();
+                if (info.isEmpty()) return;
 
-        String[] charInfo = info.get().split(" ");
-        if (charInfo.length < 4) return;
+                String[] charInfo = info.get().split(" ");
+                if (charInfo.length < 4) return;
 
-        switch (charInfo[0].hashCode()) {
-            case 880 -> currentCharacterType = "Normal";
-            case 881 -> currentCharacterType = "Hardcore";
-            case 882 -> currentCharacterType = "Softcore";
-            default -> // 1771717 -> 1771734 inclusive
-                    currentCharacterType = "GHardcore";
-        }
-        try {
-            currentCharacterLevel = Integer.parseInt(charInfo[2]);
-            currentCharacterClass = charInfo[3];
+                switch (charInfo[0].hashCode()) {
+                    case 880 -> currentCharacterType = "Normal";
+                    case 881 -> currentCharacterType = "Hardcore";
+                    case 882 -> currentCharacterType = "Softcore";
+                    default -> // 1771717 -> 1771734 inclusive
+                            currentCharacterType = "GHardcore";
+                }
+                try {
+                    currentCharacterLevel = Integer.parseInt(charInfo[2]);
+                    currentCharacterClass = charInfo[3];
 
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        currentClientPing = getPing().isPresent() ? getPing().get() : String.valueOf(-1);
-        updateCharacterArea();
-        Optional<String> realm = TabListUtils.getServer();
-        realm.ifPresent(s -> currentCharacterWorld = s);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                currentClientPing = getPing().isPresent() ? getPing().get() : String.valueOf(-1);
+                updateCharacterArea();
+                Optional<String> realm = TabListUtils.getServer();
+                realm.ifPresent(s -> currentCharacterWorld = s.replaceAll("[\\[\\]]+", ""));
+        });
     }
 
     private static void updateCharacterArea(){
@@ -56,7 +61,7 @@ public class LocalAPI {
 
                 BossBar areaBar = (BossBar) preArray[3];
                 String area = stripAllFormatting(areaBar.getName().getString());
-                currentCharacterArea = area.replaceAll("[^a-zA-z ]+", ""); // idk why but theres numbers at the end so we gotta trim that off
+                currentCharacterArea = area.replaceAll("[^a-zA-z ']+", ""); // idk why but theres numbers at the end so we gotta trim that off
 
 
                 BossBar bossBar = (BossBar) preArray[1]; // add what boss we're fighting

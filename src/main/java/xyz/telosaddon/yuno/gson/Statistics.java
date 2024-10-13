@@ -37,6 +37,9 @@ public class Statistics{
 	@SerializedName("rotmc:royal-arctic_colossus")
 	private int rotmcRoyalArcticColossus;
 
+	@SerializedName("rotmc:companion-arctic_colossus")
+	private int rotmcCompanionArcticColossus;
+
 	@SerializedName("rotmc:boss-golden_freddy")
 	private int rotmcBossGoldenFreddy;
 
@@ -51,6 +54,12 @@ public class Statistics{
 
 	@SerializedName("rotmc:royal-pyro")
 	private int rotmcRoyalPyro;
+
+	@SerializedName("rotmc:companion-pyro")
+	private int rotmcCompanionPyro;
+
+	@SerializedName("rotmc:companion-cryo")
+	private int rotmcCompanionCryo;
 
 	@SerializedName("rotmc:royal-prismara")
 	private int rotmcRoyalPrismara;
@@ -109,6 +118,9 @@ public class Statistics{
 	@SerializedName("rotmc:boss-malfas")
 	private int rotmcBossMalfas;
 
+	@SerializedName("rotmc:companion-malfas")
+	private int rotmcCompanionMalfas;
+
 	@SerializedName("rotmc:boss-tidol")
 	private int rotmcBossTidol;
 
@@ -127,11 +139,32 @@ public class Statistics{
 	@SerializedName("rotmc:boss-miraj")
 	private int rotmcBossMiraj;
 
+	@SerializedName("rotmc:companion-miraj")
+	private int rotmcCompanionMiraj;
+
+	@SerializedName("rotmc:boss-flora")
+	private int rotmcBossFlora;
+
+	@SerializedName("rotmc:irradiated-flora")
+	private int rotmcIrradiatedFlora;
+
+	@SerializedName("rotmc:companion-flora")
+	private int rotmcCompanionFlora;
+
 	@SerializedName("rotmc:boss-zhum")
 	private int rotmcBossZhum;
 
+	@SerializedName("rotmc:irradiated-zhum")
+	private int rotmcIrradiatedZhum;
+
+	@SerializedName("rotmc:companion-zhum")
+	private int rotmcCompanionZhum;
+
 	@SerializedName("rotmc:boss-onyx")
 	private int rotmcBossOnyx;
+
+	@SerializedName("rotmc:bloodshot-onyx")
+	private int rotmcBloodshotOnyx;
 
 	@SerializedName("rotmc:boss-glumi")
 	private int rotmcBossGlumi;
@@ -175,6 +208,9 @@ public class Statistics{
 	@SerializedName("rotmc:royal-ashenclaw")
 	private int rotmcRoyalAshenclaw;
 
+	@SerializedName("rotmc:companion-ashenclaw")
+	private int rotmcCompanionAshenclaw;
+
 	@SerializedName("rotmc:boss-jones")
 	private int rotmcBossJones;
 
@@ -186,6 +222,18 @@ public class Statistics{
 
 	@SerializedName("rotmc:royal-reaper")
 	private int rotmcRoyalReaper;
+
+	@SerializedName("rotmc:bloodshot-reaper")
+	private int rotmcBloodshotReaper;
+
+	@SerializedName("rotmc:bloodshot-herald")
+	private int rotmcBloodshotHerald;
+
+	@SerializedName("rotmc:bloodshot-warden")
+	private int rotmcBloodshotWarden;
+
+	@SerializedName("rotmc:bloodshot-defender")
+	private int rotmcBloodshotDefender;
 
 	@SerializedName("rotmc:royal-shadowflare")
 	private int rotmcRoyalShadowflare;
@@ -208,8 +256,14 @@ public class Statistics{
 	@SerializedName("rotmc:boss-choji")
 	private int rotmcBossChoji;
 
+	@SerializedName("rotmc:companion-choji")
+	private int rotmcCompanionChoji;
+
 	@SerializedName("rotmc:bloodshot-valerion")
 	private int rotmcBloodshotValerion;
+
+	@SerializedName("rotmc:companion-valerion")
+	private int rotmcCompanionValerion;
 
 	@SerializedName("rotmc:royal-cryo")
 	private int rotmcRoyalCryo;
@@ -325,6 +379,36 @@ public class Statistics{
 	@SerializedName("rotmc:royal-defender")
 	private int rotmcRoyalDefender;
 
+	@SerializedName("rotmc:companion-tidol")
+	private int rotmcCompanionTidol;
+
+	@SerializedName("rotmc:companion-lotil")
+	private int rotmcCompanionLotil;
+
+	@SerializedName("rotmc:companion-valus")
+	private int rotmcCompanionValus;
+
+	@SerializedName("rotmc:companion-chungus")
+	private int rotmcCompanionChungus;
+
+	@SerializedName("rotmc:companion-astaroth")
+	private int rotmcCompanionAstaroth;
+
+	@SerializedName("rotmc:companion-glumi")
+	private int rotmcCompanionGlumi;
+
+	@SerializedName("rotmc:companion-anubis")
+	private int rotmcCompanionAnubis;
+
+	@SerializedName("rotmc:companion-oozul")
+	private int rotmcCompanionOozul;
+
+	@SerializedName("rotmc:companion-illarius")
+	private int rotmcCompanionIllarius;
+
+	@SerializedName("rotmc:companion-freddy")
+	private int rotmcCompanionFreddy;
+
 	public int getRotmcIrradiatedDrayruk(){
 		return rotmcIrradiatedDrayruk;
 	}
@@ -369,6 +453,10 @@ public class Statistics{
 		return rotmcRoyalArcticColossus;
 	}
 
+	public int getRotmcCompanionArcticColossus(){
+		return rotmcRoyalArcticColossus;
+	}
+
 	public int getRotmcBossGoldenFreddy(){
 		return rotmcBossGoldenFreddy;
 	}
@@ -387,6 +475,14 @@ public class Statistics{
 
 	public int getRotmcRoyalPyro(){
 		return rotmcRoyalPyro;
+	}
+
+	public int getRotmcCompanionPyro(){
+		return rotmcCompanionPyro;
+	}
+
+	public int getRotmcCompanionCryo(){
+		return rotmcCompanionCryo;
 	}
 
 	public int getRotmcRoyalPrismara(){
@@ -493,8 +589,32 @@ public class Statistics{
 		return rotmcBossZhum;
 	}
 
+	public int getRotmcIrradiatedZhum(){
+		return rotmcIrradiatedZhum;
+	}
+
+	public int getRotmcCompanionZhum(){
+		return rotmcCompanionZhum;
+	}
+
+	public int getRotmcIrradiatedFlora(){
+		return rotmcIrradiatedFlora;
+	}
+
+	public int getRotmcCompanionFlora(){
+		return rotmcCompanionFlora;
+	}
+
+	public int getRotmcBossFlora(){
+		return rotmcBossFlora;
+	}
+
 	public int getRotmcBossOnyx(){
 		return rotmcBossOnyx;
+	}
+
+	public int getRotmcBloodshotOnyx(){
+		return rotmcBloodshotOnyx;
 	}
 
 	public int getRotmcBossGlumi(){
@@ -553,6 +673,10 @@ public class Statistics{
 		return rotmcRoyalAshenclaw;
 	}
 
+	public int getRotmcCompanionAshenclaw(){
+		return rotmcCompanionAshenclaw;
+	}
+
 	public int getRotmcBossJones(){
 		return rotmcBossJones;
 	}
@@ -571,6 +695,22 @@ public class Statistics{
 
 	public int getRotmcRoyalDefender() {
 		return rotmcRoyalDefender;
+	}
+
+	public int getRotmcBloodshotDefender() {
+		return rotmcBloodshotDefender;
+	}
+
+	public int getRotmcBloodshotReaper() {
+		return rotmcBloodshotReaper;
+	}
+
+	public int getRotmcBloodshotHerald() {
+		return rotmcBloodshotHerald;
+	}
+
+	public int getRotmcBloodshotWarden() {
+		return rotmcBloodshotWarden;
 	}
 
 	public int getRotmcRoyalShadowflare(){
@@ -601,8 +741,16 @@ public class Statistics{
 		return rotmcBossChoji;
 	}
 
+	public int getRotmcCompanionChoji(){
+		return rotmcCompanionChoji;
+	}
+
 	public int getRotmcBloodshotValerion(){
 		return rotmcBloodshotValerion;
+	}
+
+	public int getRotmcCompanionValerion(){
+		return rotmcCompanionValerion;
 	}
 
 	public int getRotmcRoyalCryo(){
@@ -661,6 +809,10 @@ public class Statistics{
 		return rotmcIrradiatedMiraj;
 	}
 
+	public int getRotmcCompanionMiraj(){
+		return rotmcCompanionMiraj;
+	}
+
 	public int getRotmcBossDefender(){
 		return rotmcBossDefender;
 	}
@@ -671,6 +823,10 @@ public class Statistics{
 
 	public int getRotmcRoyalMalfas(){
 		return rotmcRoyalMalfas;
+	}
+
+	public int getRotmcCompanionMalfas(){
+		return rotmcCompanionMalfas;
 	}
 
 	public int getRotmcCompanionMagnus(){
@@ -751,5 +907,45 @@ public class Statistics{
 
 	public int getRotmcCompanionOphanim(){
 		return rotmcCompanionOphanim;
+	}
+
+	public int getRotmcCompanionTidol() {
+		return rotmcCompanionTidol;
+	}
+
+	public int getRotmcCompanionLotil() {
+		return rotmcCompanionLotil;
+	}
+
+	public int getRotmcCompanionValus() {
+		return rotmcCompanionValus;
+	}
+
+	public int getRotmcCompanionChungus() {
+		return rotmcCompanionChungus;
+	}
+
+	public int getRotmcCompanionAstaroth() {
+		return rotmcCompanionAstaroth;
+	}
+
+	public int getRotmcCompanionGlumi() {
+		return rotmcCompanionGlumi;
+	}
+
+	public int getRotmcCompanionAnubis() {
+		return rotmcCompanionAnubis;
+	}
+
+	public int getRotmcCompanionOozul() {
+		return rotmcCompanionOozul;
+	}
+
+	public int getRotmcCompanionIllarius() {
+		return rotmcCompanionIllarius;
+	}
+
+	public int getRotmcCompanionFreddy() {
+		return rotmcCompanionFreddy;
 	}
 }

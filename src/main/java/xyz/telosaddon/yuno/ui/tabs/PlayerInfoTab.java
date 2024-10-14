@@ -126,7 +126,7 @@ public class PlayerInfoTab extends AbstractTab {
             elements.add(new CustomText(800, 360, "Valerion: " + stats.getRotmcBossValerion() + " (§4" + stats.getRotmcBloodshotValerion() + "§r/§e" + stats.getRotmcCompanionValerion() + "§r)"));
             elements.add(new CustomText(800, 380, "Nebula: " + stats.getRotmcBossNebula() + " (§4" + stats.getRotmcBloodshotNebula() + "§r)"));
             elements.add(new CustomText(800, 400, "Ophanim: " + stats.getRotmcBossOphanim() + " (§4" + stats.getRotmcBloodshotOphanim() + "§r)"));
-            elements.add(new CustomText(800, 420, "Asmodeus: " + stats.getRotmcBossAsmodeus() + " (§4" + stats.getRotmcBloodshotAsmodeus() + "§r/§e" + stats.getRotmcCompanionAsmodeus() + "§r)"));
+            elements.add(new CustomText(800, 420, "Asmodeus: " + stats.getRotmcBossAsmodeus() + " (§4" + stats.getRotmcBloodshotAsmodeus() + "§r))"));
             elements.add(new CustomText(800, 440, "Seraphim: " + stats.getRotmcBossSeraphim() + " (§4" + stats.getRotmcBloodshotSeraphim() + "§r/§e" + stats.getRotmcCompanionSeraphim() + "§r)"));
 
 

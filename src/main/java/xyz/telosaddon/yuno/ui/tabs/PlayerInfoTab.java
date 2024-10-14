@@ -19,10 +19,10 @@ import java.util.Objects;
 
 public class PlayerInfoTab extends AbstractTab {
     private final CustomUiManager uiManager;
-    private List<CustomElement> elements; // Initialized in the constructor
+    private final List<CustomElement> elements; // Initialized in the constructor
     private final TelosApi telosApi;
     private PlayerData playerData; // Will be null until fetched
-    private static final long CACHE_LIFETIME = 56750; // 1 minute (in milliseconds)
+    private static final long CACHE_LIFETIME = 60000; // 1 minute (in milliseconds)
     private static final PlayerDataCache playerDataCache = new PlayerDataCache(CACHE_LIFETIME); // Static cache instance
 
     public PlayerInfoTab(CustomUiManager uiManager) {
@@ -93,17 +93,17 @@ public class PlayerInfoTab extends AbstractTab {
             elements.add(new CustomText(550, 220, "Freddy: " + stats.getRotmcBossFreddy() + " (" + stats.getRotmcRoyalFreddy() + "§r/§e" + stats.getRotmcCompanionFreddy() + "§r)"));
 
             // world dungeons
-            elements.add(new CustomText(675, 20, "World Dungeons:"));
-            elements.add(new CustomText(675, 40, "Omnipotent: " + stats.getRotmcBossOmnipotent() + " (" + stats.getRotmcRoyalOmnipotent() + "/§4" + stats.getRotmcBloodshotOmnipotent() + "§r)"));
-            elements.add(new CustomText(675, 60, "Prismara: " + stats.getRotmcBossPrismara() + " (" + stats.getRotmcRoyalPrismara() + ")"));
-            elements.add(new CustomText(675, 80, "Kurvaros: " + stats.getRotmcBossKurvaros() + " (" + stats.getRotmcRoyalKurvaros() + "/§4" + stats.getRotmcBloodshotKurvaros() + "§r)"));
-            elements.add(new CustomText(675, 100, "Thalassar: " + stats.getRotmcBossThalassar() + " (" + stats.getRotmcRoyalThalassar() + ")"));
-            elements.add(new CustomText(675, 120, "Chronos: " + stats.getRotmcBossChronos() + " (" + stats.getRotmcRoyalChronos() + "/§4" + stats.getRotmcBloodshotChronos() + "§r)"));
-            elements.add(new CustomText(675, 140, "Shadowflare: " + stats.getRotmcBossShadowflare() + " (" + stats.getRotmcRoyalShadowflare() + "/§4" + stats.getRotmcBloodshotShadowflare() + "§r)"));
-            elements.add(new CustomText(675, 160, "Golden Freddy: " + stats.getRotmcBossGoldenFreddy() + " (" + stats.getRotmcRoyalGoldenFreddy() + ")"));
-            elements.add(new CustomText(675, 180, "Loa: " + stats.getRotmcBossLoa() + " (" + stats.getRotmcRoyalLoa() + ")"));
-            elements.add(new CustomText(675, 200, "Silex: " + stats.getRotmcBossSilex() + " (" + stats.getRotmcRoyalSilex() + "/§4" + stats.getRotmcBloodshotSilex() + "§r)"));
-            elements.add(new CustomText(675, 220, "Onyx: " + stats.getRotmcBossOnyx() + " (" + "/§4" + stats.getRotmcBloodshotOnyx() + "§r)"));
+            elements.add(new CustomText(650, 20, "World Dungeons:"));
+            elements.add(new CustomText(650, 40, "Omnipotent: " + stats.getRotmcBossOmnipotent() + " (" + stats.getRotmcRoyalOmnipotent() + "§r/§4" + stats.getRotmcBloodshotOmnipotent() + "§r/§e" + stats.getRotmcCompanionOmnipotent() + "§r)"));
+            elements.add(new CustomText(650, 60, "Prismara: " + stats.getRotmcBossPrismara() + " (" + stats.getRotmcRoyalPrismara() + "§r/§4" + stats.getRotmcCompanionPrismara() + "§r/§e" + stats.getRotmcCompanionPrismara() + "§r)"));
+            elements.add(new CustomText(650, 80, "Kurvaros: " + stats.getRotmcBossKurvaros() + " (" + stats.getRotmcRoyalKurvaros() + "§r/§4" + stats.getRotmcBloodshotKurvaros() + "§r/§e" + stats.getRotmcCompanionKurvaros() + "§r)"));
+            elements.add(new CustomText(650, 100, "Thalassar: " + stats.getRotmcBossThalassar() + " (" + stats.getRotmcRoyalThalassar() + "§r/§4" + stats.getRotmcCompanionThalassar() + "§r/§e" + stats.getRotmcCompanionThalassar() + "§r)"));
+            elements.add(new CustomText(650, 120, "Chronos: " + stats.getRotmcBossChronos() + " (" + stats.getRotmcRoyalChronos() + "§r/§4" + stats.getRotmcBloodshotChronos() + "§r/§e" + stats.getRotmcCompanionChronos() + "§r)"));
+            elements.add(new CustomText(650, 140, "Shadowflare: " + stats.getRotmcBossShadowflare() + " (" + stats.getRotmcRoyalShadowflare() + "§r/§4" + stats.getRotmcBloodshotShadowflare() + "§r/§e" + stats.getRotmcCompanionShadowflare() + "§r)"));
+            elements.add(new CustomText(650, 160, "Golden Freddy: " + stats.getRotmcBossGoldenFreddy() + " (" + stats.getRotmcRoyalGoldenFreddy() + "§r/§4" + stats.getRotmcCompanionGoldenFreddy() + "§r/§e" + stats.getRotmcCompanionGoldenFreddy() + "§r)"));
+            elements.add(new CustomText(650, 180, "Loa: " + stats.getRotmcBossLoa() + " (" + stats.getRotmcRoyalLoa() + "§r/§4" + stats.getRotmcCompanionLoa() + "§r/§e" + stats.getRotmcCompanionLoa() + "§r)"));
+            elements.add(new CustomText(650, 200, "Silex: " + stats.getRotmcBossSilex() + " (" + stats.getRotmcRoyalSilex() + "§r/§4" + stats.getRotmcBloodshotSilex() + "§r/§e" + stats.getRotmcCompanionSilex() + "§r)"));
+            elements.add(new CustomText(650, 220, "Onyx: " + stats.getRotmcBossOnyx() + " (" + "§4" + stats.getRotmcBloodshotOnyx() + "§r/§e" + stats.getRotmcCompanionOnyx() + "§r)"));
 
             // dungeon bosses
             elements.add(new CustomText(800, 20, "Dungeon Bosses:"));
@@ -126,8 +126,8 @@ public class PlayerInfoTab extends AbstractTab {
             elements.add(new CustomText(800, 360, "Valerion: " + stats.getRotmcBossValerion() + " (§4" + stats.getRotmcBloodshotValerion() + "§r/§e" + stats.getRotmcCompanionValerion() + "§r)"));
             elements.add(new CustomText(800, 380, "Nebula: " + stats.getRotmcBossNebula() + " (§4" + stats.getRotmcBloodshotNebula() + "§r)"));
             elements.add(new CustomText(800, 400, "Ophanim: " + stats.getRotmcBossOphanim() + " (§4" + stats.getRotmcBloodshotOphanim() + "§r)"));
-            elements.add(new CustomText(800, 420, "Asmodeus: " + stats.getRotmcBossAsmodeus() + " (§4" + stats.getRotmcBloodshotAsmodeus() + "§r)"));
-            elements.add(new CustomText(800, 440, "Seraphim: " + stats.getRotmcBossSeraphim() + " (§4" + stats.getRotmcBloodshotSeraphim() + "§r)"));
+            elements.add(new CustomText(800, 420, "Asmodeus: " + stats.getRotmcBossAsmodeus() + " (§4" + stats.getRotmcBloodshotAsmodeus() + "§r/§e" + stats.getRotmcCompanionAsmodeus() + "§r)"));
+            elements.add(new CustomText(800, 440, "Seraphim: " + stats.getRotmcBossSeraphim() + " (§4" + stats.getRotmcBloodshotSeraphim() + "§r/§e" + stats.getRotmcCompanionSeraphim() + "§r)"));
 
 
 

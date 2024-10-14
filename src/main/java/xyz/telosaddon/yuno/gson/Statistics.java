@@ -190,6 +190,9 @@ public class Statistics{
 	@SerializedName("rotmc:bloodshot-seraphim")
 	private int rotmcBloodshotSeraphim;
 
+	@SerializedName("rotmc:companion-seraphim")
+	private int rotmcCompanionSeraphim;
+
 	@SerializedName("rotmc:royal-oog")
 	private int rotmcRoyalOog;
 
@@ -337,6 +340,9 @@ public class Statistics{
 	@SerializedName("rotmc:bloodshot-asmodeus")
 	private int rotmcBloodshotAsmodeus;
 
+	@SerializedName("rotmc:companion-asmodeus")
+	private int rotmcCompanionAsmodeus;
+
 	@SerializedName("rotmc:companion-drayruk")
 	private int rotmcCompanionDrayruk;
 
@@ -408,6 +414,30 @@ public class Statistics{
 
 	@SerializedName("rotmc:companion-freddy")
 	private int rotmcCompanionFreddy;
+
+	@SerializedName("rotmc:companion-silex")
+	private int rotmcCompanionSilex;
+
+	@SerializedName("rotmc:companion-loa")
+	private int rotmcCompanionLoa;
+
+	@SerializedName("rotmc:companion-golden_freddy")
+	private int rotmcCompanionGoldenFreddy;
+
+	@SerializedName("rotmc:companion-shadowflare")
+	private int rotmcCompanionShadowflare;
+
+	@SerializedName("rotmc:companion-thalassar")
+	private int rotmcCompanionThalassar;
+
+	@SerializedName("rotmc:companion-Kurvaros")
+	private int rotmcCompanionKurvaros;
+
+	@SerializedName("rotmc:companion-prismara")
+	private int rotmcCompanionPrismara;
+
+	@SerializedName("rotmc:companion-omnipotent")
+	private int rotmcCompanionOmnipotent;
 
 	public int getRotmcIrradiatedDrayruk(){
 		return rotmcIrradiatedDrayruk;
@@ -649,6 +679,10 @@ public class Statistics{
 		return rotmcBloodshotSeraphim;
 	}
 
+	public int getRotmcCompanionSeraphim(){
+		return rotmcCompanionSeraphim;
+	}
+
 	public int getRotmcRoyalOog(){
 		return rotmcRoyalOog;
 	}
@@ -857,6 +891,10 @@ public class Statistics{
 		return rotmcBloodshotAsmodeus;
 	}
 
+	public int getRotmcCompanionAsmodeus(){
+		return rotmcCompanionAsmodeus;
+	}
+
 	public int getRotmcCompanionDrayruk(){
 		return rotmcCompanionDrayruk;
 	}
@@ -947,5 +985,37 @@ public class Statistics{
 
 	public int getRotmcCompanionFreddy() {
 		return rotmcCompanionFreddy;
+	}
+
+	public int getRotmcCompanionSilex() {
+		return rotmcCompanionSilex;
+	}
+
+	public int getRotmcCompanionLoa() {
+		return rotmcCompanionLoa;
+	}
+
+	public int getRotmcCompanionGoldenFreddy() {
+		return rotmcCompanionGoldenFreddy;
+	}
+
+	public int getRotmcCompanionShadowflare() {
+		return rotmcCompanionShadowflare;
+	}
+
+	public int getRotmcCompanionThalassar() {
+		return rotmcCompanionThalassar;
+	}
+
+	public int getRotmcCompanionKurvaros() {
+		return rotmcCompanionKurvaros;
+	}
+
+	public int getRotmcCompanionPrismara() {
+		return rotmcCompanionPrismara;
+	}
+
+	public int getRotmcCompanionOmnipotent() {
+		return rotmcCompanionOmnipotent;
 	}
 }

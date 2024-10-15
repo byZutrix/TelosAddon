@@ -1,10 +1,8 @@
-package xyz.telosaddon.yuno.ui.tabs;
+package xyz.telosaddon.yuno.utils;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
 import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.hotkey.NexusHotkey;
-import xyz.telosaddon.yuno.utils.LocalAPI;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -40,7 +38,6 @@ public class RealmUtils {
         return CompletableFuture.supplyAsync(()-> {
             String worldToJoin = worldName;
             NexusHotkey.useNexus();
-
             int waitTime = 15;
             while (!LocalAPI.getCurrentCharacterWorld().contains("Hub")){
                 try {
@@ -52,12 +49,10 @@ public class RealmUtils {
                 }
                 if (waitTime == 0) {
                     TelosAddon.getInstance().sendMessage("§cError teleporting to " + worldName);
-
                     throw new CompletionException(new Exception("Error teleporting to hub"));
                 }
             }
             return worldToJoin;
-
         }).thenAcceptAsync(RealmUtils::asyncTeleport);
 
     }

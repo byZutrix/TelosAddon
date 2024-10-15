@@ -1,24 +1,15 @@
 package xyz.telosaddon.yuno.ui.tabs;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import xyz.telosaddon.yuno.TelosAddon;
-import xyz.telosaddon.yuno.hotkey.NexusHotkey;
 import xyz.telosaddon.yuno.ui.CustomElement;
 import xyz.telosaddon.yuno.ui.CustomUiManager;
 import xyz.telosaddon.yuno.ui.elements.CustomButton;
-import xyz.telosaddon.yuno.ui.elements.CustomText;
 import xyz.telosaddon.yuno.utils.LocalAPI;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 
-import static xyz.telosaddon.yuno.ui.tabs.RealmUtils.nexusThenTp;
+import static xyz.telosaddon.yuno.utils.RealmUtils.nexusThenTp;
 
 public class TeleportTab{
     private final CustomUiManager uiManager;

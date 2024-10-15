@@ -2,16 +2,17 @@
   "schemaVersion": 1,
   "id": "telosaddon",
   "version": "${version}",
-  "name": "TelosAddon",
-  "description": "No description yet.",
+  "name": "RealmsAddon",
+  "description": "A mod that adds a few features for the server Telos Realms! Please note that this mod is not affiliated with Telos Realms in any way. For support and other concerns, join the discord: https://discord.gg/2pa42RxuaF",
   "authors": [
-    "KamiYuno"
+    "KamiYuno",
+    "PixelizedGaming"
   ],
   "contact": {
     "repo": "https://github.com/byZutrix/TelosAddon.git"
   },
-  "license": "All-Rights-Reserved",
-  "icon": "assets/telosaddon/icon.png",
+  "license": "MIT",
+  "icon": "assets/telosaddon/icon.jpg",
   "environment": "client",
   "entrypoints": {
     "client": [

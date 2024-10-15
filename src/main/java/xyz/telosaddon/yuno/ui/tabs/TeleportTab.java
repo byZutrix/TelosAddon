@@ -44,13 +44,14 @@ public class TeleportTab{
 
     private void joinWorld(String worldName){
         if (MinecraftClient.getInstance().player == null) return;
+        MinecraftClient.getInstance().player.networkHandler.sendChatCommand("joinq " + worldName);
 
-        if (!LocalAPI.getCurrentCharacterWorld().contains("Hub")){
-            nexusThenTp(worldName);
-        }
-        else{
-            MinecraftClient.getInstance().player.networkHandler.sendChatCommand("joinq " + worldName);
-        }
+//        if (!LocalAPI.getCurrentCharacterWorld().contains("Hub")){
+//            nexusThenTp(worldName);
+//        }
+//        else{
+//            MinecraftClient.getInstance().player.networkHandler.sendChatCommand("joinq " + worldName);
+//        }
 
     }
 }

@@ -94,7 +94,7 @@ public class MixinMessageHandler {
         int newValue2 = TelosAddon.getInstance().getBagCounter().get("NoWhiteRuns");
         TelosAddon.getInstance().getBagCounter().replace("NoWhiteRuns", newValue2 + 1);
 
-        int newBlackValue = TelosAddon.getInstance().getBagCounter().get("NoWhiteRuns");
+        int newBlackValue = TelosAddon.getInstance().getBagCounter().get("NoBlackRuns");
         TelosAddon.getInstance().getBagCounter().replace("NoBlackRuns", newBlackValue + 1);
     }
 

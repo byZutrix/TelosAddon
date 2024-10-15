@@ -30,6 +30,7 @@ public class GuiTab {
         boolean relicSetting = config.getBoolean("RelicSetting");
         boolean totalRunSetting = config.getBoolean("TotalRunSetting");
         boolean noWhiteRunSetting = config.getBoolean("NoWhiteRunSetting");
+        boolean noBlackRunSetting = config.getBoolean("NoBlackRunSetting");
         boolean lifetimeSetting = config.getBoolean("LifetimeSetting");
 
         this.elements = Arrays.asList(
@@ -70,7 +71,11 @@ public class GuiTab {
                     toggle("NoWhiteRunSetting", button.getText(), toggled);
                 }).setToggled(noWhiteRunSetting),
 
-                new CustomButton(8, 290, 150, 20, "Lifetime Counter", (button, toggled) -> {
+                new CustomButton(8, 290, 150, 20, "No Black Runs", (button, toggled) -> {
+                    toggle("NoBlackRunSetting", button.getText(), toggled);
+                }).setToggled(noBlackRunSetting),
+
+                new CustomButton(175, 83, 150, 20, "Lifetime Counter", (button, toggled) -> {
                     toggle("LifetimeSetting", button.getText(), toggled);
                 }).setToggled(lifetimeSetting)
 

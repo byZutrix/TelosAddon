@@ -11,8 +11,11 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import org.lwjgl.glfw.GLFW;
+import xyz.telosaddon.yuno.TelosAddon;
 
 import java.nio.charset.StandardCharsets;
+
+import static xyz.telosaddon.yuno.TelosAddon.LOGGER;
 
 @Environment(EnvType.CLIENT)
 public class NexusHotkey {
@@ -28,6 +31,8 @@ public class NexusHotkey {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (keyBinding.wasPressed()) {
+                TelosAddon.getInstance().sendMessage("Nexus hotkey pressed!");
+                LOGGER.info("Nexus hotkey pressed!");
                 useNexus();
             }
         });

@@ -22,7 +22,7 @@ public class TelosMenu extends Screen {
     private final Config config;
 
     public TelosMenu() {
-        super(Text.literal("Telos Menu"));
+        super(Text.literal("Realms Menu"));
         this.mc = MinecraftClient.getInstance();
         this.config = TelosAddon.getInstance().getConfig();
         this.customUiManager = new CustomUiManager();
@@ -118,7 +118,7 @@ public class TelosMenu extends Screen {
     }
 
     private void drawTitle(DrawContext context, TextRenderer tr) {
-        String title = "Telos Addon | BETA-" + MOD_VERSION;
+        String title = "Realms Addon | BETA-" + MOD_VERSION;
         Text titleText = FontHelper.toCustomFont(title, config.getString("Font"));
 
         float titleScale = 1.5f;

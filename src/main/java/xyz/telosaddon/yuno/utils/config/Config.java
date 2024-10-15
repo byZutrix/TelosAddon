@@ -83,6 +83,7 @@ public class Config {
         addDefault("Relics", 0);
         addDefault("TotalRuns", 0);
         addDefault("NoWhiteRuns", 0);
+        addDefault("NoBlackRuns", 0);
         addDefault("TotalPlaytime", 0L);
 
         addDefault("NewGamma", 15000.0D);
@@ -107,6 +108,7 @@ public class Config {
         addDefault("RelicSetting", false);
         addDefault("TotalRunSetting", false);
         addDefault("NoWhiteRunSetting", false);
+        addDefault("NoBlackRunSetting", false);
         addDefault("LifetimeSetting", false);
 
 

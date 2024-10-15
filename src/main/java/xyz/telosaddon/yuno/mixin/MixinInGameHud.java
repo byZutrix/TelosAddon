@@ -69,6 +69,7 @@ public abstract class MixinInGameHud {
         int relics = config.getBoolean("LifetimeSetting") ? config.getInteger("Relics") : TelosAddon.getInstance().getBagCounter().get("Relics");
         int totalRuns = config.getBoolean("LifetimeSetting") ? config.getInteger("TotalRuns") : TelosAddon.getInstance().getBagCounter().get("TotalRuns");
         int noWhitesRuns = config.getBoolean("LifetimeSetting") ? config.getInteger("NoWhiteRuns") : TelosAddon.getInstance().getBagCounter().get("NoWhiteRuns");
+        int noBlackRuns = config.getBoolean("LifetimeSetting") ? config.getInteger("NoBlackRuns") : TelosAddon.getInstance().getBagCounter().get("NoBlackRuns");
 
         List<String> bagTexts = new ArrayList<>();
         if(config.getBoolean("GreenSetting") || isEditMode)
@@ -89,6 +90,8 @@ public abstract class MixinInGameHud {
             bagTexts.add("Total Runs§7: §f" + totalRuns);
         if(config.getBoolean("NoWhiteRunSetting") || isEditMode)
             bagTexts.add("No Whites Runs§7: §f" + noWhitesRuns);
+        if(config.getBoolean("NoBlackRunSetting") || isEditMode)
+            bagTexts.add("No Black Runs§7: §f" + noBlackRuns);
 
         int bagY = config.getInteger("BagY");
         int bagX = config.getInteger("BagX");

@@ -28,7 +28,11 @@ dependencies {
     include implementation('org.slf4j:slf4j-api:2.0.7')
     include implementation('com.kohlschutter.junixsocket:junixsocket-common:2.6.2')
     include implementation('com.kohlschutter.junixsocket:junixsocket-native-common:2.6.2')
-    }
+    include implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    include implementation("com.google.code.gson:gson:2.11.0")
+    include implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+    include implementation("com.squareup.okio:okio:3.5.0")
+}
 
 processResources {
     inputs.property "version", project.version

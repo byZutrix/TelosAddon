@@ -12,7 +12,7 @@
     "repo": "https://github.com/byZutrix/TelosAddon.git"
   },
   "license": "MIT",
-  "icon": "assets/telosaddon/icon.jpg",
+  "icon": "assets/telosaddon/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [

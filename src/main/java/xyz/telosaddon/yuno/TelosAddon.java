@@ -40,8 +40,6 @@ public class TelosAddon implements ClientModInitializer  {
     private SoundManager soundManager;
     private Config config;
     private Map<String, Integer> bagCounter;
-
-
     private long playTime = 0;
     private int tickCounter = 0;
     private List<String> aliveBosses;

@@ -5,7 +5,7 @@ Please download from the official modrinth page unless you want to help test for
 Minecraft Fabric 1.21.1 Addon for TelosRealms!<br>
 You can open the Menu with 'b' and change the Keybind in your Minecraft Settings!<br>
 If you encounter any bugs/errors just send them to 'kamiyuno' on discord!<br>
-Made by: KamiYuno!
+Made by: pixelizedgaming!
 
 Modrinth:
 https://modrinth.com/mod/telosaddon/versions

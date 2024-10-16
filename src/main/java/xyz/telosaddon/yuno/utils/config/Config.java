@@ -110,7 +110,7 @@ public class Config {
         addDefault("NoWhiteRunSetting", false);
         addDefault("NoBlackRunSetting", false);
         addDefault("LifetimeSetting", false);
-
+        addDefault("EnableJoinText", true);
 
         addDefault("SwingSetting", false);
         addDefault("GammaSetting", false);

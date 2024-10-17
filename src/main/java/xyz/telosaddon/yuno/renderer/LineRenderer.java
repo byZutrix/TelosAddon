@@ -14,6 +14,8 @@ import java.util.OptionalDouble;
 
 public class LineRenderer implements IRenderer{
 
+	private float radius = Float.NaN;
+
 	@Override
 	public void draw(float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, int color, float height) {
 		float dy = (entity.isInSneakingPose() ? 0.125f : 0) + height;
@@ -28,43 +30,46 @@ public class LineRenderer implements IRenderer{
 	}
 
 	private void drawLine(float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumer, float dy, int argb){
+		if(Float.isNaN(radius))
+			return;
 		MatrixStack.Entry entry = matrices.peek();
-		ClientPlayerEntity player = MinecraftClient.getInstance().player;
-		assert player != null;
+		float width = 0.2f;
 
-		double pYaw = player.getYaw(tickDelta);
-		double angleRad = -Math.toRadians(pYaw);
-		Vector3f unit = new Vector3f((float)Math.sin(angleRad), 0, (float)Math.cos(angleRad));
-		unit.mul(10f);
+		vertexConsumer.vertex(entry, width/2, dy, 0f).color(argb).normal(entry, 0.0f, 0.0f, 0);
+		vertexConsumer.vertex(entry, width/2, dy, this.radius).color(argb).normal(entry, 0.0f, 0.0f, 0);
+		vertexConsumer.vertex(entry, -width/2, dy, this.radius).color(argb).normal(entry, 0.0f, 0.0f, 0);
+		vertexConsumer.vertex(entry, -width/2, dy, 0f).color(argb).normal(entry, 0.0f, 0.0f, 0);
 
-		vertexConsumer.vertex(entry, new Vector3f(0f, 0f, 0f)).color(argb).normal(matrices.peek(), -unit.x, 0.0f, -unit.z);
-		vertexConsumer.vertex(entry, unit).color(argb).normal(matrices.peek(), -unit.x, 0.0f, -unit.z);
+
 	}
 
 	@Override
 	public void setRadius(float radius) {
-
+		this.radius = radius;
 	}
 
 	private static class LineRendererPhases extends RenderPhase {
 		static final RenderLayer.MultiPhase LINE_LAYER = makeLayer();
 
 		private static RenderLayer.MultiPhase makeLayer() {
-			String name = "showtelosrange_line_" + VertexFormat.DrawMode.QUADS.name().toLowerCase(Locale.ROOT);
+			String name = "showtelosrange_line_" + VertexFormat.DrawMode.LINES.name().toLowerCase(Locale.ROOT);
 
 			return RenderLayer.of(
 					name,
-					VertexFormats.LINES,
-					VertexFormat.DrawMode.LINES,
+					VertexFormats.POSITION_COLOR,
+					VertexFormat.DrawMode.QUADS,
 					1536,
+					false,
+					true,
 					RenderLayer.MultiPhaseParameters.builder()
-							.program(LINES_PROGRAM)
+							.program(RenderPhase.COLOR_PROGRAM)
 							.lineWidth(new RenderPhase.LineWidth(OptionalDouble.of(10f)))
-							.layering(VIEW_OFFSET_Z_LAYERING)
-							.transparency(TRANSLUCENT_TRANSPARENCY)
+							.layering(RenderPhase.VIEW_OFFSET_Z_LAYERING)
+							.transparency(RenderPhase.NO_TRANSPARENCY)
 							.target(ITEM_ENTITY_TARGET)
 							.writeMaskState(ALL_MASK)
 							.cull(DISABLE_CULLING)
+							.depthTest(RenderPhase.LEQUAL_DEPTH_TEST)
 							.build(false));
 		}
 

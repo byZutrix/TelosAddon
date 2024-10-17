@@ -16,13 +16,15 @@ import java.util.function.Function;
 
 public class ShowRangeFeature extends AbstractFeature {
 	private ItemStack previousItem = null;
-	private final IRenderer circleRenderer;
+	private final IRenderer renderer;
 	private final Function<PlayerInventory, ItemStack> itemGetter;
+	private float radius = Float.NaN;
 
 
 	public ShowRangeFeature(Config config, Function<PlayerInventory, ItemStack> itemGetter, String itemSlotName) {
 		super(config, "Show" + itemSlotName + "RangeFeature");
-		this.circleRenderer = new LineRenderer();
+		this.renderer = new LineRenderer();
+//		this.renderer = new CircleRenderer();
 		this.itemGetter = itemGetter;
 	}
 
@@ -49,8 +51,8 @@ public class ShowRangeFeature extends AbstractFeature {
 		ItemStack itemToCheck = this.itemGetter.apply(inventory);
 		if (!itemToCheck.equals(this.previousItem)) {
 			previousItem = itemToCheck;
-			float radius = parseRadius(itemToCheck);
-			this.circleRenderer.setRadius(radius);
+			radius = parseRadius(itemToCheck);
+			this.renderer.setRadius(radius);
 		}
 	}
 
@@ -61,14 +63,18 @@ public class ShowRangeFeature extends AbstractFeature {
 		checkMainHand(client);
 	}
 
-	public void draw(float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, ClientPlayerEntity player) {
+	public float getRadius(){
+		return this.radius;
+	}
+
+	public void draw(float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, ClientPlayerEntity player, float dy) {
 		if (!this.isEnabled()) return;
-		this.circleRenderer.draw(tickDelta,
+		this.renderer.draw(tickDelta,
 				matrices,
 				vertexConsumers,
 				player,
 				this.getConfig().getInteger(this.getFeatureName() + "Color"),
-				this.getConfig().getDouble(this.getFeatureName() + "Height").floatValue());
+				this.getConfig().getDouble(this.getFeatureName() + "Height").floatValue() + dy);
 
 	}
 }

@@ -96,12 +96,12 @@ public class CircleRenderer implements IRenderer{
 					VertexFormats.POSITION_COLOR,
 					VertexFormat.DrawMode.QUADS,
 					1536,
-//					false,
-//					true,
+					false,
+					true,
 					RenderLayer.MultiPhaseParameters.builder()
 							.program(COLOR_PROGRAM)
 							.layering(VIEW_OFFSET_Z_LAYERING)
-							.transparency(TRANSLUCENT_TRANSPARENCY)
+							.transparency(NO_TRANSPARENCY)
 							.target(ITEM_ENTITY_TARGET)
 							.writeMaskState(ALL_MASK)
 							.cull(DISABLE_CULLING)

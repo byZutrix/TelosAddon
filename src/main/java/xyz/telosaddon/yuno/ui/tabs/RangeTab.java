@@ -29,10 +29,10 @@ public class RangeTab extends AbstractTab {
 		double showOffHandRangeHeight = getConfig().getDouble("ShowOffHandRangeFeatureHeight");
 
 		var mainRangeHeightField = new CustomTextField(8, 118, 150, 20, "" + showMainRangeHeight);
-		var mainRangeColorField = new CustomTextField(8, 153, 150, 20, "#AARRGGBB");
+		var mainRangeColorField = new CustomTextField(8, 153, 150, 20, "#RRGGBB");
 
 		var offHandRangeHeightField = new CustomTextField(8, 234, 150, 20, "" + showOffHandRangeHeight);
-		var offHandRangeColorField = new CustomTextField(8, 269, 150, 20, "#AARRGGBB");
+		var offHandRangeColorField = new CustomTextField(8, 269, 150, 20, "#RRGGBB");
 		this.elements = Arrays.asList(
 				// Main Hand
 				new CustomButton(8, 83, 150, 20, "Show Main Hand's range", (button, toggled) -> {
@@ -54,7 +54,7 @@ public class RangeTab extends AbstractTab {
 				new CustomButton(163, 153, 40, 20, "Apply", (button) -> {
 					String input = mainRangeColorField.getText();
 					try {
-						int color = SerializeUtils.parseHexARGB(input);
+						int color = 0xFF000000 | SerializeUtils.parseHexRGB(input);
 						config.set("ShowMainRangeFeatureColor", color);
 					} catch (Exception e) {
 						TelosAddon.getInstance().sendMessage("Wrong Format! Use #AARRGGBB!");
@@ -81,7 +81,7 @@ public class RangeTab extends AbstractTab {
 				new CustomButton(163, 269, 40, 20, "Apply", (button) -> {
 					String input = offHandRangeColorField.getText();
 					try {
-						int color = SerializeUtils.parseHexARGB(input);
+						int color = 0xFF000000 | SerializeUtils.parseHexRGB(input);
 						config.set("ShowOffHandRangeFeatureColor", color);
 					} catch (Exception e) {
 						TelosAddon.getInstance().sendMessage("Wrong Format! Use #AARRGGBB!");

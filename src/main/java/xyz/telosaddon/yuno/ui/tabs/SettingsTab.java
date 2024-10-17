@@ -53,7 +53,7 @@ public class SettingsTab extends AbstractTab{
                     config.set("BagX", -1);
                     config.set("BagY", 60);
                 })).setTextInMiddle(true),
-                new CustomDropdown(8, 166, 150, 20, "Change Font", Arrays.asList(
+                new CustomDropdown<>(8, 166, 150, 20, "Change Font", Arrays.asList(
                         "Default",
                         "Arial",
                         "Nokia CF",

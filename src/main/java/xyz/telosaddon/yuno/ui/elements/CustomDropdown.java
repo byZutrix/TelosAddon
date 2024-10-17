@@ -11,19 +11,19 @@ import xyz.telosaddon.yuno.utils.FontHelper;
 import java.awt.*;
 import java.util.List;
 
-public class CustomDropdown extends AbstractCustomElement {
+public class CustomDropdown<T> extends AbstractCustomElement {
 
     private int x;
     private int y;
     private int width;
     private int height;
     private String text;
-    private List<String> list;
+    private List<T> list;
     private boolean isOpen = false;
     private boolean hovered = false;
-    protected CustomDropdown.PressAction onPress;
+    protected CustomDropdown.PressAction<T> onPress;
 
-    public CustomDropdown(int x, int y, int width, int height, String text, List<String> list, CustomDropdown.PressAction onPress) {
+    public CustomDropdown(int x, int y, int width, int height, String text, List<T> list, CustomDropdown.PressAction<T> onPress) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -54,7 +54,7 @@ public class CustomDropdown extends AbstractCustomElement {
 
                 context.fill(this.x, boxY, this.x + this.width, boxY + this.height, fillColor2);
 
-                Text buttonText = FontHelper.toCustomFont(this.list.get(i), getConfig().getString("Font"));
+                Text buttonText = FontHelper.toCustomFont(this.list.get(i).toString(), getConfig().getString("Font"));
                 context.drawText(tr, buttonText, this.x + (this.width - tr.getWidth(buttonText)) / 2, boxY + (this.height - 8) / 2,
                         0xFFFFFF, true);
             }
@@ -81,7 +81,7 @@ public class CustomDropdown extends AbstractCustomElement {
 
         if(button == 0 && getDropdownButton((int) mouseX, (int) mouseY) != -1) {
 
-            String value = this.list.get(getDropdownButton((int) mouseX, (int) mouseY));
+            T value = this.list.get(getDropdownButton((int) mouseX, (int) mouseY));
             this.onPress.onPress(this, value);
 
             getSoundManager().playSound("button_click");
@@ -115,7 +115,7 @@ public class CustomDropdown extends AbstractCustomElement {
     }
 
     @Environment(EnvType.CLIENT)
-    public interface PressAction {
-        void onPress(CustomDropdown button, String value);
+    public interface PressAction<T> {
+        void onPress(CustomDropdown<T> button, T value);
     }
 }

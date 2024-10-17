@@ -5,6 +5,7 @@ import com.google.gson.*;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.crash.CrashReport;
 import xyz.telosaddon.yuno.TelosAddon;
+import xyz.telosaddon.yuno.features.ShowRangeFeature;
 import xyz.telosaddon.yuno.utils.BossBarUtils;
 
 import java.awt.*;
@@ -126,13 +127,15 @@ public class Config {
         addDefault("RPCShowFightingSetting", false);
 
         addDefault("SwingIfNoCooldown", false);
+
         addDefault("ShowMainRangeFeatureEnabled", true);
         addDefault("ShowOffHandRangeFeatureEnabled", false);
         addDefault("ShowMainRangeFeatureHeight", 0.5);
         addDefault("ShowOffHandRangeFeatureHeight", 0.5);
-
         addDefault("ShowMainRangeFeatureColor", new Color(255, 0, 0).getRGB());
         addDefault("ShowOffHandRangeFeatureColor", new Color(0, 0, 255).getRGB());
+        addDefault("ShowMainRangeFeatureViewType", ShowRangeFeature.RangeViewType.CIRCLE.name());
+        addDefault("ShowOffHandRangeFeatureViewType", ShowRangeFeature.RangeViewType.CIRCLE.name());
     }
 
     public void addDefault(String key, Object value) {

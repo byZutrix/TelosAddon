@@ -1,26 +1,33 @@
 package xyz.telosaddon.yuno.renderer;
 
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.event.Event;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
+import xyz.telosaddon.yuno.TelosAddon;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CircleRenderer {
+public class CircleRenderer implements IRenderer{
+
+
 	private final List<Angle> angles = new ArrayList<>();
 
-	public void drawCircle(MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, int color, float height) {
-		ClientPlayerEntity player = MinecraftClient.getInstance().player;
-
+	@Override
+	public void draw(float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, int color, float height) {
 		float dy = (entity.isInSneakingPose() ? 0.125f : 0) + height;
 
-		RenderLayer layer = CircleRendererPhases.DEBUG_QUADS;;
+		RenderLayer layer = CircleRendererPhases.DEBUG_QUADS;
 
 		VertexConsumer vertices = vertexConsumers.getBuffer(layer);
 
@@ -43,15 +50,19 @@ public class CircleRenderer {
 		}
 	}
 
+	@Override
 	public void setRadius(float radius){
-		computeAngles(radius);
+		if(Float.isNaN(radius))
+			clearAngles();
+		else
+			computeAngles(radius);
 	}
 
-	public void clearAngles(){
+	private void clearAngles(){
 		angles.clear();
 	}
 
-	public void computeAngles(float radius) {
+	private void computeAngles(float radius) {
 		angles.clear();
 		int segments = 100;
 		float thickness = 0.2f;
@@ -79,7 +90,7 @@ public class CircleRenderer {
 		static final RenderLayer.MultiPhase DEBUG_QUADS = makeLayer();
 
 		private static RenderLayer.MultiPhase makeLayer() {
-			String name = "showtelosrange_" + VertexFormat.DrawMode.QUADS.name().toLowerCase(Locale.ROOT);
+			String name = "showtelosrange_circle_" + VertexFormat.DrawMode.QUADS.name().toLowerCase(Locale.ROOT);
 
 			return RenderLayer.of(name,
 					VertexFormats.POSITION_COLOR,

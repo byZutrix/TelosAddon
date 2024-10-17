@@ -14,7 +14,6 @@
     "MixinMessageHandler",
     "MixinMinecraftServer",
     "MixinSimpleOption",
-    "MixinWorldRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

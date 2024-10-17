@@ -8,21 +8,21 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import xyz.telosaddon.yuno.renderer.CircleRenderer;
+import xyz.telosaddon.yuno.renderer.IRenderer;
+import xyz.telosaddon.yuno.renderer.LineRenderer;
 import xyz.telosaddon.yuno.utils.config.Config;
 
 import java.util.function.Function;
 
 public class ShowRangeFeature extends AbstractFeature {
 	private ItemStack previousItem = null;
-	private float radius = Float.NaN;
-	private final CircleRenderer circleRenderer;
+	private final IRenderer circleRenderer;
 	private final Function<PlayerInventory, ItemStack> itemGetter;
 
-	private int color = 0x99FF0000;
 
 	public ShowRangeFeature(Config config, Function<PlayerInventory, ItemStack> itemGetter, String itemSlotName) {
 		super(config, "Show" + itemSlotName + "RangeFeature");
-		this.circleRenderer = new CircleRenderer();
+		this.circleRenderer = new LineRenderer();
 		this.itemGetter = itemGetter;
 	}
 
@@ -50,12 +50,7 @@ public class ShowRangeFeature extends AbstractFeature {
 		if (!itemToCheck.equals(this.previousItem)) {
 			previousItem = itemToCheck;
 			float radius = parseRadius(itemToCheck);
-			this.radius = radius;
-			if (Float.isNaN(radius)) {
-				this.circleRenderer.clearAngles();
-			} else {
-				this.circleRenderer.setRadius(radius);
-			}
+			this.circleRenderer.setRadius(radius);
 		}
 	}
 
@@ -66,9 +61,10 @@ public class ShowRangeFeature extends AbstractFeature {
 		checkMainHand(client);
 	}
 
-	public void draw(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ClientPlayerEntity player) {
+	public void draw(float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, ClientPlayerEntity player) {
 		if (!this.isEnabled()) return;
-		this.circleRenderer.drawCircle(matrices,
+		this.circleRenderer.draw(tickDelta,
+				matrices,
 				vertexConsumers,
 				player,
 				this.getConfig().getInteger(this.getFeatureName() + "Color"),

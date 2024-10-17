@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static net.minecraft.client.render.RenderPhase.*;
-
 public class CircleRenderer {
 	private final List<Angle> angles = new ArrayList<>();
 
@@ -31,17 +29,6 @@ public class CircleRenderer {
 		matrices.pop();
 	}
 
-	private void drawCircleLineStrip(MatrixStack matrices, VertexConsumer vertices, float dy, int argb) {
-		Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
-
-		for (Angle angle : angles) {
-			vertices.vertex(positionMatrix, angle.dx, dy, angle.dz).color(argb).normal(matrices.peek(), 0.0f, 0.0f, 0.0f);
-		}
-
-		Angle first = angles.getFirst(); // closes the circle
-		vertices.vertex(positionMatrix, first.dx, dy, first.dz).color(argb).normal(matrices.peek(), 0.0f, 0.0f, 0.0f);
-	}
-
 	private void drawCircleQuad(MatrixStack matrices, VertexConsumer vertices, float dy, int argb) {
 		Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
 
@@ -54,13 +41,6 @@ public class CircleRenderer {
 			vertices.vertex(positionMatrix, angle.farDx, dy, angle.farDz).color(argb).normal(matrices.peek(), 0.0f, 0.0f, 0.0f);
 			vertices.vertex(positionMatrix, angle.dx, dy, angle.dz).color(argb).normal(matrices.peek(), 0.0f, 0.0f, 0.0f);
 		}
-	}
-
-	private void drawCircleTriangleFan(MatrixStack matrices, VertexConsumer vertices, float dy, int argb) {
-		Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
-
-		vertices.vertex(positionMatrix, 0, dy, 0).color(argb).normal(matrices.peek(), 0.0f, 0.0f, 0.0f);
-		drawCircleLineStrip(matrices, vertices, dy, argb);
 	}
 
 	public void setRadius(float radius){
@@ -96,23 +76,27 @@ public class CircleRenderer {
 	}
 
 	private static class CircleRendererPhases extends RenderPhase{
-		static final RenderLayer.MultiPhase DEBUG_LINE_STRIP = makeLayer(VertexFormat.DrawMode.DEBUG_LINE_STRIP);
-		static final RenderLayer.MultiPhase DEBUG_QUADS = makeLayer(VertexFormat.DrawMode.QUADS);
-		static final RenderLayer.MultiPhase TRIANGLE_FAN = makeLayer(VertexFormat.DrawMode.TRIANGLE_FAN);
+		static final RenderLayer.MultiPhase DEBUG_QUADS = makeLayer();
 
-		private static RenderLayer.MultiPhase makeLayer(VertexFormat.DrawMode mode) {
-			String name = "showtelosrange_" + mode.name().toLowerCase(Locale.ROOT);
+		private static RenderLayer.MultiPhase makeLayer() {
+			String name = "showtelosrange_" + VertexFormat.DrawMode.QUADS.name().toLowerCase(Locale.ROOT);
 
-			return RenderLayer.of(name, VertexFormats.POSITION_COLOR, mode, 1536, false, true,
+			return RenderLayer.of(name,
+					VertexFormats.POSITION_COLOR,
+					VertexFormat.DrawMode.QUADS,
+					1536,
+//					false,
+//					true,
 					RenderLayer.MultiPhaseParameters.builder()
 							.program(COLOR_PROGRAM)
-							.transparency(TRANSLUCENT_TRANSPARENCY)
-							.cull(ENABLE_CULLING)
-							.lightmap(ENABLE_LIGHTMAP)
-							.overlay(ENABLE_OVERLAY_COLOR)
-							.writeMaskState(COLOR_MASK)
-							.depthTest(LEQUAL_DEPTH_TEST)
 							.layering(VIEW_OFFSET_Z_LAYERING)
+							.transparency(TRANSLUCENT_TRANSPARENCY)
+							.target(ITEM_ENTITY_TARGET)
+							.writeMaskState(ALL_MASK)
+							.cull(DISABLE_CULLING)
+//							.lightmap(ENABLE_LIGHTMAP)
+//							.overlay(ENABLE_OVERLAY_COLOR)
+//							.depthTest(LEQUAL_DEPTH_TEST)
 							.build(false)
 			);
 		}

@@ -1,45 +1,39 @@
 package xyz.telosaddon.yuno.renderer;
 
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.event.Event;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
+import xyz.telosaddon.yuno.TelosAddon;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static net.minecraft.client.render.RenderPhase.*;
+public class CircleRenderer implements IRenderer{
 
-public class CircleRenderer {
+
 	private final List<Angle> angles = new ArrayList<>();
 
-	public void drawCircle(MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, int color, float height) {
-		ClientPlayerEntity player = MinecraftClient.getInstance().player;
-
+	@Override
+	public void draw(float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, int color, float height) {
 		float dy = (entity.isInSneakingPose() ? 0.125f : 0) + height;
 
-		RenderLayer layer = CircleRendererPhases.DEBUG_QUADS;;
+		RenderLayer layer = CircleRendererPhases.DEBUG_QUADS;
 
 		VertexConsumer vertices = vertexConsumers.getBuffer(layer);
 
 		matrices.push();
 		drawCircleQuad(matrices, vertices, dy, color);
 		matrices.pop();
-	}
-
-	private void drawCircleLineStrip(MatrixStack matrices, VertexConsumer vertices, float dy, int argb) {
-		Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
-
-		for (Angle angle : angles) {
-			vertices.vertex(positionMatrix, angle.dx, dy, angle.dz).color(argb).normal(matrices.peek(), 0.0f, 0.0f, 0.0f);
-		}
-
-		Angle first = angles.getFirst(); // closes the circle
-		vertices.vertex(positionMatrix, first.dx, dy, first.dz).color(argb).normal(matrices.peek(), 0.0f, 0.0f, 0.0f);
 	}
 
 	private void drawCircleQuad(MatrixStack matrices, VertexConsumer vertices, float dy, int argb) {
@@ -56,22 +50,19 @@ public class CircleRenderer {
 		}
 	}
 
-	private void drawCircleTriangleFan(MatrixStack matrices, VertexConsumer vertices, float dy, int argb) {
-		Matrix4f positionMatrix = matrices.peek().getPositionMatrix();
-
-		vertices.vertex(positionMatrix, 0, dy, 0).color(argb).normal(matrices.peek(), 0.0f, 0.0f, 0.0f);
-		drawCircleLineStrip(matrices, vertices, dy, argb);
-	}
-
+	@Override
 	public void setRadius(float radius){
-		computeAngles(radius);
+		if(Float.isNaN(radius))
+			clearAngles();
+		else
+			computeAngles(radius);
 	}
 
-	public void clearAngles(){
+	private void clearAngles(){
 		angles.clear();
 	}
 
-	public void computeAngles(float radius) {
+	private void computeAngles(float radius) {
 		angles.clear();
 		int segments = 100;
 		float thickness = 0.2f;
@@ -96,23 +87,27 @@ public class CircleRenderer {
 	}
 
 	private static class CircleRendererPhases extends RenderPhase{
-		static final RenderLayer.MultiPhase DEBUG_LINE_STRIP = makeLayer(VertexFormat.DrawMode.DEBUG_LINE_STRIP);
-		static final RenderLayer.MultiPhase DEBUG_QUADS = makeLayer(VertexFormat.DrawMode.QUADS);
-		static final RenderLayer.MultiPhase TRIANGLE_FAN = makeLayer(VertexFormat.DrawMode.TRIANGLE_FAN);
+		static final RenderLayer.MultiPhase DEBUG_QUADS = makeLayer();
 
-		private static RenderLayer.MultiPhase makeLayer(VertexFormat.DrawMode mode) {
-			String name = "showtelosrange_" + mode.name().toLowerCase(Locale.ROOT);
+		private static RenderLayer.MultiPhase makeLayer() {
+			String name = "showtelosrange_circle_" + VertexFormat.DrawMode.QUADS.name().toLowerCase(Locale.ROOT);
 
-			return RenderLayer.of(name, VertexFormats.POSITION_COLOR, mode, 1536, false, true,
+			return RenderLayer.of(name,
+					VertexFormats.POSITION_COLOR,
+					VertexFormat.DrawMode.QUADS,
+					1536,
+					false,
+					true,
 					RenderLayer.MultiPhaseParameters.builder()
 							.program(COLOR_PROGRAM)
-							.transparency(TRANSLUCENT_TRANSPARENCY)
-							.cull(ENABLE_CULLING)
-							.lightmap(ENABLE_LIGHTMAP)
-							.overlay(ENABLE_OVERLAY_COLOR)
-							.writeMaskState(COLOR_MASK)
-							.depthTest(LEQUAL_DEPTH_TEST)
 							.layering(VIEW_OFFSET_Z_LAYERING)
+							.transparency(NO_TRANSPARENCY)
+							.target(ITEM_ENTITY_TARGET)
+							.writeMaskState(ALL_MASK)
+							.cull(DISABLE_CULLING)
+//							.lightmap(ENABLE_LIGHTMAP)
+//							.overlay(ENABLE_OVERLAY_COLOR)
+//							.depthTest(LEQUAL_DEPTH_TEST)
 							.build(false)
 			);
 		}

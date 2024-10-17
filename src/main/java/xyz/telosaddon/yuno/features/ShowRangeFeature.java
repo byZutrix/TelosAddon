@@ -8,22 +8,25 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import xyz.telosaddon.yuno.renderer.CircleRenderer;
+import xyz.telosaddon.yuno.renderer.IRenderer;
+import xyz.telosaddon.yuno.renderer.LineRenderer;
 import xyz.telosaddon.yuno.utils.config.Config;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 public class ShowRangeFeature extends AbstractFeature {
 	private ItemStack previousItem = null;
-	private float radius = Float.NaN;
-	private final CircleRenderer circleRenderer;
+	private List<IRenderer> renderers;
 	private final Function<PlayerInventory, ItemStack> itemGetter;
+	private float radius = Float.NaN;
 
-	private int color = 0x99FF0000;
 
 	public ShowRangeFeature(Config config, Function<PlayerInventory, ItemStack> itemGetter, String itemSlotName) {
 		super(config, "Show" + itemSlotName + "RangeFeature");
-		this.circleRenderer = new CircleRenderer();
 		this.itemGetter = itemGetter;
+		this.setRangeType(RangeViewType.valueOf(config.getString("Show" + itemSlotName + "RangeFeatureViewType")));
 	}
 
 	private float parseRadius(ItemStack itemStack) {
@@ -49,13 +52,8 @@ public class ShowRangeFeature extends AbstractFeature {
 		ItemStack itemToCheck = this.itemGetter.apply(inventory);
 		if (!itemToCheck.equals(this.previousItem)) {
 			previousItem = itemToCheck;
-			float radius = parseRadius(itemToCheck);
-			this.radius = radius;
-			if (Float.isNaN(radius)) {
-				this.circleRenderer.clearAngles();
-			} else {
-				this.circleRenderer.setRadius(radius);
-			}
+			radius = parseRadius(itemToCheck);
+			this.renderers.forEach(r -> r.setRadius(radius));
 		}
 	}
 
@@ -66,13 +64,34 @@ public class ShowRangeFeature extends AbstractFeature {
 		checkMainHand(client);
 	}
 
-	public void draw(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ClientPlayerEntity player) {
+	public float getRadius() {
+		return this.radius;
+	}
+
+	public void draw(float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, ClientPlayerEntity player, float dy) {
 		if (!this.isEnabled()) return;
-		this.circleRenderer.drawCircle(matrices,
+		this.renderers.forEach(r -> r.draw(tickDelta,
+				matrices,
 				vertexConsumers,
 				player,
 				this.getConfig().getInteger(this.getFeatureName() + "Color"),
-				this.getConfig().getDouble(this.getFeatureName() + "Height").floatValue());
+				this.getConfig().getDouble(this.getFeatureName() + "Height").floatValue() + dy));
 
+	}
+
+	public void setRangeType(RangeViewType type) {
+		this.renderers = switch (type){
+			case CIRCLE -> List.of(new CircleRenderer());
+			case LINE -> List.of(new LineRenderer());
+			case BOTH -> List.of(new CircleRenderer(), new LineRenderer());
+		};
+
+		this.renderers.forEach(r -> r.setRadius(radius));
+	}
+
+	public enum RangeViewType {
+		CIRCLE,
+		LINE,
+		BOTH;
 	}
 }

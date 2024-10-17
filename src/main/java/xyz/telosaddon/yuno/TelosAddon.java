@@ -16,6 +16,7 @@ import xyz.telosaddon.yuno.hotkey.MenuHotkey;
 import xyz.telosaddon.yuno.hotkey.NexusHotkey;
 import xyz.telosaddon.yuno.features.ShowMainRangeFeature;
 import xyz.telosaddon.yuno.features.ShowOffHandFeature;
+import xyz.telosaddon.yuno.renderer.RangeRenderer;
 import xyz.telosaddon.yuno.sound.SoundManager;
 
 import xyz.telosaddon.yuno.utils.BossBarUtils;
@@ -165,7 +166,7 @@ public class TelosAddon implements ClientModInitializer  {
         this.showMainRangeFeature = new ShowMainRangeFeature(config);
         this.showOffHandFeature = new ShowOffHandFeature(config);
 
-
+        RangeRenderer.init();
     }
 
     public void run(){

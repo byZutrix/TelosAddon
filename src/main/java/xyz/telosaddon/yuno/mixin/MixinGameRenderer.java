@@ -40,6 +40,9 @@ public abstract class MixinGameRenderer {
             case 3 -> {
                 addBag("BlackBags", config);
 
+                config.set("NoBlackRuns", 0);
+                TelosAddon.getInstance().getBagCounter().replace("NoBlackRuns", 0);
+
                 if(soundSetting)
                     soundManager.playSound("black_bag");
 

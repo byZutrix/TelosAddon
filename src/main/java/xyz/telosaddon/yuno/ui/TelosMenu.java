@@ -22,7 +22,7 @@ public class TelosMenu extends Screen {
     private final Config config;
 
     public TelosMenu() {
-        super(Text.literal("Telos Menu"));
+        super(Text.literal("Realms Menu"));
         this.mc = MinecraftClient.getInstance();
         this.config = TelosAddon.getInstance().getConfig();
         this.customUiManager = new CustomUiManager();
@@ -41,7 +41,7 @@ public class TelosMenu extends Screen {
             TextRenderer tr = mc.textRenderer;
             drawTitle(context, tr);
 
-            String bugString = "§cPlease report bugs to §7'§4kamiyuno§7'§c on Discord§7!";
+            String bugString = "§cPlease report bugs to §7'§4pixelizedgaming§7'§c on Discord§7!";
             Text bugText = FontHelper.toCustomFont(bugString, config.getString("Font"));
             int bugTextWidth = tr.getWidth(bugText);
             context.drawText(tr, bugText, width - bugTextWidth - 4, height - 12, 0xFFFFFF, true);
@@ -118,7 +118,7 @@ public class TelosMenu extends Screen {
     }
 
     private void drawTitle(DrawContext context, TextRenderer tr) {
-        String title = "Telos Addon | BETA-" + MOD_VERSION;
+        String title = "Realms Addon | BETA-" + MOD_VERSION;
         Text titleText = FontHelper.toCustomFont(title, config.getString("Font"));
 
         float titleScale = 1.5f;

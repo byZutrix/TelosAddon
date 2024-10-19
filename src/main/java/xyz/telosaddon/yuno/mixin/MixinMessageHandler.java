@@ -21,11 +21,12 @@ import xyz.telosaddon.yuno.utils.config.Config;
 import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 
-import static xyz.telosaddon.yuno.TelosAddon.MOD_NAME;
-import static xyz.telosaddon.yuno.TelosAddon.MOD_VERSION;
+import static xyz.telosaddon.yuno.TelosAddon.*;
 
 @Mixin(MessageHandler.class)
 public class MixinMessageHandler {
+    private boolean trackerBit = false;
+
     @Inject(method = "method_45745", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/ChatHud;addMessage(Lnet/minecraft/text/Text;)V"))
     private void onDisguisedChatLambda(MessageType.Parameters parameters, Text text, Instant instant, CallbackInfoReturnable<Boolean> cir) {
         onChat(text);
@@ -82,7 +83,8 @@ public class MixinMessageHandler {
             }
         }
 
-        if(!s.startsWith("Your rank:")) return;
+        if(!s.equals("===============================================")) return;
+        if (trackerBit = !trackerBit) return; // there's 2 bars in the kill message, and guess what datatype has 2 states
         Config config = TelosAddon.getInstance().getConfig();
 
         config.addInt("TotalRuns", 1);

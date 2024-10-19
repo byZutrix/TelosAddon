@@ -49,9 +49,7 @@ public abstract class MixinGameRenderer {
             }
             case 15 -> addBag("GoldBags", config);
             case 12 -> addBag("Crosses", config);
-            case 6,9 -> {
-                addBag("EventBags", config);
-            }
+            case 6,9 -> {addBag("EventBags", config);}
             case 13 -> addBag("GreenBags", config);
             case 8 -> addBag("Relics", config);
             case 14 -> addBag("Runes", config);

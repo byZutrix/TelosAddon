@@ -22,7 +22,6 @@ public class AbilityHotkey{
     private static KeyBinding keyBinding;
 
     public static void init() {
-
         keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.telosaddon.ability",
                 InputUtil.Type.KEYSYM,

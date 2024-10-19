@@ -64,9 +64,10 @@ public abstract class MixinInGameHud {
         int goldBags = config.getBoolean("LifetimeSetting") ? config.getInteger("GoldBags") : TelosAddon.getInstance().getBagCounter().get("GoldBags");
         int whiteBags = config.getBoolean("LifetimeSetting") ? config.getInteger("WhiteBags") : TelosAddon.getInstance().getBagCounter().get("WhiteBags");
         int blackBags = config.getBoolean("LifetimeSetting") ? config.getInteger("BlackBags") : TelosAddon.getInstance().getBagCounter().get("BlackBags");
-        int xMasBags = config.getBoolean("LifetimeSetting") ? config.getInteger("XMasBags") : TelosAddon.getInstance().getBagCounter().get("XMasBags");
+        int eventBags = config.getBoolean("LifetimeSetting") ? config.getInteger("EventBags") : TelosAddon.getInstance().getBagCounter().get("EventBags");
         int crosses = config.getBoolean("LifetimeSetting") ? config.getInteger("Crosses") : TelosAddon.getInstance().getBagCounter().get("Crosses");
         int relics = config.getBoolean("LifetimeSetting") ? config.getInteger("Relics") : TelosAddon.getInstance().getBagCounter().get("Relics");
+        int runes = config.getBoolean("LifetimeSetting") ? config.getInteger("Runes") : TelosAddon.getInstance().getBagCounter().get("Runes");
         int totalRuns = config.getBoolean("LifetimeSetting") ? config.getInteger("TotalRuns") : TelosAddon.getInstance().getBagCounter().get("TotalRuns");
         int noWhitesRuns = config.getBoolean("LifetimeSetting") ? config.getInteger("NoWhiteRuns") : TelosAddon.getInstance().getBagCounter().get("NoWhiteRuns");
         int noBlackRuns = config.getBoolean("LifetimeSetting") ? config.getInteger("NoBlackRuns") : TelosAddon.getInstance().getBagCounter().get("NoBlackRuns");
@@ -80,12 +81,14 @@ public abstract class MixinInGameHud {
             bagTexts.add("White Bags§7: §f" + whiteBags);
         if(config.getBoolean("BlackSetting") || isEditMode)
             bagTexts.add("Black Bags§7: §f" + blackBags);
-        if(config.getBoolean("XMasSetting") || isEditMode)
-            bagTexts.add("XMas Bags§7: §f" + xMasBags);
+        if(config.getBoolean("EventSetting") || isEditMode)
+            bagTexts.add("Event Bags§7: §f" + eventBags);
         if(config.getBoolean("CrossSetting") || isEditMode)
             bagTexts.add("Crosses§7: §f" + crosses);
         if(config.getBoolean("RelicSetting") || isEditMode)
             bagTexts.add("Relics§7: §f" + relics);
+        if(config.getBoolean("RunesSetting") || isEditMode)
+            bagTexts.add("Runes§7: §f" + runes);
         if(config.getBoolean("TotalRunSetting") || isEditMode)
             bagTexts.add("Total Runs§7: §f" + totalRuns);
         if(config.getBoolean("NoWhiteRunSetting") || isEditMode)

@@ -27,7 +27,7 @@ public abstract class MixinGameRenderer {
         SoundManager soundManager = TelosAddon.getInstance().getSoundManager();
         boolean soundSetting = config.getBoolean("SoundSetting");
         switch (customModelData) {
-            case 2 -> {
+            case 11 -> {
                 addBag("WhiteBags", config);
 
                 config.set("NoWhiteRuns", 0);
@@ -37,7 +37,7 @@ public abstract class MixinGameRenderer {
                     soundManager.playSound("white_bag");
 
             }
-            case 3 -> {
+            case 10 -> {
                 addBag("BlackBags", config);
 
                 config.set("NoBlackRuns", 0);
@@ -47,11 +47,14 @@ public abstract class MixinGameRenderer {
                     soundManager.playSound("black_bag");
 
             }
-            case 4 -> addBag("GoldBags", config);
-            case 5 -> addBag("Crosses", config);
-            case 6 -> addBag("XMasBags", config);
-            case 7 -> addBag("GreenBags", config);
+            case 15 -> addBag("GoldBags", config);
+            case 12 -> addBag("Crosses", config);
+            case 6,9 -> {
+                addBag("EventBags", config);
+            }
+            case 13 -> addBag("GreenBags", config);
             case 8 -> addBag("Relics", config);
+            case 14 -> addBag("Runes", config);
             default -> {
             }
         }

@@ -80,9 +80,10 @@ public class Config {
         addDefault("GoldBags", 0);
         addDefault("WhiteBags", 0);
         addDefault("BlackBags", 0);
-        addDefault("XMasBags", 0);
+        addDefault("EventBags", 0);
         addDefault("Crosses", 0);
         addDefault("Relics", 0);
+        addDefault("Runes", 0);
         addDefault("TotalRuns", 0);
         addDefault("NoWhiteRuns", 0);
         addDefault("NoBlackRuns", 0);
@@ -105,9 +106,10 @@ public class Config {
         addDefault("GoldSetting", false);
         addDefault("WhiteSetting", false);
         addDefault("BlackSetting", false);
-        addDefault("XMasSetting", false);
+        addDefault("EventSetting", false);
         addDefault("CrossSetting", false);
         addDefault("RelicSetting", false);
+        addDefault("RunesSetting", false);
         addDefault("TotalRunSetting", false);
         addDefault("NoWhiteRunSetting", false);
         addDefault("NoBlackRunSetting", false);

@@ -31,7 +31,7 @@ import static xyz.telosaddon.yuno.utils.LocalAPI.updateAPI;
 
 public class TelosAddon implements ClientModInitializer  {
     public static final String MOD_NAME = "RealmsAddon";
-    public static final String MOD_VERSION = "v0.21d";
+    public static final String MOD_VERSION = "v0.21e";
 
     public static final Logger LOGGER = Logger.getLogger(MOD_NAME);
     private final MinecraftClient mc = MinecraftClient.getInstance();
@@ -60,7 +60,7 @@ public class TelosAddon implements ClientModInitializer  {
     public void initHotkeys(){
         NexusHotkey.init();
         MenuHotkey.init();
-        AbilityHotkey.init();// until fixed
+        //AbilityHotkey.init();// until fixed
     }
     public void stop() {
         config.save();
@@ -111,9 +111,10 @@ public class TelosAddon implements ClientModInitializer  {
         bagCounter.put("GoldBags", 0);
         bagCounter.put("WhiteBags", 0);
         bagCounter.put("BlackBags", 0);
-        bagCounter.put("XMasBags", 0);
+        bagCounter.put("EventBags", 0);
         bagCounter.put("Crosses", 0);
         bagCounter.put("Relics", 0);
+        bagCounter.put("Runes", 0);
         bagCounter.put("TotalRuns", 0);
         bagCounter.put("NoWhiteRuns", 0);
         bagCounter.put("NoBlackRuns", 0);

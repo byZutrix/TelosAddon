@@ -60,7 +60,7 @@ public class ShowRangeFeature extends AbstractFeature {
 				// Hacks for specific items
 				switch (itemType) {
 					case UT_HERALD_ESSENCE, EX_HERALD_ESSENCE -> {
-						radius = 8;
+						radius = 6;
 						offset = 3;
 					}
 					case EX_AYAHUASCA_FLASK, UT_AYAHUASCA_FLASK -> radius = 8;

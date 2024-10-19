@@ -35,7 +35,18 @@ public class CircleRenderer implements IRenderer{
 		matrices.push();
 		matrices.translate(0, 0, this.offset);
 		drawCircleQuad(matrices, vertices, dy, color);
+		if(this.offset != 0)
+			drawOffsetCenter(matrices, vertices, dy, color);
 		matrices.pop();
+	}
+
+	private void drawOffsetCenter(MatrixStack matrices, VertexConsumer vertices, float dy, int argb){
+		float width = 0.2f;
+		var entry = matrices.peek();
+		vertices.vertex(entry, -width/2, dy, -width/2).color(argb).normal(entry, 0.0f, 0.0f, 0.0f);
+		vertices.vertex(entry, -width/2, dy, width/2).color(argb).normal(entry, 0.0f, 0.0f, 0.0f);;
+		vertices.vertex(entry, width/2, dy, width/2).color(argb).normal(entry, 0.0f, 0.0f, 0.0f);;
+		vertices.vertex(entry, width/2, dy, -width/2).color(argb).normal(entry, 0.0f, 0.0f, 0.0f);;
 	}
 
 	private void drawCircleQuad(MatrixStack matrices, VertexConsumer vertices, float dy, int argb) {

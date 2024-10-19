@@ -7,6 +7,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.renderer.CircleRenderer;
 import xyz.telosaddon.yuno.renderer.IRenderer;
@@ -14,7 +15,6 @@ import xyz.telosaddon.yuno.renderer.LineRenderer;
 import xyz.telosaddon.yuno.utils.ItemType;
 import xyz.telosaddon.yuno.utils.config.Config;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -47,9 +47,8 @@ public class ShowRangeFeature extends AbstractFeature {
 		return Float.NaN;
 	}
 
-	private void checkMainHand(MinecraftClient client) {
-		assert client.player != null;
-		var inventory = client.player.getInventory();
+	private void checkItem(@NotNull ClientPlayerEntity player) {
+		var inventory = player.getInventory();
 		if (inventory == null) return;
 		ItemStack itemToCheck = this.itemGetter.apply(inventory);
 		if (!itemToCheck.equals(this.previousItem)) {
@@ -69,8 +68,8 @@ public class ShowRangeFeature extends AbstractFeature {
 
 				}
 			}
-			this.renderers.forEach(r -> r.setRadius(radius));
 			float finalOffset = offset;
+			this.renderers.forEach(r -> r.setRadius(radius));
 			this.renderers.forEach(r -> r.setOffset(finalOffset));
 		}
 	}
@@ -79,7 +78,7 @@ public class ShowRangeFeature extends AbstractFeature {
 		if (!this.isEnabled()) return;
 		var client = MinecraftClient.getInstance();
 		if (client.player == null) return;
-		checkMainHand(client);
+		checkItem(client.player);
 	}
 
 	public float getRadius() {
@@ -103,8 +102,13 @@ public class ShowRangeFeature extends AbstractFeature {
 			case LINE -> List.of(new LineRenderer());
 			case BOTH -> List.of(new CircleRenderer(), new LineRenderer());
 		};
-
-		this.renderers.forEach(r -> r.setRadius(radius));
+		var player = MinecraftClient.getInstance().player;
+		if(player == null) {
+			TelosAddon.LOGGER.warning("Got client.player == null even though the guy did so through a GUI?");
+			return;
+		}
+		this.previousItem = null;
+		checkItem(player);
 	}
 
 	public enum RangeViewType {

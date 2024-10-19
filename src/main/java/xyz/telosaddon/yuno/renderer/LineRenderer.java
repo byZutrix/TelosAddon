@@ -15,6 +15,7 @@ import java.util.OptionalDouble;
 public class LineRenderer implements IRenderer{
 
 	private float radius = Float.NaN;
+	private float offset = 0;
 
 	@Override
 	public void draw(float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, int color, float height) {
@@ -25,6 +26,7 @@ public class LineRenderer implements IRenderer{
 		VertexConsumer vertices = vertexConsumers.getBuffer(layer);
 
 		matrices.push();
+		matrices.translate(0, 0, offset);
 		drawLine(tickDelta, matrices, vertices, dy, color);
 		matrices.pop();
 	}
@@ -39,13 +41,16 @@ public class LineRenderer implements IRenderer{
 		vertexConsumer.vertex(entry, width/2, dy, this.radius).color(argb).normal(entry, 0.0f, 0.0f, 0);
 		vertexConsumer.vertex(entry, -width/2, dy, this.radius).color(argb).normal(entry, 0.0f, 0.0f, 0);
 		vertexConsumer.vertex(entry, -width/2, dy, 0f).color(argb).normal(entry, 0.0f, 0.0f, 0);
-
-
 	}
 
 	@Override
 	public void setRadius(float radius) {
 		this.radius = radius;
+	}
+
+	@Override
+	public void setOffset(float offset) {
+		this.offset = offset;
 	}
 
 	private static class LineRendererPhases extends RenderPhase {

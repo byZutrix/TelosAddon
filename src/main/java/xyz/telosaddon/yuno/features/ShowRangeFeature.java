@@ -7,12 +7,14 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.renderer.CircleRenderer;
 import xyz.telosaddon.yuno.renderer.IRenderer;
 import xyz.telosaddon.yuno.renderer.LineRenderer;
+import xyz.telosaddon.yuno.utils.ItemType;
 import xyz.telosaddon.yuno.utils.config.Config;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -45,15 +47,30 @@ public class ShowRangeFeature extends AbstractFeature {
 		return Float.NaN;
 	}
 
-	private void checkMainHand(MinecraftClient client) {
-		assert client.player != null;
-		var inventory = client.player.getInventory();
+	private void checkItem(@NotNull ClientPlayerEntity player) {
+		var inventory = player.getInventory();
 		if (inventory == null) return;
 		ItemStack itemToCheck = this.itemGetter.apply(inventory);
 		if (!itemToCheck.equals(this.previousItem)) {
+			ItemType itemType = ItemType.fromItemStack(itemToCheck);
 			previousItem = itemToCheck;
-			radius = parseRadius(itemToCheck);
+			float offset = 0;
+			if (itemType == null) radius = parseRadius(itemToCheck);
+			else {
+				// Hacks for specific items
+				switch (itemType) {
+					case UT_HERALD_ESSENCE, EX_HERALD_ESSENCE -> {
+						radius = 6;
+						offset = 3;
+					}
+					case EX_AYAHUASCA_FLASK, UT_AYAHUASCA_FLASK -> radius = 8;
+					default -> radius = parseRadius(itemToCheck);
+
+				}
+			}
+			float finalOffset = offset;
 			this.renderers.forEach(r -> r.setRadius(radius));
+			this.renderers.forEach(r -> r.setOffset(finalOffset));
 		}
 	}
 
@@ -61,7 +78,7 @@ public class ShowRangeFeature extends AbstractFeature {
 		if (!this.isEnabled()) return;
 		var client = MinecraftClient.getInstance();
 		if (client.player == null) return;
-		checkMainHand(client);
+		checkItem(client.player);
 	}
 
 	public float getRadius() {
@@ -80,13 +97,18 @@ public class ShowRangeFeature extends AbstractFeature {
 	}
 
 	public void setRangeType(RangeViewType type) {
-		this.renderers = switch (type){
+		this.renderers = switch (type) {
 			case CIRCLE -> List.of(new CircleRenderer());
 			case LINE -> List.of(new LineRenderer());
 			case BOTH -> List.of(new CircleRenderer(), new LineRenderer());
 		};
-
-		this.renderers.forEach(r -> r.setRadius(radius));
+		var player = MinecraftClient.getInstance().player;
+		if(player == null) {
+			TelosAddon.LOGGER.warning("Got client.player == null even though the guy did so through a GUI?");
+			return;
+		}
+		this.previousItem = null;
+		checkItem(player);
 	}
 
 	public enum RangeViewType {

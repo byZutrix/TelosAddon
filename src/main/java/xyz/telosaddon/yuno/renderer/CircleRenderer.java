@@ -22,6 +22,7 @@ public class CircleRenderer implements IRenderer{
 
 
 	private final List<Angle> angles = new ArrayList<>();
+	private float offset = 0;
 
 	@Override
 	public void draw(float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, int color, float height) {
@@ -32,6 +33,7 @@ public class CircleRenderer implements IRenderer{
 		VertexConsumer vertices = vertexConsumers.getBuffer(layer);
 
 		matrices.push();
+		matrices.translate(0, 0, this.offset);
 		drawCircleQuad(matrices, vertices, dy, color);
 		matrices.pop();
 	}
@@ -60,7 +62,7 @@ public class CircleRenderer implements IRenderer{
 
 	@Override
 	public void setOffset(float offset) {
-
+		this.offset = offset;
 	}
 
 	private void clearAngles(){

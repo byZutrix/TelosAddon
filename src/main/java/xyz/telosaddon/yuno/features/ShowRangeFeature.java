@@ -7,9 +7,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import xyz.telosaddon.yuno.TelosAddon;
 import xyz.telosaddon.yuno.renderer.CircleRenderer;
 import xyz.telosaddon.yuno.renderer.IRenderer;
 import xyz.telosaddon.yuno.renderer.LineRenderer;
+import xyz.telosaddon.yuno.utils.ItemType;
 import xyz.telosaddon.yuno.utils.config.Config;
 
 import java.util.ArrayList;
@@ -51,9 +53,25 @@ public class ShowRangeFeature extends AbstractFeature {
 		if (inventory == null) return;
 		ItemStack itemToCheck = this.itemGetter.apply(inventory);
 		if (!itemToCheck.equals(this.previousItem)) {
+			ItemType itemType = ItemType.fromItemStack(itemToCheck);
 			previousItem = itemToCheck;
-			radius = parseRadius(itemToCheck);
+			float offset = 0;
+			if (itemType == null) radius = parseRadius(itemToCheck);
+			else {
+				// Hacks for specific items
+				switch (itemType) {
+					case UT_HERALD_ESSENCE, EX_HERALD_ESSENCE -> {
+						radius = 8;
+						offset = 3;
+					}
+					case EX_AYAHUASCA_FLASK, UT_AYAHUASCA_FLASK -> radius = 8;
+					default -> radius = parseRadius(itemToCheck);
+
+				}
+			}
 			this.renderers.forEach(r -> r.setRadius(radius));
+			float finalOffset = offset;
+			this.renderers.forEach(r -> r.setOffset(finalOffset));
 		}
 	}
 
@@ -80,7 +98,7 @@ public class ShowRangeFeature extends AbstractFeature {
 	}
 
 	public void setRangeType(RangeViewType type) {
-		this.renderers = switch (type){
+		this.renderers = switch (type) {
 			case CIRCLE -> List.of(new CircleRenderer());
 			case LINE -> List.of(new LineRenderer());
 			case BOTH -> List.of(new CircleRenderer(), new LineRenderer());

@@ -14,4 +14,5 @@ public interface IRenderer {
 	 */
 	void setRadius(float radius);
 
+	void setOffset(float offset);
 }

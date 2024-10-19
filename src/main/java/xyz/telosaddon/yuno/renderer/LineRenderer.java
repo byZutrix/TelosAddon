@@ -48,6 +48,11 @@ public class LineRenderer implements IRenderer{
 		this.radius = radius;
 	}
 
+	@Override
+	public void setOffset(float offset) {
+
+	}
+
 	private static class LineRendererPhases extends RenderPhase {
 		static final RenderLayer.MultiPhase LINE_LAYER = makeLayer();
 

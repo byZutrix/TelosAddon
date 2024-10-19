@@ -58,6 +58,11 @@ public class CircleRenderer implements IRenderer{
 			computeAngles(radius);
 	}
 
+	@Override
+	public void setOffset(float offset) {
+
+	}
+
 	private void clearAngles(){
 		angles.clear();
 	}

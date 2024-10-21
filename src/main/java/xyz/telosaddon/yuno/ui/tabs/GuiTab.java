@@ -25,11 +25,13 @@ public class GuiTab {
         boolean goldSetting = config.getBoolean("GoldSetting");
         boolean whiteSetting = config.getBoolean("WhiteSetting");
         boolean blackSetting = config.getBoolean("BlackSetting");
-        boolean xMasSetting = config.getBoolean("XMasSetting");
+        boolean xMasSetting = config.getBoolean("EventSetting");
         boolean crossSetting = config.getBoolean("CrossSetting");
         boolean relicSetting = config.getBoolean("RelicSetting");
+        boolean runesSetting = config.getBoolean("RunesSetting");
         boolean totalRunSetting = config.getBoolean("TotalRunSetting");
         boolean noWhiteRunSetting = config.getBoolean("NoWhiteRunSetting");
+        boolean noBlackRunSetting = config.getBoolean("NoBlackRunSetting");
         boolean lifetimeSetting = config.getBoolean("LifetimeSetting");
 
         this.elements = Arrays.asList(
@@ -50,8 +52,8 @@ public class GuiTab {
                     toggle("BlackSetting", button.getText(), toggled);
                 }).setToggled(blackSetting),
 
-                new CustomButton(8, 175, 150, 20, "XMasBag Counter", (button, toggled) -> {
-                    toggle("XMasSetting", button.getText(), toggled);
+                new CustomButton(8, 175, 150, 20, "EventBag Counter", (button, toggled) -> {
+                    toggle("EventSetting", button.getText(), toggled);
                 }).setToggled(xMasSetting),
 
                 new CustomButton(8, 198, 150, 20, "Cross Counter", (button, toggled) -> {
@@ -61,16 +63,23 @@ public class GuiTab {
                 new CustomButton(8, 221, 150, 20, "Relic Counter", (button, toggled) -> {
                     toggle("RelicSetting", button.getText(), toggled);
                 }).setToggled(relicSetting),
+                new CustomButton(8, 244, 150, 20, "Runes Counter", (button, toggled) -> {
+                    toggle("RunesSetting", button.getText(), toggled);
+                }).setToggled(runesSetting),
 
-                new CustomButton(8, 244, 150, 20, "Total Boss Runs", (button, toggled) -> {
+                new CustomButton(8, 267, 150, 20, "Total Boss Runs", (button, toggled) -> {
                     toggle("TotalRunSetting", button.getText(), toggled);
                 }).setToggled(totalRunSetting),
 
-                new CustomButton(8, 267, 150, 20, "No Whites Runs", (button, toggled) -> {
+                new CustomButton(175, 83, 150, 20, "No Whites Runs", (button, toggled) -> {
                     toggle("NoWhiteRunSetting", button.getText(), toggled);
                 }).setToggled(noWhiteRunSetting),
 
-                new CustomButton(8, 290, 150, 20, "Lifetime Counter", (button, toggled) -> {
+                new CustomButton(175, 106, 150, 20, "No Black Runs", (button, toggled) -> {
+                    toggle("NoBlackRunSetting", button.getText(), toggled);
+                }).setToggled(noBlackRunSetting),
+
+                new CustomButton(175, 129, 150, 20, "Lifetime Counter", (button, toggled) -> {
                     toggle("LifetimeSetting", button.getText(), toggled);
                 }).setToggled(lifetimeSetting)
 

@@ -1,9 +1,14 @@
 package xyz.telosaddon.yuno;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.HoverEvent;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import xyz.telosaddon.yuno.discordrpc.DiscordRPCManager;
 import xyz.telosaddon.yuno.hotkey.AbilityHotkey;
@@ -11,6 +16,7 @@ import xyz.telosaddon.yuno.hotkey.MenuHotkey;
 import xyz.telosaddon.yuno.hotkey.NexusHotkey;
 import xyz.telosaddon.yuno.features.ShowMainRangeFeature;
 import xyz.telosaddon.yuno.features.ShowOffHandFeature;
+import xyz.telosaddon.yuno.renderer.RangeRenderer;
 import xyz.telosaddon.yuno.sound.SoundManager;
 
 import xyz.telosaddon.yuno.utils.BossBarUtils;
@@ -19,14 +25,13 @@ import xyz.telosaddon.yuno.sound.CustomSound;
 
 import java.util.*;
 
-//todo: change to literally any other logger
 import java.util.logging.Logger;
 
 import static xyz.telosaddon.yuno.utils.LocalAPI.updateAPI;
 
 public class TelosAddon implements ClientModInitializer  {
-    public static final String MOD_NAME = "TelosAddon";
-    public static final String MOD_VERSION = "v0.21c";
+    public static final String MOD_NAME = "RealmsAddon";
+    public static final String MOD_VERSION = "v0.21e";
 
     public static final Logger LOGGER = Logger.getLogger(MOD_NAME);
     private final MinecraftClient mc = MinecraftClient.getInstance();
@@ -55,7 +60,7 @@ public class TelosAddon implements ClientModInitializer  {
     public void initHotkeys(){
         NexusHotkey.init();
         MenuHotkey.init();
-        AbilityHotkey.init();// until fixed
+        //AbilityHotkey.init();// until fixed
     }
     public void stop() {
         config.save();
@@ -106,11 +111,13 @@ public class TelosAddon implements ClientModInitializer  {
         bagCounter.put("GoldBags", 0);
         bagCounter.put("WhiteBags", 0);
         bagCounter.put("BlackBags", 0);
-        bagCounter.put("XMasBags", 0);
+        bagCounter.put("EventBags", 0);
         bagCounter.put("Crosses", 0);
         bagCounter.put("Relics", 0);
+        bagCounter.put("Runes", 0);
         bagCounter.put("TotalRuns", 0);
         bagCounter.put("NoWhiteRuns", 0);
+        bagCounter.put("NoBlackRuns", 0);
     }
 
     public Map<String, Integer> getBagCounter() {
@@ -160,7 +167,7 @@ public class TelosAddon implements ClientModInitializer  {
         this.showMainRangeFeature = new ShowMainRangeFeature(config);
         this.showOffHandFeature = new ShowOffHandFeature(config);
 
-
+        RangeRenderer.init();
     }
 
     public void run(){
@@ -180,4 +187,8 @@ public class TelosAddon implements ClientModInitializer  {
     public DiscordRPCManager getRpcManager () {
         return rpcManager;
     }
+    public long getPlayTime() {
+        return playTime;
+    }
+
 }

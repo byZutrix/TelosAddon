@@ -3,18 +3,16 @@ package xyz.telosaddon.yuno.utils.config;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.util.crash.CrashReport;
 import xyz.telosaddon.yuno.TelosAddon;
+import xyz.telosaddon.yuno.features.ShowRangeFeature;
 import xyz.telosaddon.yuno.utils.BossBarUtils;
 
 import java.awt.*;
 import java.io.*;
 import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -28,6 +26,7 @@ public class Config {
             .setPrettyPrinting()
             .create();
     private final File configFile;
+
     /**
      * Backup file in case the main file becomes corrupted
      */
@@ -50,6 +49,7 @@ public class Config {
 
     private void load(boolean fromBackup) {
         TelosAddon.LOGGER.info( "Attempting to load config" + (fromBackup ? " from backup..." : "..."));
+        configMap = new HashMap<>();
         File file = fromBackup ? tmpFile : configFile;
         if (file.exists()) {
             try (FileReader reader = new FileReader(file)) {
@@ -64,12 +64,13 @@ public class Config {
                     this.load(true);
                     return;
                 }
-                configMap = new HashMap<>();
             }
         } else {
-            TelosAddon.LOGGER.info("No config file found, resorting to defaults");
-            configMap = new HashMap<>();
+            TelosAddon.LOGGER.info("No config or backup file found, resorting to defaults");
         }
+        if (configMap == null) configMap = new HashMap<>(); // case both files are blank/corrupted
+
+
         loadDefaults();
         save();
     }
@@ -79,11 +80,13 @@ public class Config {
         addDefault("GoldBags", 0);
         addDefault("WhiteBags", 0);
         addDefault("BlackBags", 0);
-        addDefault("XMasBags", 0);
+        addDefault("EventBags", 0);
         addDefault("Crosses", 0);
         addDefault("Relics", 0);
+        addDefault("Runes", 0);
         addDefault("TotalRuns", 0);
         addDefault("NoWhiteRuns", 0);
+        addDefault("NoBlackRuns", 0);
         addDefault("TotalPlaytime", 0L);
 
         addDefault("NewGamma", 15000.0D);
@@ -103,13 +106,15 @@ public class Config {
         addDefault("GoldSetting", false);
         addDefault("WhiteSetting", false);
         addDefault("BlackSetting", false);
-        addDefault("XMasSetting", false);
+        addDefault("EventSetting", false);
         addDefault("CrossSetting", false);
         addDefault("RelicSetting", false);
+        addDefault("RunesSetting", false);
         addDefault("TotalRunSetting", false);
         addDefault("NoWhiteRunSetting", false);
+        addDefault("NoBlackRunSetting", false);
         addDefault("LifetimeSetting", false);
-
+        addDefault("EnableJoinText", true);
 
         addDefault("SwingSetting", false);
         addDefault("GammaSetting", false);
@@ -126,13 +131,15 @@ public class Config {
         addDefault("RPCShowFightingSetting", false);
 
         addDefault("SwingIfNoCooldown", false);
+
         addDefault("ShowMainRangeFeatureEnabled", true);
         addDefault("ShowOffHandRangeFeatureEnabled", false);
         addDefault("ShowMainRangeFeatureHeight", 0.5);
         addDefault("ShowOffHandRangeFeatureHeight", 0.5);
-
         addDefault("ShowMainRangeFeatureColor", new Color(255, 0, 0).getRGB());
         addDefault("ShowOffHandRangeFeatureColor", new Color(0, 0, 255).getRGB());
+        addDefault("ShowMainRangeFeatureViewType", ShowRangeFeature.RangeViewType.CIRCLE.name());
+        addDefault("ShowOffHandRangeFeatureViewType", ShowRangeFeature.RangeViewType.CIRCLE.name());
     }
 
     public void addDefault(String key, Object value) {
@@ -149,50 +156,63 @@ public class Config {
     /**
      * Saves config to the local json file and the previous version becomes a backup .tmp file
      */
+
     private void save(boolean overwriteBackup) {
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            synchronized (this) { // lets see if this works, we can try reentrantlock if not
+                try {
+                    ensureConfigFileExists();
+                    ensureTmpFileExists();
+                    if (overwriteBackup && !handleBackup()) {
+                        TelosAddon.LOGGER.log(Level.WARNING, "Backup failed; skipping config save.");
+                        return; // Early exit if backup fails
+                    }
+                    saveConfig();
+                } catch (IOException e) {
+                    TelosAddon.LOGGER.log(Level.WARNING, "An error occurred while saving the config: ", e);
+                }
+            }
+        });
+    }
 
+    private void ensureTmpFileExists() throws IOException {
         if (!tmpFile.exists()) {
-            try {
-                tmpFile.createNewFile();
-            } catch (IOException ignore) {
-                TelosAddon.LOGGER.log(Level.WARNING, "Encountered an issue when creating tmp config file.");
+            if (!tmpFile.createNewFile()) {
+                throw new IOException("Failed to create temporary backup file.");
             }
         }
+    }
 
-        if (overwriteBackup) {
-            boolean deletedOldBackup = tmpFile.delete();
-            boolean createdNewBackup = false;
-
-            if (deletedOldBackup) {
-                createdNewBackup = configFile.renameTo(tmpFile);
-            }
-
-            if (!createdNewBackup) {
-                TelosAddon.LOGGER.log(Level.WARNING,"Could not backup config. Skipping save.");
-                return;
+    private void ensureConfigFileExists() throws IOException {
+        if (!configFile.exists()) {
+            if (!configFile.createNewFile()) {
+                throw new IOException("Failed to create temporary config file.");
             }
         }
+    }
+
+    private boolean handleBackup() {
+        if (tmpFile.exists() && !tmpFile.delete()) {
+            TelosAddon.LOGGER.log(Level.WARNING, "Could not delete old backup file.");
+            return false; // Backup process failed
+        }
+        return configFile.renameTo(tmpFile); // Attempt to create a new backup
+    }
+
+    private void saveConfig() throws IOException {
         try (FileWriter writer = new FileWriter(configFile)) {
             GSON.toJson(configMap, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
+            TelosAddon.LOGGER.log(Level.INFO, "Config saved successfully");
         }
     }
 
     public void set(String key, Object value) {
         configMap.put(key, value);
-        save();
-    }
-
-    public void remove(String key, Object value) {
-        configMap.remove(key);
-        save();
     }
 
     public Optional<Object> get(String key) {
         return Optional.ofNullable(configMap.get(key));
     }
-
 
     public Double getDouble(String key) {
         Object value = configMap.get(key);
@@ -225,19 +245,11 @@ public class Config {
     public void addInt(String key, int amount) {
         int value = getInteger(key);
         configMap.put(key, value + amount);
-        save();
     }
 
     public void addLong(String key, long amount) {
         long value = getInteger(key);
         configMap.put(key, value + amount);
-        save();
-    }
-
-    public void toggle(String key) {
-        boolean value = getBoolean(key);
-        value = !value;
-        save();
     }
 
     @Override

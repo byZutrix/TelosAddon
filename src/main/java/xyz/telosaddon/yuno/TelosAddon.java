@@ -1,6 +1,10 @@
 package xyz.telosaddon.yuno;
 
+import com.mojang.brigadier.Message;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -27,6 +31,7 @@ import java.util.*;
 
 import java.util.logging.Logger;
 
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static xyz.telosaddon.yuno.utils.LocalAPI.updateAPI;
 
 public class TelosAddon implements ClientModInitializer  {
@@ -168,6 +173,8 @@ public class TelosAddon implements ClientModInitializer  {
         this.showOffHandFeature = new ShowOffHandFeature(config);
 
         RangeRenderer.init();
+
+        new InitializeCommands().initializeCommands();
     }
 
     public void run(){

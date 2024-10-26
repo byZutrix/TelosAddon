@@ -11,11 +11,12 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import xyz.telosaddon.yuno.discordrpc.DiscordRPCManager;
-import xyz.telosaddon.yuno.hotkey.AbilityHotkey;
+import xyz.telosaddon.yuno.hotkey.CallHotkey;
 import xyz.telosaddon.yuno.hotkey.MenuHotkey;
 import xyz.telosaddon.yuno.hotkey.NexusHotkey;
 import xyz.telosaddon.yuno.features.ShowMainRangeFeature;
 import xyz.telosaddon.yuno.features.ShowOffHandFeature;
+import xyz.telosaddon.yuno.hotkey.TeleportMenuHotkey;
 import xyz.telosaddon.yuno.renderer.RangeRenderer;
 import xyz.telosaddon.yuno.sound.SoundManager;
 
@@ -56,11 +57,11 @@ public class TelosAddon implements ClientModInitializer  {
     private ShowOffHandFeature showOffHandFeature;
 
 
-
     public void initHotkeys(){
         NexusHotkey.init();
         MenuHotkey.init();
-        //AbilityHotkey.init();// until fixed
+        TeleportMenuHotkey.init();
+        CallHotkey.init();
     }
     public void stop() {
         config.save();
@@ -96,6 +97,7 @@ public class TelosAddon implements ClientModInitializer  {
     public void sendMessage(String message) {
         mc.inGameHud.setOverlayMessage(Text.of("§6" + message), false);
     }
+
     public static TelosAddon getInstance() { return instance; }
     public Config getConfig() { return config; }
     public SoundManager getSoundManager() { return soundManager; }

@@ -115,6 +115,7 @@ public class Config {
         addDefault("NoBlackRunSetting", false);
         addDefault("LifetimeSetting", false);
         addDefault("EnableJoinText", true);
+        addDefault("CallHotkeyShout", false);
 
         addDefault("SwingSetting", false);
         addDefault("GammaSetting", false);
@@ -144,7 +145,6 @@ public class Config {
 
     public void addDefault(String key, Object value) {
         if(!configMap.containsKey(key)) {
-            //TelosAddon.LOGGER.info("Config key (" + key + ") does not have a value. Using default");
             configMap.put(key, value);
         }
     }
@@ -159,7 +159,7 @@ public class Config {
 
     private void save(boolean overwriteBackup) {
         CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-            synchronized (this) { // lets see if this works, we can try reentrantlock if not
+            synchronized (this) {
                 try {
                     ensureConfigFileExists();
                     ensureTmpFileExists();

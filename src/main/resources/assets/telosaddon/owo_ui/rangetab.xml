@@ -1,0 +1,73 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical">
+            <children>
+                <flow-layout direction="horizontal">
+                    <children>
+                        <button id="Home">
+                            <text>Home</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                        <button id="Gui">
+                            <text>Gui</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                        <button id="Settings">
+                            <text>Settings</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                        <button id="Teleport">
+                            <text>Teleport</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                        <button id="Range">
+                            <text>Range</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                    </children>
+                </flow-layout> <!--Tab buttons-->
+                <flow-layout direction="vertical">
+                    <children>
+                        <label>
+                            <text>Range tab</text>
+                        </label>
+                    </children>
+                </flow-layout>
+            </children>
+            <surface>
+                <vanilla-translucent/>
+            </surface>
+        </flow-layout>
+    </components>
+</owo-ui>

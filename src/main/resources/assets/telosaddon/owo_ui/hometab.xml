@@ -1,0 +1,144 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical">
+            <children>
+                <flow-layout direction="horizontal">
+                    <children>
+                        <button id="Home">
+                            <text>Home</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                        <button id="Gui">
+                            <text>Gui</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                        <button id="Settings">
+                            <text>Settings</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                        <button id="Teleport">
+                            <text>Teleport</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                        <button id="Range">
+                            <text>Range</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                    </children>
+                </flow-layout> <!--Tab buttons-->
+                <flow-layout direction="vertical">
+                    <children>
+                        <checkbox id="SwingSetting">
+                            <text>Hold To Swing</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="SwingIfNoCooldown">
+                            <text>Swing Only If No Cooldown</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="GammaSetting">
+                            <text>Gamma</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="FPSSetting">
+                            <text>Show FPS</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="PingSetting">
+                            <text>Show Ping</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="PlaytimeSetting">
+                            <text>Show Playtime</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="SpawnBossesSetting">
+                            <text>Show Spawned Bosses</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="SoundSetting">
+                            <text>Custom Bag Sounds</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="DiscordRPCSetting">
+                            <text>Discord Rich Presence</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="DiscordDefaultStatusMessage">
+                            <text>Confirm change</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="RPCShowLocationSetting">
+                            <text>Show location</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="RPCShowFightingSetting">
+                            <text>Show current boss</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                    </children>
+
+                    <padding><all>10</all></padding>
+                </flow-layout>
+            </children>
+            <surface>
+                <vanilla-translucent/>
+            </surface>
+        </flow-layout>
+    </components>
+</owo-ui>

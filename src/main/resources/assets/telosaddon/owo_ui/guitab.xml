@@ -1,0 +1,144 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.20/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical">
+            <children>
+                <flow-layout direction="horizontal">
+                    <children>
+                        <button id="Home">
+                            <text>Home</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                        <button id="Gui">
+                            <text>Gui</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                        <button id="Settings">
+                            <text>Settings</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                        <button id="Teleport">
+                            <text>Teleport</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                        <button id="Range">
+                            <text>Range</text>
+                            <margins>
+                                <left>5</left>
+                                <top>5</top>
+                            </margins>
+                            <sizing>
+                                <horizontal method="fixed">100</horizontal>
+                            </sizing>
+                        </button>
+                    </children>
+                </flow-layout> <!--Tab buttons-->
+                <flow-layout direction="vertical">
+                    <children>
+                        <checkbox id="GreenSetting">
+                            <text>GreenBag Counter</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="GoldSetting">
+                            <text>GoldBag Counter</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="WhiteSetting">
+                            <text>WhiteBag Counter</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="BlackSetting">
+                            <text>BlackBag Counter</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="EventSetting">
+                            <text>EventBag Counter</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="CrossSetting">
+                            <text>Cross Counter</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="RelicSetting">
+                            <text>Relic Counter</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="RunesSetting">
+                            <text>Runes Counter</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="TotalRunSetting">
+                            <text>Total Boss Runs</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="NoWhiteRunSetting">
+                            <text>No Whites Runs</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="NoBlackRunSetting">
+                            <text>No Black Runs</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                        <checkbox id="LifetimeSetting">
+                            <text>Lifetime Counter</text>
+                            <sizing>
+                                <horizontal method="fixed">150</horizontal>
+                            </sizing>
+                        </checkbox>
+                    </children>
+
+                    <padding><all>10</all></padding>
+                </flow-layout>
+            </children>
+            <surface>
+                <vanilla-translucent/>
+            </surface>
+        </flow-layout>
+    </components>
+</owo-ui>

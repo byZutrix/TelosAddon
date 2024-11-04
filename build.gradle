@@ -9,8 +9,8 @@ group = project.maven_group
 
 repositories {
     mavenCentral()
-    maven { url 'https://jitpack.io'
-    }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.wispforest.io/releases/' }
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
@@ -28,6 +28,8 @@ dependencies {
     include implementation('org.slf4j:slf4j-api:2.0.7')
     include implementation('com.kohlschutter.junixsocket:junixsocket-common:2.6.2')
     include implementation('com.kohlschutter.junixsocket:junixsocket-native-common:2.6.2')
+    modImplementation "io.wispforest:owo-lib:${project.owo_version}"
+    include "io.wispforest:owo-sentinel:${project.owo_version}"
     }
 
 processResources {
